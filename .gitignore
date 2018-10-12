@@ -48,3 +48,5 @@ autom4te.cache
 simple/simptest
 simple/simpclient
 
+# multibeat tests
+multibeat/jctrl

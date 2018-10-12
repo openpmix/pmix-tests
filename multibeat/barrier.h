@@ -1,0 +1,1 @@
+void barrier(void);
