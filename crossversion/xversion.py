@@ -13,12 +13,13 @@ import re
 import argparse
 import subprocess
 
+# put this in one place
+supported_versions = ["master", "v3.0", "v2.1", "v2.0", "v1.2"]
+
 pmix_git_url      = "git@github.com:pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
-pmix_base_dir     = "/tmp/pmix-test/"
-pmix_install_dir  = pmix_base_dir + "/install/"
-pmix_build_dir    = pmix_base_dir
-pmix_libevent_dir = "/tmp/pmix-test/libevent"
+pmix_install_dir  = ""
+pmix_build_dir    = ""
 
 args = None
 output_file = os.getcwd() + "/build_output.txt"
@@ -51,7 +52,6 @@ class BuildInfo:
         print("Branch: %6s" % (self.branch))
 
 def build_tree(bld, logfile=None):
-    global pmix_libevent_dir
     global pmix_build_dir
     global pmix_install_dir
     global output_file
@@ -93,15 +93,39 @@ def build_tree(bld, logfile=None):
         return ret
 
     print("============ PMIx Build: "+bld.branch+" : Configure")
-    ret = subprocess.call(["./configure",
-                           "--disable-debug",
-                           "--enable-static",
-                           "--disable-shared",
-                           "--disable-dlopen",
-                           "--disable-per-user-config-files",
-                           "--with-libevent=" + pmix_libevent_dir,
-                           "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
-                           stdout=logfile, stderr=logfile, shell=False)
+    if "v1" in bld.branch:
+        ret = subprocess.call(["./configure",
+                               "--disable-debug",
+                               "--enable-static",
+                               "--disable-shared",
+                               "--disable-visibility",
+                               "--with-libevent=" + args.libevent,
+                               "--with-hwloc=" + args.hwloc1,
+                               "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
+                               stdout=logfile, stderr=logfile, shell=False)
+    elif "v2" in bld.branch:
+        ret = subprocess.call(["./configure",
+                               "--disable-debug",
+                               "--enable-static",
+                               "--disable-shared",
+                               "--disable-dlopen",
+                               "--disable-per-user-config-files",
+                               "--disable-visibility",
+                               "--with-libevent=" + args.libevent,
+                               "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
+                               stdout=logfile, stderr=logfile, shell=False)
+    else:
+        ret = subprocess.call(["./configure",
+                               "--disable-debug",
+                               "--enable-static",
+                               "--disable-shared",
+                               "--disable-dlopen",
+                               "--disable-per-user-config-files",
+                               "--with-libevent=" + args.libevent,
+                               "--with-hwloc=" + args.hwloc,
+                               "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
+                               stdout=logfile, stderr=logfile, shell=False)
+
     if 0 != ret:
         os.chdir(orig_dir)
         return ret
@@ -137,11 +161,13 @@ def run_test(bld_server, bld_client):
     os.chdir(pmix_build_dir + bld_server.build_base_dir + "/test/simple")
 
     print("============ PMIx Run  : Run simptest")
+    print("Client " + pmix_build_dir + bld_client.build_base_dir + "/test/simple/simpclient")
     with open(result_file, 'w') as logfile:
         ret = subprocess.call(["./simptest",
                                "-n", "2",
                                "-e", pmix_build_dir + bld_client.build_base_dir + "/test/simple/simpclient"],
                                stdout=logfile, stderr=logfile, shell=False)
+        print("RETURNED " + str(ret))
         if 0 != ret:
             os.chdir(orig_dir)
             return ret
@@ -158,12 +184,22 @@ def run_test(bld_server, bld_client):
 if __name__ == "__main__":
     allBuilds = []
     invalid_pairs = []
+    servers = []
+    clients = []
+
+    defbasedir = os.getcwd()
 
     # Command line parsing
     parser = argparse.ArgumentParser(description="PMIx Cross Version Check Script")
     parser.add_argument("-b", "--no-build", help="Skip building PMIx", action="store_true")
     parser.add_argument("-r", "--no-run", help="Skip running PMIx", action="store_true")
-    parser.add_argument("-q", "--quiet", help="Quiet Output (output in output.txt)", action="store_true")
+    parser.add_argument("-q", "--quiet", help="Quiet output (output in output.txt)", action="store_true")
+    parser.add_argument("--basedir", help="Base directory", action="store", dest="basedir", default=defbasedir)
+    parser.add_argument("--with-libevent", help="Where libevent is located", action="store", dest="libevent", default="")
+    parser.add_argument("--with-hwloc", help="Where hwloc is located", action="store", dest="hwloc", default="")
+    parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
+    parser.add_argument("--server-versions", help="Comma-separated PMIx versions to use as servers", action="store", dest="servers", default="all")
+    parser.add_argument("--client-versions", help="Comma-separated PMIx versions to use as clients", action="store", dest="clients", default="all")
     parser.parse_args()
     args = parser.parse_args()
 
@@ -180,36 +216,30 @@ if __name__ == "__main__":
     invalid_pairs.append(["v2.0","master"])
     invalid_pairs.append(["v2.0","v3.0"])
     invalid_pairs.append(["v2.0","v2.1"])
+    invalid_pairs.append(["v2.0","v1.2"])
 
-    # Git master
-    bld = BuildInfo()
-    bld.branch = "master"
-    bld.sync()
-    allBuilds.append(bld)
+    # set the directories
+    if args.basedir.startswith("."):
+        args.basedir = defbasedir + args.basedir[1:]
+    pmix_install_dir = args.basedir + "/install/"
+    pmix_build_dir = args.basedir + "/"
 
-    # Git v3.0
-    bld = BuildInfo()
-    bld.branch = "v3.0"
-    bld.sync()
-    allBuilds.append(bld)
+    # setup server list
+    if "all" in args.servers:
+        servers = supported_versions
+    else:
+        servers = args.servers.split(",")
+    if "all" in args.clients:
+        clients = supported_versions
+    else:
+        clients = args.clients.split(",")
 
-    # Git v2.1
-    bld = BuildInfo()
-    bld.branch = "v2.1"
-    bld.sync()
-    allBuilds.append(bld)
-
-    # Git v2.0
-    bld = BuildInfo()
-    bld.branch = "v2.0"
-    bld.sync()
-    allBuilds.append(bld)
-
-    # Git v1.2
-    bld = BuildInfo()
-    bld.branch = "v1.2"
-    bld.sync()
-    allBuilds.append(bld)
+    for vers in supported_versions:
+        if vers in servers or vers in clients:
+            bld = BuildInfo()
+            bld.branch = vers
+            bld.sync()
+            allBuilds.append(bld)
 
     # Tar v3.0.0
     # bld = BuildInfo()
@@ -237,7 +267,11 @@ if __name__ == "__main__":
 
     if args.no_run is False:
         for bld_server in allBuilds:
+            if bld_server.branch not in servers:
+                continue
             for bld_client in allBuilds:
+                if bld_client.branch not in clients:
+                    continue
                 is_valid = True
                 for pair in invalid_pairs:
                     if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
