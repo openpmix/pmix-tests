@@ -14,7 +14,7 @@ import argparse
 import subprocess
 
 # put this in one place
-supported_versions = ["master", "v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
+supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
 
 pmix_git_url      = "git@github.com:pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
@@ -209,12 +209,16 @@ if __name__ == "__main__":
 
     # 'server' -> 'client' pairs that are not supported
     invalid_pairs.append(["v1.2","master"])
+    invalid_pairs.append(["v1.2","v3.1"])
     invalid_pairs.append(["v1.2","v3.0"])
+    invalid_pairs.append(["v1.2","v2.2"])
     invalid_pairs.append(["v1.2","v2.1"])
     invalid_pairs.append(["v1.2","v2.0"])
     # --
     invalid_pairs.append(["v2.0","master"])
+    invalid_pairs.append(["v2.0","v3.1"])
     invalid_pairs.append(["v2.0","v3.0"])
+    invalid_pairs.append(["v2.0","v2.2"])
     invalid_pairs.append(["v2.0","v2.1"])
     invalid_pairs.append(["v2.0","v1.2"])
 
