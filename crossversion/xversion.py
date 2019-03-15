@@ -1,10 +1,10 @@
-#!/usr/bin/python
+#!/usr/bin/python -u
 
 #
 # To build only: (-q = quiet mode)
-#  ./bin/cvc-0-setup-builds.py -r -q
+#  ./xversion.py -r -q
 # To run only:
-#  ./bin/cvc-0-setup-builds.py -b -q
+#  ./xversion.py -b -q
 #
 
 import sys
@@ -12,11 +12,12 @@ import os
 import re
 import argparse
 import subprocess
+import shutil
 
 # put this in one place
 supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
 
-pmix_git_url      = "git@github.com:pmix/pmix.git"
+pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
 pmix_install_dir  = ""
 pmix_build_dir    = ""
@@ -26,6 +27,8 @@ output_file = os.getcwd() + "/build_output.txt"
 result_file = os.getcwd() + "/run_result.txt"
 
 final_summary = []
+
+count_failed=0
 
 class BuildInfo:
     def __init__(self):
@@ -59,16 +62,60 @@ def build_tree(bld, logfile=None):
 
     orig_dir = os.getcwd()
 
-    if os.path.isdir(pmix_build_dir + bld_server.build_base_dir) is False:
-        if bld.is_git is True:
-            print("============ PMIx Build: "+bld.branch+" : Git Clone")
-            ret = subprocess.call(["git", "clone",
-                                   "-b", bld.branch,
-                                   bld.url, pmix_build_dir + bld_server.build_base_dir],
+    local_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
+    local_install_dir = pmix_install_dir + "/" + bld.build_base_dir
+
+    # If the build directory exists see if we need to update+rebuild, rebuild, or skip.
+    if os.path.isdir(local_build_dir) and os.path.isdir(local_install_dir):
+        os.chdir(local_build_dir)
+
+        # Not a .git repo
+        # if the install dir is present then skip, otherwise continue to build
+        if os.path.exists(".git") is False:
+            if os.path.isdir(local_install_dir) is True:
+                print("Skip: Local install already exists: "+local_install_dir)
+                return 1
+        # .git repo
+        # if there is an upstream update for this branch then rebuild, otherwise skip.
+        else:
+            ret = subprocess.call(["git", "fetch", "-q", "origin", bld.branch],
                                    stdout=logfile, stderr=logfile, shell=False)
             if 0 != ret:
                 os.chdir(orig_dir)
                 return ret
+
+            p = subprocess.Popen("git pull origin "+bld.branch,
+                                 stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, close_fds=True)
+            p.wait()
+            if p.returncode != 0:
+                os.chdir(orig_dir)
+                return -1
+
+            os.chdir(orig_dir)
+
+            sio = p.stdout.read()
+            if "Already up-to-date" in sio:
+                print("Skip: Local install already exists ("+local_install_dir+") and branch ("+bld.branch+") has no updates")
+                return 1
+            else:
+                print("\"git pull\" indicated a change on this branch. Rebuilding.")
+                print("Log:\n"+sio)
+                shutil.rmtree(local_build_dir)
+
+    # If the build directory does not exist then check it out
+    if os.path.isdir(local_build_dir) is False:
+        if bld.is_git is True:
+            print("============ PMIx Build: "+bld.branch+" : Git Clone")
+            ret = subprocess.call(["git", "clone",
+                                   "-b", bld.branch,
+                                   bld.url, local_build_dir],
+                                   stdout=logfile, stderr=logfile, shell=False)
+            if 0 != ret:
+                os.chdir(orig_dir)
+                return ret
+        elif os.path.isabs(bld.url) and os.path.isdir(bld.url):
+            print("============ PMIx Build: "+bld.url+" : Build from source directory")
+            shutil.copytree(bld.url, local_build_dir)
         else:
             print("============ PMIx Build: "+bld.branch+" : Unpack tarball")
             ret = subprocess.call(["wget",bld.url], stdout=logfile, stderr=logfile, shell=False)
@@ -80,7 +127,12 @@ def build_tree(bld, logfile=None):
             os.chdir(orig_dir)
             return -1;
 
-    os.chdir(pmix_build_dir + bld_server.build_base_dir)
+
+    os.chdir(local_build_dir)
+
+    if os.path.isdir(local_install_dir):
+        shutil.rmtree(local_install_dir)
+
     print("============ PMIx Build: "+bld.branch+" : "+os.getcwd())
 
     print("============ PMIx Build: "+bld.branch+" : Autogen")
@@ -101,7 +153,7 @@ def build_tree(bld, logfile=None):
                                "--disable-visibility",
                                "--with-libevent=" + args.libevent,
                                "--with-hwloc=" + args.hwloc1,
-                               "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
+                               "--prefix=" + local_install_dir],
                                stdout=logfile, stderr=logfile, shell=False)
     elif "v2" in bld.branch:
         ret = subprocess.call(["./configure",
@@ -112,7 +164,7 @@ def build_tree(bld, logfile=None):
                                "--disable-per-user-config-files",
                                "--disable-visibility",
                                "--with-libevent=" + args.libevent,
-                               "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
+                               "--prefix=" + local_install_dir],
                                stdout=logfile, stderr=logfile, shell=False)
     else:
         ret = subprocess.call(["./configure",
@@ -123,7 +175,7 @@ def build_tree(bld, logfile=None):
                                "--disable-per-user-config-files",
                                "--with-libevent=" + args.libevent,
                                "--with-hwloc=" + args.hwloc,
-                               "--prefix=" + pmix_install_dir + "/" + bld.build_base_dir],
+                               "--prefix=" + local_install_dir],
                                stdout=logfile, stderr=logfile, shell=False)
 
     if 0 != ret:
@@ -143,7 +195,7 @@ def build_tree(bld, logfile=None):
         return ret
 
     print("============ PMIx Build: "+bld.branch+" : Make Test")
-    os.chdir(pmix_build_dir + bld_server.build_base_dir + "/test/simple")
+    os.chdir(local_build_dir + "/test/simple")
     ret = subprocess.call(["make"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
@@ -158,15 +210,19 @@ def run_test(bld_server, bld_client):
     global result_file
 
     orig_dir = os.getcwd()
-    os.chdir(pmix_build_dir + bld_server.build_base_dir + "/test/simple")
+
+    client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
+    server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
+
+    os.chdir(server_build_dir + "/test/simple")
+    cmd = ["./simptest", "-n", "2", "-e", client_build_dir + "/test/simple/simpclient"];
 
     print("============ PMIx Run  : Run simptest")
-    print("Client " + pmix_build_dir + bld_client.build_base_dir + "/test/simple/simpclient")
+    print("Client " + client_build_dir + "/test/simple/simpclient")
+    print("Server " + os.getcwd() )
+    print("Command: "+ " ".join(cmd))
     with open(result_file, 'w') as logfile:
-        ret = subprocess.call(["./simptest",
-                               "-n", "2",
-                               "-e", pmix_build_dir + bld_client.build_base_dir + "/test/simple/simpclient"],
-                               stdout=logfile, stderr=logfile, shell=False)
+        ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
         print("RETURNED " + str(ret))
         if 0 != ret:
             os.chdir(orig_dir)
@@ -200,6 +256,11 @@ if __name__ == "__main__":
     parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
     parser.add_argument("--server-versions", help="Comma-separated PMIx versions to use as servers", action="store", dest="servers", default="all")
     parser.add_argument("--client-versions", help="Comma-separated PMIx versions to use as clients", action="store", dest="clients", default="all")
+
+    parser.add_argument("--with-repo", help="Use this GitHub repo", action="store", dest="gh_repo", default="")
+    parser.add_argument("--with-branch", help="Build this GitHub branch", action="store", dest="gh_branch", default="")
+    parser.add_argument("--with-src", help="Use this source directory", action="store", dest="raw_src", default="")
+
     parser.parse_args()
     args = parser.parse_args()
 
@@ -225,8 +286,8 @@ if __name__ == "__main__":
     # set the directories
     if args.basedir.startswith("."):
         args.basedir = defbasedir + args.basedir[1:]
-    pmix_install_dir = args.basedir + "/install/"
-    pmix_build_dir = args.basedir + "/"
+    pmix_install_dir = args.basedir + "/install"
+    pmix_build_dir = args.basedir
 
     # setup server list
     if "all" in args.servers:
@@ -245,14 +306,32 @@ if __name__ == "__main__":
             bld.sync()
             allBuilds.append(bld)
 
-    # Tar v3.0.0
-    # bld = BuildInfo()
-    # bld.branch = "v3.0.0"
-    # bld.is_git = False
-    # bld.url = pmix_release_url + "v3.0.0/pmix-3.0.0.tar.bz2"
-    # bld.sync()
-    # allBuilds.append(bld)
+    # Specific repo target
+    if len(args.gh_repo) > 0 and len(args.gh_branch) > 0:
+        bld = BuildInfo()
+        bld.url = args.gh_repo
+        bld.branch = args.gh_branch
+        bld.is_git = True
+        bld.sync()
+        allBuilds.append(bld)
+        servers.append(bld.branch)
+        clients.append(bld.branch)
 
+    # Specific directory target
+    if len(args.raw_src) > 0:
+        args.raw_src = args.raw_src.rstrip("/")
+
+        bld = BuildInfo()
+        bld.url = args.raw_src
+        bld.branch = os.path.basename(args.raw_src)
+        bld.is_git = False
+        bld.sync()
+        allBuilds.append(bld)
+        servers.append(bld.branch)
+        clients.append(bld.branch)
+
+
+    # Build everything necessary
     if args.no_build is False:
         for bld_server in allBuilds:
             print("============ PMIx Build: "+bld_server.branch+" =====================")
@@ -266,9 +345,13 @@ if __name__ == "__main__":
 
             if 0 == ret:
                 final_summary.append("Build PASS: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+            elif 1 == ret:
+                final_summary.append("Build SKIP: "+bld_server.branch+" -> "+bld_server.build_base_dir)
             else:
-                final_summary.append("Build FAIL: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+                final_summary.append("Build ***FAILED***: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+                count_failed += 1
 
+    # Run the cross-version test
     if args.no_run is False:
         for bld_server in allBuilds:
             if bld_server.branch not in servers:
@@ -288,8 +371,11 @@ if __name__ == "__main__":
                     if 0 == ret:
                         final_summary.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
                     else:
-                        final_summary.append("Run FAIL: "+bld_server.branch+" -> "+bld_client.branch)
+                        final_summary.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
+                        count_failed += 1
 
     print("="*30 + " Summary " + "="*30)
     for line in final_summary:
         print line
+
+    sys.exit(count_failed)
