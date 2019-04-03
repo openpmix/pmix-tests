@@ -47,6 +47,12 @@ autom4te.cache
 # simple tests
 simple/simptest
 simple/simpclient
+simple/xnspace
 
 # multibeat tests
 multibeat/jctrl
+
+# cross-version tests
+crossversion/install
+crossversion/pmix-*
+crossversion/run_result.txt
