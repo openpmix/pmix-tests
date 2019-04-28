@@ -17,6 +17,23 @@ import shutil
 # put this in one place
 supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
 
+tests = ["-n 4 --ns-dist 3:1 --fence \"[db | 0:0-2;1:0]\"",
+         "-n 4 --ns-dist 3:1 --fence \"[db | 0:;1:0]\"",
+         "-n 4 --ns-dist 3:1 --fence \"[db | 0:;1:]\"",
+         "-n 4 --ns-dist 3:1 --fence \"[0:]\"",
+         "-n 4 --ns-dist 3:1 --fence \"[b | 0:]\"",
+         "-n 4 --ns-dist 3:1 --fence \"[d | 0:]\" --noise \"[0:0,1]\"",
+         "-n 4 --job-fence -c",
+         "-n 4 --job-fence",
+         "-n 2 --test-publish",
+         "-n 2 --test-spawn",
+         "-n 2 --test-connect",
+         "-n 5 --test-resolve-peers --ns-dist \"1:2:2\"",
+         "-n 5 --test-replace 100:0,1,10,50,99",
+         "-n 5 --test-internal 10",
+         "-s 2 -n 2 --job-fence",
+         "-s 2 -n 2 --job-fence -c"]
+
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
 pmix_install_dir  = ""
@@ -214,28 +231,25 @@ def run_test(bld_server, bld_client):
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
-    os.chdir(server_build_dir + "/test/simple")
-    cmd = ["./simptest", "-n", "2", "-e", client_build_dir + "/test/simple/simpclient"];
+    logfile = open(result_file, 'w')
+    logfile.write("============ PMIx Cross-Version Test ============\n")
+    logfile.write("Client " + client_build_dir + "\n")
+    logfile.write("Server " + os.getcwd() + "\n")
+    logfile.flush()
 
-    print("============ PMIx Run  : Run simptest")
-    print("Client " + client_build_dir + "/test/simple/simpclient")
-    print("Server " + os.getcwd() )
-    print("Command: "+ " ".join(cmd))
-    with open(result_file, 'w') as logfile:
+    for test in tests:
+        cmd = server_build_dir + "/test/pmix_test " + test + " -e " + client_build_dir + "/test/pmix_client";
+
+        logfile.write("Command: "+ cmd + "\n")
+        logfile.flush()
         ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
-        print("RETURNED " + str(ret))
         if 0 != ret:
-            os.chdir(orig_dir)
-            return ret
-
-    if args.quiet is False:
-        with open(result_file, 'r') as logfile:
-            for line in logfile:
-                print(line),
-        print("")
+            logfile.write("\tRETURNED ERROR STATUS " + str(ret) + "\n\n")
+        else:
+            logfile.write("\tRETURNED SUCCESS\n\n")
 
     os.chdir(orig_dir)
-    return ret
+    return 0
 
 if __name__ == "__main__":
     allBuilds = []
@@ -364,15 +378,21 @@ if __name__ == "__main__":
                     if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
                         is_valid = False
 
-                if is_valid:
+                if is_valid and args.quiet is False:
                     print("="*70)
                     print("Server: %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
-                    ret = run_test(bld_server, bld_client)
-                    if 0 == ret:
-                        final_summary.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
-                    else:
-                        final_summary.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
-                        count_failed += 1
+                ret = run_test(bld_server, bld_client)
+                if 0 == ret:
+                    final_summary.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
+                else:
+                    final_summary.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
+                    count_failed += 1
+
+    if args.quiet is False:
+        with open(result_file, 'r') as logfile:
+            for line in logfile:
+                print(line),
+        print("\n")
 
     print("="*30 + " Summary " + "="*30)
     for line in final_summary:
