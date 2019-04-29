@@ -38,6 +38,7 @@ pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
 pmix_install_dir  = ""
 pmix_build_dir    = ""
+logfile = None
 
 args = None
 output_file = os.getcwd() + "/build_output.txt"
@@ -225,18 +226,14 @@ def build_tree(bld, logfile=None):
 def run_test(bld_server, bld_client):
     global pmix_build_dir
     global result_file
+    global logfile
 
     orig_dir = os.getcwd()
 
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
-    logfile = open(result_file, 'w')
-    logfile.write("============ PMIx Cross-Version Test ============\n")
-    logfile.write("Client " + client_build_dir + "\n")
-    logfile.write("Server " + os.getcwd() + "\n")
-    logfile.flush()
-
+    exit_status = 0
     for test in tests:
         cmd = server_build_dir + "/test/pmix_test " + test + " -e " + client_build_dir + "/test/pmix_client";
 
@@ -245,11 +242,13 @@ def run_test(bld_server, bld_client):
         ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
         if 0 != ret:
             logfile.write("\tRETURNED ERROR STATUS " + str(ret) + "\n\n")
+            if 0 == exit_status:
+                exit_status = ret
         else:
             logfile.write("\tRETURNED SUCCESS\n\n")
 
     os.chdir(orig_dir)
-    return 0
+    return exit_status
 
 if __name__ == "__main__":
     allBuilds = []
@@ -367,6 +366,8 @@ if __name__ == "__main__":
 
     # Run the cross-version test
     if args.no_run is False:
+        logfile = open(result_file, 'w')
+        logfile.write("============ PMIx Cross-Version Test ============\n\n")
         for bld_server in allBuilds:
             if bld_server.branch not in servers:
                 continue
@@ -378,15 +379,20 @@ if __name__ == "__main__":
                     if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
                         is_valid = False
 
-                if is_valid and args.quiet is False:
-                    print("="*70)
-                    print("Server: %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
-                ret = run_test(bld_server, bld_client)
-                if 0 == ret:
-                    final_summary.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
-                else:
-                    final_summary.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
-                    count_failed += 1
+                if is_valid:
+                    if args.quiet is False:
+                        print("="*70)
+                        print("Server: %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
+                    logfile.write("="*40 + "\n")
+                    logfile.write("Server: %6s -> Client: %6s\n" % (bld_server.branch, bld_client.branch))
+                    logfile.write("="*40 + "\n\n")
+                    logfile.flush()
+                    ret = run_test(bld_server, bld_client)
+                    if 0 == ret:
+                        final_summary.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
+                    else:
+                        final_summary.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
+                        count_failed += 1
 
     if args.quiet is False:
         with open(result_file, 'r') as logfile:
