@@ -26,9 +26,12 @@ args = None
 output_file = os.getcwd() + "/build_output.txt"
 result_file = os.getcwd() + "/run_result.txt"
 
-final_summary = []
+final_summary_build = []
+final_summary_client = []
+final_summary_tool = []
 
 count_failed=0
+count_failed_tool=0
 
 class BuildInfo:
     def __init__(self):
@@ -215,26 +218,72 @@ def run_test(bld_server, bld_client):
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
     os.chdir(server_build_dir + "/test/simple")
-    cmd = ["./simptest", "-n", "2", "-e", client_build_dir + "/test/simple/simpclient"];
+    cmd = "./simptest -n 2 -e " + client_build_dir + "/test/simple/simpclient"
 
-    print("============ PMIx Run  : Run simptest")
-    print("Client " + client_build_dir + "/test/simple/simpclient")
-    print("Server " + os.getcwd() )
-    print("Command: "+ " ".join(cmd))
+    print("-----> : Run simptest Client")
+    print("Client : " + client_build_dir + "/test/simple/simpclient")
+    print("Server : " + os.getcwd() )
+    print("Command: cd " + os.getcwd() + " ; " + cmd)
+
+    if os.path.isfile(result_file):
+        os.remove(result_file)
     with open(result_file, 'w') as logfile:
         ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
-        print("RETURNED " + str(ret))
         if 0 != ret:
-            os.chdir(orig_dir)
-            return ret
+            print("Status : " + str(ret) + " ***FAILED***")
+        else:
+            print("Status : " + str(ret))
 
-    if args.quiet is False:
+    if args.quiet is False or 0 != ret:
+        print("-----> : Test output")
         with open(result_file, 'r') as logfile:
             for line in logfile:
                 print(line),
         print("")
+    else:
+        print("-----> : Test output (Not shown)")
 
     os.chdir(orig_dir)
+
+    return ret
+
+def run_test_tool(bld_server, bld_client):
+    global pmix_build_dir
+    global result_file
+
+    orig_dir = os.getcwd()
+
+    client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
+    server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
+
+    os.chdir(server_build_dir + "/test/simple")
+    cmd = "./simptest -e "+client_build_dir + "/test/simple/simptool"
+
+    print("-----> : Run simptest Tool")
+    print("Tool   : " + client_build_dir + "/test/simple/simptool")
+    print("Server : " + os.getcwd() )
+    print("Command: cd " + os.getcwd() + " ; " + cmd)
+
+    if os.path.isfile(result_file):
+        os.remove(result_file)
+    with open(result_file, 'w') as logfile:
+        ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
+        if 0 != ret:
+            print("Status : " + str(ret) + " ***FAILED***")
+        else:
+            print("Status : " + str(ret))
+
+    if args.quiet is False or 0 != ret:
+        print("-----> : Test output")
+        with open(result_file, 'r') as logfile:
+            for line in logfile:
+                print(line),
+        print("")
+    else:
+        print("-----> : Test output (Not shown)")
+
+    os.chdir(orig_dir)
+
     return ret
 
 if __name__ == "__main__":
@@ -251,6 +300,8 @@ if __name__ == "__main__":
     parser.add_argument("-r", "--no-run", help="Skip running PMIx", action="store_true")
     parser.add_argument("-q", "--quiet", help="Quiet output (output in output.txt)", action="store_true")
     parser.add_argument("--basedir", help="Base directory", action="store", dest="basedir", default=defbasedir)
+    parser.add_argument("--skip-client", help="Skip Client tests", action="store_true")
+    parser.add_argument("--skip-tool", help="Skip Tool tests", action="store_true")
     parser.add_argument("--with-libevent", help="Where libevent is located", action="store", dest="libevent", default="")
     parser.add_argument("--with-hwloc", help="Where hwloc is located", action="store", dest="hwloc", default="")
     parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
@@ -344,15 +395,15 @@ if __name__ == "__main__":
                 ret = build_tree(bld_server)
 
             if 0 == ret:
-                final_summary.append("Build PASS: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+                final_summary_build.append("Build PASS: "+bld_server.branch+" -> "+bld_server.build_base_dir)
             elif 1 == ret:
-                final_summary.append("Build SKIP: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+                final_summary_build.append("Build SKIP: "+bld_server.branch+" -> "+bld_server.build_base_dir)
             else:
-                final_summary.append("Build ***FAILED***: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+                final_summary_build.append("Build ***FAILED***: "+bld_server.branch+" -> "+bld_server.build_base_dir)
                 count_failed += 1
 
-    # Run the cross-version test
-    if args.no_run is False:
+    # Run the cross-version test - Client
+    if args.no_run is False and args.skip_client is False:
         for bld_server in allBuilds:
             if bld_server.branch not in servers:
                 continue
@@ -366,16 +417,52 @@ if __name__ == "__main__":
 
                 if is_valid:
                     print("="*70)
-                    print("Server: %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
+                    print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
                     ret = run_test(bld_server, bld_client)
                     if 0 == ret:
-                        final_summary.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
+                        final_summary_client.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
                     else:
-                        final_summary.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
+                        final_summary_client.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
                         count_failed += 1
 
-    print("="*30 + " Summary " + "="*30)
-    for line in final_summary:
-        print line
+    # Run the cross-version test - Tool
+    if args.no_run is False and args.skip_tool is False:
+        for bld_server in allBuilds:
+            if bld_server.branch not in servers:
+                continue
+            for bld_client in allBuilds:
+                if bld_client.branch not in clients:
+                    continue
+                is_valid = True
+                for pair in invalid_pairs:
+                    if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
+                        is_valid = False
 
-    sys.exit(count_failed)
+                if is_valid:
+                    print("="*70)
+                    print("Server : %6s -> Tool: %6s" % (bld_server.branch, bld_client.branch))
+                    ret = run_test_tool(bld_server, bld_client)
+                    if 0 == ret:
+                        final_summary_tool.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
+                    else:
+                        final_summary_tool.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
+                        count_failed_tool += 1
+
+    print("")
+    print("="*70)
+    if args.no_build is False:
+        print("="*30 + " Summary (Build) " + "="*30)
+        for line in final_summary_build:
+            print line
+
+    if args.no_run is False and args.skip_client is False:
+        print("="*30 + " Summary (Client) " + "="*30)
+        for line in final_summary_client:
+            print line
+
+    if args.no_run is False and args.skip_tool is False:
+        print("="*30 + " Summary (Tool) " + "="*30)
+        for line in final_summary_tool:
+            print line
+
+    sys.exit(count_failed + count_failed_tool)
