@@ -208,59 +208,42 @@ def build_tree(bld, logfile=None):
     os.chdir(orig_dir)
     return ret
 
-def run_test(bld_server, bld_client):
+def run_test(bld_server, bld_client, test_client=False, test_tool=False):
     global pmix_build_dir
     global result_file
+    test_name = ""
+    test_bin = ""
+    cmd = ""
+
+    if test_client is False and test_tool is False:
+        print("Error: No test specified.")
+        return 42
+    if test_client and test_tool:
+        print("Error: Only one test can be specified per call.")
+        return 42
 
     orig_dir = os.getcwd()
 
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
-    os.chdir(server_build_dir + "/test/simple")
-    cmd = "./simptest -n 2 -e " + client_build_dir + "/test/simple/simpclient"
-
-    print("-----> : Run simptest Client")
-    print("Client : " + client_build_dir + "/test/simple/simpclient")
-    print("Server : " + os.getcwd() )
-    print("Command: cd " + os.getcwd() + " ; " + cmd)
-
-    if os.path.isfile(result_file):
-        os.remove(result_file)
-    with open(result_file, 'w') as logfile:
-        ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
-        if 0 != ret:
-            print("Status : " + str(ret) + " ***FAILED***")
-        else:
-            print("Status : " + str(ret))
-
-    if args.quiet is False or 0 != ret:
-        print("-----> : Test output")
-        with open(result_file, 'r') as logfile:
-            for line in logfile:
-                print(line),
-        print("")
+    if test_client:
+        test_name = "Client"
+        test_bin = client_build_dir + "/test/simple/simpclient"
+        cmd = "./simptest -n 2 -e " + test_bin
     else:
-        print("-----> : Test output (Not shown)")
+        test_name = "Tool"
+        test_bin = client_build_dir + "/test/simple/simptool"
+        cmd = "./simptest -e " + test_bin
 
-    os.chdir(orig_dir)
-
-    return ret
-
-def run_test_tool(bld_server, bld_client):
-    global pmix_build_dir
-    global result_file
-
-    orig_dir = os.getcwd()
-
-    client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
-    server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
+    # Check if the test binary exists
+    if os.path.isfile(test_bin) is False:
+        print("Error: Test binary (%s) does not exist." % (test_bin))
+        return 1
 
     os.chdir(server_build_dir + "/test/simple")
-    cmd = "./simptest -e "+client_build_dir + "/test/simple/simptool"
-
-    print("-----> : Run simptest Tool")
-    print("Tool   : " + client_build_dir + "/test/simple/simptool")
+    print("-----> : Run simptest "+test_name)
+    print("%7s: %s" % (test_name, test_bin) )
     print("Server : " + os.getcwd() )
     print("Command: cd " + os.getcwd() + " ; " + cmd)
 
@@ -418,7 +401,7 @@ if __name__ == "__main__":
                 if is_valid:
                     print("="*70)
                     print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
-                    ret = run_test(bld_server, bld_client)
+                    ret = run_test(bld_server, bld_client, test_client=True)
                     if 0 == ret:
                         final_summary_client.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
                     else:
@@ -438,10 +421,14 @@ if __name__ == "__main__":
                     if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
                         is_valid = False
 
+                # v1.2 does not support Tools
+                if bld_server.branch is "v1.2" or bld_client.branch is "v1.2":
+                    is_valid = False
+
                 if is_valid:
                     print("="*70)
                     print("Server : %6s -> Tool: %6s" % (bld_server.branch, bld_client.branch))
-                    ret = run_test_tool(bld_server, bld_client)
+                    ret = run_test(bld_server, bld_client, test_tool=True)
                     if 0 == ret:
                         final_summary_tool.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
                     else:
