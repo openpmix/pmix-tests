@@ -302,21 +302,6 @@ if __name__ == "__main__":
         if os.path.exists(output_file):
             os.system("rm " + output_file)
 
-    # 'server' -> 'client' pairs that are not supported
-    invalid_pairs.append(["v1.2","master"])
-    invalid_pairs.append(["v1.2","v3.1"])
-    invalid_pairs.append(["v1.2","v3.0"])
-    invalid_pairs.append(["v1.2","v2.2"])
-    invalid_pairs.append(["v1.2","v2.1"])
-    invalid_pairs.append(["v1.2","v2.0"])
-    # --
-    invalid_pairs.append(["v2.0","master"])
-    invalid_pairs.append(["v2.0","v3.1"])
-    invalid_pairs.append(["v2.0","v3.0"])
-    invalid_pairs.append(["v2.0","v2.2"])
-    invalid_pairs.append(["v2.0","v2.1"])
-    invalid_pairs.append(["v2.0","v1.2"])
-
     # set the directories
     if args.basedir.startswith("."):
         args.basedir = defbasedir + args.basedir[1:]
@@ -364,6 +349,47 @@ if __name__ == "__main__":
         servers.append(bld.branch)
         clients.append(bld.branch)
 
+    # 'server' -> 'client' pairs that are not supported
+    invalid_pairs.append(["v1.2","master"])
+    invalid_pairs.append(["v1.2","v3.1"])
+    invalid_pairs.append(["v1.2","v3.0"])
+    invalid_pairs.append(["v1.2","v2.2"])
+    invalid_pairs.append(["v1.2","v2.1"])
+    invalid_pairs.append(["v1.2","v2.0"])
+    # --
+    invalid_pairs.append(["v2.0","master"])
+    invalid_pairs.append(["v2.0","v3.1"])
+    invalid_pairs.append(["v2.0","v3.0"])
+    invalid_pairs.append(["v2.0","v2.2"])
+    invalid_pairs.append(["v2.0","v2.1"])
+    invalid_pairs.append(["v2.0","v1.2"])
+
+    # PR_TARGET_BRANCH is an envar set by Jenkins CI to indicate the target branch
+    # This is no way from the github branch itself to tell where it was targeted.
+    # As such we need some external envar to tell us.
+    target_branch = None
+    try:
+        target_branch = os.environ['PR_TARGET_BRANCH']
+        if target_branch == "v1.2":
+            invalid_pairs.append([bld.branch,"master"])
+            invalid_pairs.append([bld.branch,"v3.1"])
+            invalid_pairs.append([bld.branch,"v3.0"])
+            invalid_pairs.append([bld.branch,"v2.2"])
+            invalid_pairs.append([bld.branch,"v2.1"])
+            invalid_pairs.append([bld.branch,"v2.0"])
+        elif target_branch == "v2.0":
+            invalid_pairs.append([bld.branch,"master"])
+            invalid_pairs.append([bld.branch,"v3.1"])
+            invalid_pairs.append([bld.branch,"v3.0"])
+            invalid_pairs.append([bld.branch,"v2.2"])
+            invalid_pairs.append([bld.branch,"v2.1"])
+            invalid_pairs.append([bld.branch,"v1.2"])
+        else:
+            invalid_pairs.append(["v1.2",bld.branch])
+            invalid_pairs.append(["v2.0",bld.branch])
+    except KeyError as e:
+        # Ignore if envar is not set
+        pass
 
     # Build everything necessary
     if args.no_build is False:
@@ -422,7 +448,7 @@ if __name__ == "__main__":
                         is_valid = False
 
                 # v1.2 does not support Tools
-                if bld_server.branch is "v1.2" or bld_client.branch is "v1.2":
+                if bld_server.branch == "v1.2" or bld_client.branch == "v1.2":
                     is_valid = False
 
                 if is_valid:
