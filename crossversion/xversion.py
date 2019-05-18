@@ -29,9 +29,31 @@ result_file = os.getcwd() + "/run_result.txt"
 final_summary_build = []
 final_summary_client = []
 final_summary_tool = []
+final_summary_check = []
 
 count_failed=0
 count_failed_tool=0
+count_failed_check=0
+
+# provide the array of tests used in "make check" - for each
+# target branch, we need to append the full path to their "pmix_client"
+# executable
+make_check_tests = ["-n 4 --ns-dist 3:1 --fence \"[db | 0:0-2;1:0]\" -e ",
+                    "-n 4 --ns-dist 3:1 --fence \"[db | 0:;1:0]\" -e ",
+                    "-n 4 --ns-dist 3:1 --fence \"[db | 0:;1:]\" -e ",
+                    "-n 4 --ns-dist 3:1 --fence \"[0:]\" -e ",
+                    "-n 4 --ns-dist 3:1 --fence \"[b | 0:]\" -e ",
+                    "-n 4 --ns-dist 3:1 --fence \"[d | 0:]\" --noise \"[0:0,1]\" -e ",
+                    "-n 4 --job-fence -c -e ",
+                    "-n 4 --job-fence -e ",
+                    "-n 2 --test-publish -e ",
+                    "-n 2 --test-spawn -e ",
+                    "-n 2 --test-connect -e ",
+                    "-n 5 --test-resolve-peers --ns-dist \"1:2:2\" -e ",
+                    "-n 5 --test-replace 100:0,1,10,50,99 -e ",
+                    "-n 5 --test-internal 10 -e ",
+                    "-s 2 -n 2 --job-fence -e ",
+                    "-s 2 -n 2 --job-fence -c -e "]
 
 class BuildInfo:
     def __init__(self):
@@ -208,17 +230,17 @@ def build_tree(bld, logfile=None):
     os.chdir(orig_dir)
     return ret
 
-def run_test(bld_server, bld_client, test_client=False, test_tool=False):
+def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_check=None):
     global pmix_build_dir
     global result_file
     test_name = ""
     test_bin = ""
     cmd = ""
 
-    if test_client is False and test_tool is False:
+    if test_client is False and test_tool is False and test_check is None:
         print("Error: No test specified.")
         return 42
-    if test_client and test_tool:
+    if (test_client and test_tool) or (test_client and test_check is not None) or (test_tool and test_check is not None):
         print("Error: Only one test can be specified per call.")
         return 42
 
@@ -231,6 +253,10 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False):
         test_name = "Client"
         test_bin = client_build_dir + "/test/simple/simpclient"
         cmd = "./simptest -n 2 -e " + test_bin
+    elif test_check is not None:
+        test_name = "Make Check"
+        test_bin = client_build_dir + "/test/pmix_client"
+        cmd = "./pmix_test " + test_check  + test_bin
     else:
         test_name = "Tool"
         test_bin = client_build_dir + "/test/simple/simptool"
@@ -241,11 +267,18 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False):
         print("Error: Test binary (%s) does not exist." % (test_bin))
         return 1
 
-    os.chdir(server_build_dir + "/test/simple")
-    print("-----> : Run simptest "+test_name)
-    print("%7s: %s" % (test_name, test_bin) )
-    print("Server : " + os.getcwd() )
-    print("Command: cd " + os.getcwd() + " ; " + cmd)
+    if test_check is not None:
+        os.chdir(server_build_dir + "/test")
+        print("-----> : Run simptest "+test_name)
+        print("%7s: %s" % (test_name, test_bin) )
+        print("Server : " + os.getcwd() )
+        print("Command: cd " + os.getcwd() + " ; " + cmd)
+    else:
+        os.chdir(server_build_dir + "/test/simple")
+        print("-----> : Run "+test_name)
+        print("%10s: %s" % (test_name, test_bin) )
+        print("Server : " + os.getcwd() )
+        print("Command: cd " + os.getcwd() + " ; " + cmd)
 
     if os.path.isfile(result_file):
         os.remove(result_file)
@@ -285,6 +318,7 @@ if __name__ == "__main__":
     parser.add_argument("--basedir", help="Base directory", action="store", dest="basedir", default=defbasedir)
     parser.add_argument("--skip-client", help="Skip Client tests", action="store_true")
     parser.add_argument("--skip-tool", help="Skip Tool tests", action="store_true")
+    parser.add_argument("--skip-check", help="Skip make check tests", action="store_true")
     parser.add_argument("--with-libevent", help="Where libevent is located", action="store", dest="libevent", default="")
     parser.add_argument("--with-hwloc", help="Where hwloc is located", action="store", dest="hwloc", default="")
     parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
@@ -461,6 +495,30 @@ if __name__ == "__main__":
                         final_summary_tool.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
                         count_failed_tool += 1
 
+    # Run the cross-version test - make check
+    if args.no_run is False and args.skip_check is False:
+        for bld_server in allBuilds:
+            if bld_server.branch not in servers:
+                continue
+            for bld_client in allBuilds:
+                if bld_client.branch not in clients:
+                    continue
+                is_valid = True
+                for pair in invalid_pairs:
+                    if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
+                        is_valid = False
+
+                if is_valid:
+                    print("="*70)
+                    print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
+                    for test in make_check_tests:
+                        ret = run_test(bld_server, bld_client, test_check=test)
+                        if 0 == ret:
+                            final_summary_check.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
+                        else:
+                            final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
+                            count_failed_check += 1
+
     print("")
     print("="*70)
     if args.no_build is False:
@@ -478,4 +536,9 @@ if __name__ == "__main__":
         for line in final_summary_tool:
             print line
 
-    sys.exit(count_failed + count_failed_tool)
+    if args.no_run is False and args.skip_check is False:
+        print("="*30 + " Summary (Make Check) " + "="*30)
+        for line in final_summary_check:
+            print line
+
+    sys.exit(count_failed + count_failed_tool + count_failed_check)
