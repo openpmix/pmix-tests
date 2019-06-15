@@ -431,9 +431,22 @@ if __name__ == "__main__":
             invalid_pairs.append([bld.branch,"v2.2"])
             invalid_pairs.append([bld.branch,"v2.1"])
             invalid_pairs.append([bld.branch,"v1.2"])
+            # --
+            invalid_tool_pairs.append([bld.branch,"master"])
+            invalid_tool_pairs.append([bld.branch,"v3.1"])
+            invalid_tool_pairs.append([bld.branch,"v3.0"])
+            invalid_tool_pairs.append([bld.branch,"v2.2"])
+            invalid_tool_pairs.append([bld.branch,"v2.1"])
+        elif target_branch == "v2.1":
+            invalid_tool_pairs.append([bld.branch,"master"])
+            invalid_tool_pairs.append([bld.branch,"v3.1"])
+            invalid_tool_pairs.append([bld.branch,"v3.0"])
+            invalid_tool_pairs.append([bld.branch,"v2.2"])
         else:
             invalid_pairs.append(["v1.2",bld.branch])
             invalid_pairs.append(["v2.0",bld.branch])
+            invalid_tool_pairs.append(["v2.0",bld.branch])
+            invalid_tool_pairs.append(["v2.1",bld.branch])
     except KeyError as e:
         # Ignore if envar is not set
         pass
