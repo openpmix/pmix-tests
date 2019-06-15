@@ -319,7 +319,7 @@ if __name__ == "__main__":
     parser.add_argument("--basedir", help="Base directory", action="store", dest="basedir", default=defbasedir)
     parser.add_argument("--skip-client", help="Skip Client tests", action="store_true")
     parser.add_argument("--skip-tool", help="Skip Tool tests", action="store_true")
-    parser.add_argument("--skip-check", help="Skip make check tests", action="store_true")
+    parser.add_argument("--make-check", help="Run make check tests", action="store_true")
     parser.add_argument("--with-libevent", help="Where libevent is located", action="store", dest="libevent", default="")
     parser.add_argument("--with-hwloc", help="Where hwloc is located", action="store", dest="hwloc", default="")
     parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
@@ -509,7 +509,7 @@ if __name__ == "__main__":
                         count_failed_tool += 1
 
     # Run the cross-version test - make check
-    if args.no_run is False and args.skip_check is False:
+    if args.no_run is False and args.make_check is True:
         for bld_server in allBuilds:
             if bld_server.branch not in servers:
                 continue
@@ -526,10 +526,8 @@ if __name__ == "__main__":
                     print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
                     for test in make_check_tests:
                         ret = run_test(bld_server, bld_client, test_check=test)
-                        if 0 == ret:
-                            final_summary_check.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
-                        else:
-                            final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
+                        if 0 != ret:
+                            final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch + "  [" + test + "]")
                             count_failed_check += 1
 
     print("")
@@ -549,8 +547,8 @@ if __name__ == "__main__":
         for line in final_summary_tool:
             print line
 
-    if args.no_run is False and args.skip_check is False:
-        print("="*30 + " Summary (Make Check) " + "="*30)
+    if args.no_run is False and args.make_check is True:
+        print("="*30 + " Summary (Make Check Failures) " + "="*30)
         for line in final_summary_check:
             print line
 
