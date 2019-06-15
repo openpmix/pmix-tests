@@ -272,6 +272,7 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False):
 if __name__ == "__main__":
     allBuilds = []
     invalid_pairs = []
+    invalid_tool_pairs = []
     servers = []
     clients = []
 
@@ -364,6 +365,18 @@ if __name__ == "__main__":
     invalid_pairs.append(["v2.0","v2.1"])
     invalid_pairs.append(["v2.0","v1.2"])
 
+    # 'server' -> 'client' tool pairings that are not supported
+    invalid_tool_pairs.append(["v2.1","master"])
+    invalid_tool_pairs.append(["v2.1","v3.1"])
+    invalid_tool_pairs.append(["v2.1","v3.0"])
+    invalid_tool_pairs.append(["v2.1","v2.2"])
+    # --
+    invalid_tool_pairs.append(["v2.0","master"])
+    invalid_tool_pairs.append(["v2.0","v3.1"])
+    invalid_tool_pairs.append(["v2.0","v3.0"])
+    invalid_tool_pairs.append(["v2.0","v2.2"])
+    invalid_tool_pairs.append(["v2.0","v2.1"])
+
     # PR_TARGET_BRANCH is an envar set by Jenkins CI to indicate the target branch
     # This is no way from the github branch itself to tell where it was targeted.
     # As such we need some external envar to tell us.
@@ -443,7 +456,7 @@ if __name__ == "__main__":
                 if bld_client.branch not in clients:
                     continue
                 is_valid = True
-                for pair in invalid_pairs:
+                for pair in invalid_tool_pairs:
                     if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
                         is_valid = False
 
