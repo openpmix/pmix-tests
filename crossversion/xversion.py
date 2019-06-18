@@ -417,6 +417,7 @@ if __name__ == "__main__":
     # invalid_pairs settings, and then we will check for a specific
     # test that is not supported by the target branch
     invalid_make_check_tests.append(["v1.2", "test-resolve-peers"])
+    invalid_make_check_tests.append(["v1.2", "test-replace"])
     invalid_make_check_tests.append(["v2.0", "test-resolve-peers"])
 
     # PR_TARGET_BRANCH is an envar set by Jenkins CI to indicate the target branch
