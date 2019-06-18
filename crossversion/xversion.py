@@ -306,6 +306,7 @@ if __name__ == "__main__":
     allBuilds = []
     invalid_pairs = []
     invalid_tool_pairs = []
+    invalid_make_check_tests = []
     servers = []
     clients = []
 
@@ -410,6 +411,13 @@ if __name__ == "__main__":
     invalid_tool_pairs.append(["v2.0","v3.0"])
     invalid_tool_pairs.append(["v2.0","v2.2"])
     invalid_tool_pairs.append(["v2.0","v2.1"])
+
+    # 'server' -> 'client' "make check" pairs that are not supported
+    # NOTE: we will first check the overall pairing per the above
+    # invalid_pairs settings, and then we will check for a specific
+    # test that is not supported by the target branch
+    invalid_make_check_tests.append(["v1.2", "test-resolve-peers"])
+    invalid_make_check_tests.append(["v2.0", "test-resolve-peers"])
 
     # PR_TARGET_BRANCH is an envar set by Jenkins CI to indicate the target branch
     # This is no way from the github branch itself to tell where it was targeted.
@@ -538,10 +546,15 @@ if __name__ == "__main__":
                     print("="*70)
                     print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
                     for test in make_check_tests:
-                        ret = run_test(bld_server, bld_client, test_check=test)
-                        if 0 != ret:
-                            final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch + "  [" + test + "]")
-                            count_failed_check += 1
+                        valid_test = True
+                        for tstpair in invalid_make_check_tests:
+                            if bld_client.branch is tstpair[0] and tstpair[1] in test:
+                                valid_test = False
+                        if valid_test:
+                            ret = run_test(bld_server, bld_client, test_check=test)
+                            if 0 != ret:
+                                final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch + "  [" + test + "]")
+                                count_failed_check += 1
 
     print("")
     print("="*70)
