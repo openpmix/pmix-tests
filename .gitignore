@@ -56,3 +56,10 @@ multibeat/jctrl
 crossversion/install
 crossversion/pmix-*
 crossversion/run_result.txt
+
+# unit tests
+pmi2_client
+pmi_client
+pmix_client
+pmix_regex
+pmix_test
