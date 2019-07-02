@@ -208,31 +208,7 @@ void parse_cmd(int argc, char **argv, test_params *params)
         }
     }
     if (NULL == params->binary) {
-        char *basename = NULL;
-        basename = strrchr(argv[0], '/');
-        if (basename) {
-            *basename = '\0';
-            /* pmix_test and pmix_clients are the shell scripts that
-             * make sure that actual binary placed in "./.libs" directory
-             * is properly linked.
-             * after launch pmix_test you'll find the following process:
-             *      <pmix-root-dir>/test/.libs/lt-pmix_test
-             *
-             * To launch
-             *      <pmix-root-dir>/test/pmix_client
-             * instead of
-             *      <pmix-root-dir>/test/.libs/pmix_client
-             * we need to do a step back in directory tree.
-             */
-            if (0 > asprintf(&params->binary, "%s/../pmix_client", argv[0])) {
-                exit(1);
-            }
-            *basename = '/';
-        } else {
-            if (0 > asprintf(&params->binary, "pmix_client")) {
-                exit(1);
-            }
-        }
+        params->binary = strdup("./pmix_client");
     }
 
     if( params->collect_bad ){
