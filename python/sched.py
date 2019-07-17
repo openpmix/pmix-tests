@@ -51,10 +51,6 @@ def main():
     rc = foo.register_fabric(None)
     print("Fabric registered: ", rc)
 
-    # Get the number of vertices in this fabric
-    nverts = foo.get_num_vertices()
-    print("Nverts in fabric: ", nverts)
-
     # setup the application
     (rc, regex) = foo.generate_regex("test000,test001,test002")
     print("Node regex: ", regex)
