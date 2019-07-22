@@ -55,7 +55,6 @@ static int test_publish(char *my_nspace, int my_rank, int blocking)
     pmix_info_t info;
     char data[512];
 
-sleep(10);
     PMIX_INFO_CONSTRUCT(&info);
     (void)snprintf(info.key, PMIX_MAX_KEYLEN, "%s:%d", my_nspace, my_rank);
     (void)snprintf(data, 512, "data from proc %s:%d", my_nspace, my_rank);
