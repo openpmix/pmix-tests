@@ -465,10 +465,14 @@ if __name__ == "__main__":
         for bld_server in allBuilds:
             print("============ PMIx Build: "+bld_server.branch+" =====================")
             if args.quiet is True:
-                with open(output_file, 'a') as logfile:
-                    logfile.write("============ PMIx Build: "+bld_server.branch+" =====================")
-                    logfile.flush()
+                with open(output_file, 'w') as logfile:
+                    #logfile.write("============ PMIx Build: "+bld_server.branch+" =====================\n")
+                    #logfile.flush()
                     ret = build_tree(bld_server, logfile)
+                if 0 != ret and 1 != ret:
+                    # Write the file to stdout so that CI can report it back to the user
+                    with open(output_file, 'r') as logfile:
+                        print logfile.read()
             else:
                 ret = build_tree(bld_server)
 
