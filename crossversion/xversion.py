@@ -101,20 +101,23 @@ def build_tree(bld, logfile=None):
                 print("Skip: Local install already exists: "+local_install_dir)
                 return 1
         # .git repo
-        # if there is an upstream update for this branch then rebuild, otherwise skip.
+        # If there is an upstream update for this branch then rebuild, otherwise skip.
+        # If we encounter a network issue then skip the refresh and run with what we have.
         else:
             ret = subprocess.call(["git", "fetch", "-q", "origin", bld.branch],
                                    stdout=logfile, stderr=logfile, shell=False)
             if 0 != ret:
+                print("Error: \"git fetch -q origin "+bld.branch+"\" failed. Possible network issue. (rtn "+str(ret)+")");
                 os.chdir(orig_dir)
-                return ret
+                return 2
 
             p = subprocess.Popen("git pull origin "+bld.branch,
                                  stdout=subprocess.PIPE, stderr=subprocess.STDOUT, shell=True, close_fds=True)
             p.wait()
             if p.returncode != 0:
+                print("Skip: Error: \"git pull origin "+bld.branch+"\" failed. Possible network issue. (rtn "+str(p.returncode)+")");
                 os.chdir(orig_dir)
-                return -1
+                return 2
 
             os.chdir(orig_dir)
 
@@ -136,6 +139,7 @@ def build_tree(bld, logfile=None):
                                    bld.url, local_build_dir],
                                    stdout=logfile, stderr=logfile, shell=False)
             if 0 != ret:
+                print("Error: \"git clone "+bld.branch+" "+bld.url+"\" failed. Possible network issue.");
                 os.chdir(orig_dir)
                 return ret
         elif os.path.isabs(bld.url) and os.path.isdir(bld.url):
@@ -480,6 +484,8 @@ if __name__ == "__main__":
                 final_summary_build.append("Build PASS: "+bld_server.branch+" -> "+bld_server.build_base_dir)
             elif 1 == ret:
                 final_summary_build.append("Build SKIP: "+bld_server.branch+" -> "+bld_server.build_base_dir)
+            elif 2 == ret:
+                final_summary_build.append("Build NWRK: "+bld_server.branch+" -> "+bld_server.build_base_dir)
             else:
                 final_summary_build.append("Build ***FAILED***: "+bld_server.branch+" -> "+bld_server.build_base_dir)
                 count_failed += 1
