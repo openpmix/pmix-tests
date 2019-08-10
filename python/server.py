@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from pmix import *
 import signal, time
@@ -47,7 +47,7 @@ def main():
     print("Initialized: ", rc)
     vers = foo.get_version()
     print("Version: ", vers)
-    
+
     # get our environment as a base
     env = os.environ.copy()
     # register an nspace for the client app
@@ -56,7 +56,7 @@ def main():
     print("REGISTERING NSPACE")
     rc = foo.register_nspace("testnspace", 1, kvals)
     print("RegNspace ", rc)
-    
+
     # register a client
     uid = os.getuid()
     gid = os.getgid()
@@ -65,7 +65,7 @@ def main():
     # setup the fork
     rc = foo.setup_fork(("testnspace", 0), env)
     print("SetupFrk", rc)
-    
+
     # setup the client argv
     args = ["./client.py"]
     # open a subprocess with stdout and stderr
