@@ -25,8 +25,21 @@ def clientfinalized(proc:tuple is not None):
     print("CLIENT FINALIZED", proc)
     return PMIX_SUCCESS
 
-def clientfence(args:dict is not None):
-    print("SERVER FENCE", args)
+def clientfence(procs:list, directives:list, data:bytearray):
+    # check directives
+    if directives is not None:
+        for d in directives:
+            # these are each an info dict
+            if "pmix" not in d['key']:
+                # we do not support such directives - see if
+                # it is required
+                try:
+                    if d['flags'] & PMIX_INFO_REQD:
+                        # return an error
+                        return PMIX_ERR_NOT_SUPPORTED
+                except:
+                    #it can be ignored
+                    pass
     return PMIX_SUCCESS
 
 def main():
@@ -60,10 +73,10 @@ def main():
     # register a client
     uid = os.getuid()
     gid = os.getgid()
-    rc = foo.register_client(("testnspace", 0), uid, gid)
+    rc = foo.register_client({'nspace':"testnspace", 'rank':0}, uid, gid)
     print("RegClient ", rc)
     # setup the fork
-    rc = foo.setup_fork(("testnspace", 0), env)
+    rc = foo.setup_fork({'nspace':"testnspace", 'rank':0}, env)
     print("SetupFrk", rc)
 
     # setup the client argv
