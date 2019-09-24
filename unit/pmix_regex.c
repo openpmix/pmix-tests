@@ -28,11 +28,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 
-#include "src/util/argv.h"
-#include "src/util/pmix_environ.h"
-#include "src/util/output.h"
-#include "src/server/pmix_server_ops.h"
-#include "src/mca/preg/preg.h"
+#include "argv.h"
 
 #include "server_callbacks.h"
 #include "utils.h"
@@ -64,49 +60,14 @@ int main(int argc, char **argv)
     fprintf(stderr, "NODES: %s\n", TEST_NODES);
     PMIx_generate_regex(TEST_NODES, &regex);
     fprintf(stderr, "REGEX: %s\n\n", regex);
-    /* test reverse parsing */
-    rc = pmix_preg.parse_nodes(regex, &nodes);
-    free(regex);
-    if (PMIX_SUCCESS == rc) {
-        regex = pmix_argv_join(nodes, ',');
-        pmix_argv_free(nodes);
-        fprintf(stderr, "NODES: %s\n", TEST_NODES);
-        fprintf(stderr, "RSULT: %s\n\n\n", regex);
-        free(regex);
-    } else {
-        fprintf(stderr, "Node reverse failed: %d\n\n\n", rc);
-    }
 
     fprintf(stderr, "PROCS: %s\n", TEST_PROCS);
     PMIx_generate_ppn(TEST_PROCS, &regex);
     fprintf(stderr, "PPN: %s\n\n", regex);
-    /* test reverse parsing */
-    rc = pmix_preg.parse_procs(regex, &procs);
-    free(regex);
-    if (PMIX_SUCCESS == rc) {
-        regex = pmix_argv_join(procs, ';');
-        pmix_argv_free(procs);
-        fprintf(stderr, "PROCS: %s\n", TEST_PROCS);
-        fprintf(stderr, "RSULT: %s\n", regex);
-        free(regex);
-    } else {
-        fprintf(stderr, "PPN reverse failed: %d\n", rc);
-    }
 
     fprintf(stderr, "NODES: %s\n", TEST_NODES2);
     PMIx_generate_regex(TEST_NODES2, &regex);
     fprintf(stderr, "REGEX: %s\n\n", regex);
-    /* test reverse parsing */
-    rc = pmix_preg.parse_nodes(regex, &nodes);
-    free(regex);
-    if (PMIX_SUCCESS == rc) {
-        regex = pmix_argv_join(nodes, ',');
-        pmix_argv_free(nodes);
-        fprintf(stderr, "NODES: %s\n", TEST_NODES2);
-        fprintf(stderr, "RSULT: %s\n\n\n", regex);
-        free(regex);
-    } else {
-        fprintf(stderr, "Node reverse failed: %d\n\n\n", rc);
-    }
+
     return 0;
 }

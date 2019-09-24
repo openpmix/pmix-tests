@@ -17,19 +17,57 @@
 #ifndef TEST_COMMON_H
 #define TEST_COMMON_H
 
-#include <src/include/pmix_config.h>
-#include <pmix_common.h>
-
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdint.h>
 #include <sys/time.h>
+#include <pthread.h>
+#include <event.h>
+#include <event2/thread.h>
+#include <pmix_common.h>
 
-#include "src/include/pmix_globals.h"
-#include "src/class/pmix_list.h"
-#include "src/util/argv.h"
+#include "pmix_object.h"
+#include "unit_list.h"
+
+#define PMIX_EV_TIMEOUT EV_TIMEOUT
+#define PMIX_EV_READ    EV_READ
+#define PMIX_EV_WRITE   EV_WRITE
+#define PMIX_EV_SIGNAL  EV_SIGNAL
+/* Persistent event: won't get removed automatically when activated. */
+#define PMIX_EV_PERSIST EV_PERSIST
+
+#define PMIX_EVLOOP_ONCE     EVLOOP_ONCE        /**< Block at most once. */
+#define PMIX_EVLOOP_NONBLOCK EVLOOP_NONBLOCK    /**< Do not block. */
+
+#define PMIX_EVENT_SIGNAL(ev)   pmix_event_get_signal(ev)
+
+typedef struct event pmix_event_t;
+
+#define pmix_event_base_create() event_base_new()
+
+#define pmix_event_base_free(b) event_base_free(b)
+#define pmix_event_use_threads() evthread_use_pthreads()
+#define pmix_event_free(x) event_free(x)
+#define pmix_event_get_signal(x) event_get_signal(x)
+#define pmix_event_enable_debug_mode() event_enable_debug_mode()
+
+#define pmix_event_assign(a, b, fd, arg, cbfn, cbd)  event_assign(a, b, fd, arg, cbfn, cbd)
+
+#define pmix_event_set(b, x, fd, fg, cb, arg) pmix_event_assign((x), (b), (fd), (fg), (event_callback_fn) (cb), (arg))
+#define pmix_event_add(ev, tv) event_add((ev), (tv))
+#define pmix_event_del(ev) event_del((ev))
+#define pmix_event_active(x, y, z) event_active((x), (y), (z))
+#define pmix_event_base_loopexit(b) event_base_loopexit(b, NULL)
+#define pmix_event_new(b, fd, fg, cbfn, cbd) event_new(b, fd, fg, cbfn, cbd)
+
+#define pmix_event_loop(b, fg) event_base_loop((b), (fg))
+#define pmix_event_evtimer_new(b, cb, arg) pmix_event_new((b), -1, 0, (cb), (arg))
+#define pmix_event_evtimer_add(x, tv) pmix_event_add((x), (tv))
+#define pmix_event_evtimer_set(b, x, cb, arg) pmix_event_assign((x), (b), -1, 0, (event_callback_fn) (cb), (arg))
+#define pmix_event_evtimer_del(x) pmix_event_del((x))
+#define pmix_event_signal_set(b, x, fd, cb, arg) pmix_event_assign((x), (b), (fd), EV_SIGNAL|EV_PERSIST, (event_callback_fn) (cb), (arg))
 
 #define TEST_NAMESPACE "smoky_nspace"
 #define TEST_CREDENTIAL "dummy"
@@ -39,6 +77,87 @@
         while ((m)) {               \
             usleep(10);             \
         }                           \
+    } while(0)
+
+#define pmix_condition_wait(a,b)    pthread_cond_wait(a, b)
+typedef pthread_cond_t pmix_condition_t;
+typedef pthread_mutex_t pmix_mutex_t;
+#define pmix_condition_broadcast(a) pthread_cond_broadcast(a)
+#define pmix_condition_signal(a)    pthread_cond_signal(a)
+#define PMIX_CONDITION_STATIC_INIT PTHREAD_COND_INITIALIZER
+
+typedef void *(*pmix_thread_fn_t) (pmix_object_t *);
+
+#define PMIX_THREAD_CANCELLED   ((void*)1);
+
+struct pmix_thread_t {
+    pmix_object_t super;
+    pmix_thread_fn_t t_run;
+    void* t_arg;
+    pthread_t t_handle;
+};
+
+typedef struct pmix_thread_t pmix_thread_t;
+PMIX_CLASS_DECLARATION(pmix_thread_t);
+
+extern int pmix_thread_start(pmix_thread_t *t);
+extern int pmix_thread_join(pmix_thread_t *t, void **thr_return);
+
+typedef struct {
+    pmix_status_t status;
+    pmix_mutex_t mutex;
+    pmix_condition_t cond;
+    volatile bool active;
+} pmix_lock_t;
+
+#define PMIX_CONSTRUCT_LOCK(l)                          \
+    do {                                                \
+        pthread_mutex_init(&(l)->mutex, NULL);          \
+        pthread_cond_init(&(l)->cond, NULL);            \
+        (l)->active = true;                             \
+    } while(0)
+
+#define PMIX_DESTRUCT_LOCK(l)               \
+    do {                                    \
+        pthread_mutex_destroy(&(l)->mutex);         \
+        pthread_cond_destroy(&(l)->cond);   \
+    } while(0)
+
+
+#define PMIX_ACQUIRE_THREAD(lck)                                \
+    do {                                                        \
+        pthread_mutex_lock(&(lck)->mutex);                         \
+        while ((lck)->active) {                                 \
+            pmix_condition_wait(&(lck)->cond, &(lck)->mutex);   \
+        }                                                       \
+        (lck)->active = true;                                   \
+    } while(0)
+
+
+#define PMIX_WAIT_THREAD(lck)                                   \
+    do {                                                        \
+        pthread_mutex_lock(&(lck)->mutex);                         \
+        while ((lck)->active) {                                 \
+            pmix_condition_wait(&(lck)->cond, &(lck)->mutex);   \
+        }                                                       \
+        pthread_mutex_unlock(&(lck)->mutex);                       \
+    } while(0)
+
+
+#define PMIX_RELEASE_THREAD(lck)                        \
+    do {                                                \
+        (lck)->active = false;                          \
+        pmix_condition_broadcast(&(lck)->cond);         \
+        pthread_mutex_unlock(&(lck)->mutex);               \
+    } while(0)
+
+
+#define PMIX_WAKEUP_THREAD(lck)                 \
+    do {                                        \
+        pthread_mutex_lock(&(lck)->mutex);         \
+        (lck)->active = false;                  \
+        pmix_condition_broadcast(&(lck)->cond); \
+        pthread_mutex_unlock(&(lck)->mutex);       \
     } while(0)
 
 
@@ -208,28 +327,28 @@ int parse_noise(char *noise_param, int store);
 int parse_replace(char *replace_param, int store, int *key_num);
 
 typedef struct {
-    pmix_list_item_t super;
+    unit_list_item_t super;
     int blocking;
     int data_exchange;
-    pmix_list_t *participants;  // list of participants
+    unit_list_t *participants;  // list of participants
 } fence_desc_t;
 PMIX_CLASS_DECLARATION(fence_desc_t);
 
 typedef struct {
-    pmix_list_item_t super;
+    unit_list_item_t super;
     pmix_proc_t proc;
 } participant_t;
 PMIX_CLASS_DECLARATION(participant_t);
 
 typedef struct {
-    pmix_list_item_t super;
+    unit_list_item_t super;
     int key_idx;
 } key_replace_t;
 PMIX_CLASS_DECLARATION(key_replace_t);
 
-extern pmix_list_t test_fences;
-extern pmix_list_t *noise_range;
-extern pmix_list_t key_replace;
+extern unit_list_t test_fences;
+extern unit_list_t *noise_range;
+extern unit_list_t key_replace;
 
 #define NODE_NAME "node1"
 int get_total_ns_number(test_params params);
@@ -296,7 +415,6 @@ typedef struct {
                 nanosleep(&ts,NULL);                                                                                \
                 count++;                                                                                            \
             }                                                                                                       \
-            PMIX_ACQUIRE_OBJECT(&cbdata);                                                                            \
         }                                                                                                           \
     }                                                                                                               \
     if (PMIX_SUCCESS == rc) {                                                                                       \

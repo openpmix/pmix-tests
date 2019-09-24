@@ -15,7 +15,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <stdint.h>
-#include "src/util/argv.h"
+
 #include "test_common.h"
 
 void set_client_argv(test_params *params, char ***argv);

@@ -211,7 +211,7 @@ server_callbacks.o: server_callbacks.c \
  /Users/rhc/pmix/build/clean/include/pmix/src/include/prefetch.h \
  /Users/rhc/pmix/build/clean/include/pmix.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hash_table.h \
- /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_list.h \
+ /Users/rhc/pmix/build/clean/include/pmix/src/class/unit_list.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hotel.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/event/pmix_event.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/threads/threads.h \
@@ -664,7 +664,7 @@ cli_stages.h:
 
 /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hash_table.h:
 
-/Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_list.h:
+/Users/rhc/pmix/build/clean/include/pmix/src/class/unit_list.h:
 
 /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hotel.h:
 

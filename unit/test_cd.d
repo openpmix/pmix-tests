@@ -201,7 +201,7 @@ test_cd.o: test_cd.c test_cd.h \
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/qos.h \
  /Applications/Xcode.app/Contents/Developer/Platforms/MacOSX.platform/Developer/SDKs/MacOSX.sdk/usr/include/sys/_types/_mach_port_t.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hash_table.h \
- /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_list.h \
+ /Users/rhc/pmix/build/clean/include/pmix/src/class/unit_list.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hotel.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/event/pmix_event.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/threads/threads.h \
@@ -635,7 +635,7 @@ test_common.h:
 
 /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hash_table.h:
 
-/Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_list.h:
+/Users/rhc/pmix/build/clean/include/pmix/src/class/unit_list.h:
 
 /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hotel.h:
 

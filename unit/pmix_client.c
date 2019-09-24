@@ -22,7 +22,6 @@
  * $HEADER$
  *
  */
-#include <src/include/pmix_config.h>
 #include <pmix.h>
 
 #include <stdio.h>
@@ -30,7 +29,6 @@
 #include <unistd.h>
 #include <time.h>
 
-#include "src/class/pmix_object.h"
 #include "test_common.h"
 #include "test_fence.h"
 #include "test_publish.h"
