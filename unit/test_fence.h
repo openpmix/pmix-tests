@@ -10,7 +10,6 @@
  *
  */
 
-#include <src/include/pmix_config.h>
 #include <pmix.h>
 
 #include <time.h>

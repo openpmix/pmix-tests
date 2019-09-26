@@ -12,17 +12,49 @@
  *
  */
 
-#include <src/include/pmix_config.h>
 #include <pmix_common.h>
 
-#include "test_common.h"
 #include <stdarg.h>
 #include <stdio.h>
 #include <ctype.h>
+#include <pthread.h>
+
+#include "test_common.h"
 
 int pmix_test_verbose = 0;
 
 FILE *file;
+
+static void pmix_thread_construct(pmix_thread_t *t)
+{
+    t->t_run = 0;
+    t->t_handle = (pthread_t) -1;
+}
+PMIX_CLASS_INSTANCE(pmix_thread_t,
+                    pmix_object_t,
+                    pmix_thread_construct, NULL);
+
+int pmix_thread_start(pmix_thread_t *t)
+{
+    int rc;
+
+    if (NULL == t->t_run || t->t_handle != (pthread_t) -1) {
+        return PMIX_ERR_BAD_PARAM;
+    }
+
+    rc = pthread_create(&t->t_handle, NULL, (void*(*)(void*)) t->t_run, t);
+
+    return (rc == 0) ? PMIX_SUCCESS : PMIX_ERROR;
+}
+
+
+int pmix_thread_join(pmix_thread_t *t, void **thr_return)
+{
+    int rc = pthread_join(t->t_handle, thr_return);
+    t->t_handle = (pthread_t) -1;
+    return (rc == 0) ? PMIX_SUCCESS : PMIX_ERROR;
+}
+
 
 #define OUTPUT_MAX 1024
 char *pmix_test_output_prepare(const char *fmt, ... )
@@ -247,32 +279,32 @@ static void fcon(fence_desc_t *p)
 {
     p->blocking = 0;
     p->data_exchange = 0;
-    p->participants = PMIX_NEW(pmix_list_t);
+    p->participants = PMIX_NEW(unit_list_t);
 }
 
 static void fdes(fence_desc_t *p)
 {
-    PMIX_LIST_RELEASE(p->participants);
+    UNIT_LIST_RELEASE(p->participants);
 }
 
 PMIX_CLASS_INSTANCE(fence_desc_t,
-                    pmix_list_item_t,
+                    unit_list_item_t,
                     fcon, fdes);
 
 PMIX_CLASS_INSTANCE(participant_t,
-                    pmix_list_item_t,
+                    unit_list_item_t,
                     NULL, NULL);
 
 PMIX_CLASS_INSTANCE(key_replace_t,
-                    pmix_list_item_t,
+                    unit_list_item_t,
                     NULL, NULL);
 
 static int ns_id = -1;
 static fence_desc_t *fdesc = NULL;
-pmix_list_t *participants = NULL;
-pmix_list_t test_fences;
-pmix_list_t *noise_range = NULL;
-pmix_list_t key_replace;
+unit_list_t *participants = NULL;
+unit_list_t test_fences;
+unit_list_t *noise_range = NULL;
+unit_list_t key_replace;
 
 #define CHECK_STRTOL_VAL(val, str, store) do {                  \
     if (0 == val) {                                             \
@@ -330,12 +362,12 @@ static int parse_token(char *str, int step, int store)
             }
         }
         if (store && NULL != fdesc) {
-            pmix_list_append(&test_fences, &fdesc->super);
+            unit_list_append(&test_fences, &fdesc->super);
         }
         break;
     case 1:
         if (store && NULL == participants) {
-            participants = PMIX_NEW(pmix_list_t);
+            participants = PMIX_NEW(unit_list_t);
             noise_range = participants;
         }
         pch = strtok(str, ";");
@@ -379,7 +411,7 @@ static int parse_token(char *str, int step, int store)
                 proc = PMIX_NEW(participant_t);
                 (void)snprintf(proc->proc.nspace, PMIX_MAX_NSLEN, "%s-%d", TEST_NAMESPACE, ns_id);
                 proc->proc.rank = PMIX_RANK_WILDCARD;
-                pmix_list_append(participants, &proc->super);
+                unit_list_append(participants, &proc->super);
             }
         }
         while ('\0' != *str) {
@@ -393,7 +425,7 @@ static int parse_token(char *str, int step, int store)
                             proc = PMIX_NEW(participant_t);
                             (void)snprintf(proc->proc.nspace, PMIX_MAX_NSLEN, "%s-%d", TEST_NAMESPACE, ns_id);
                             proc->proc.rank = i;
-                            pmix_list_append(participants, &proc->super);
+                            unit_list_append(participants, &proc->super);
                         }
                     }
                     remember = -1;
@@ -404,7 +436,7 @@ static int parse_token(char *str, int step, int store)
                     proc = PMIX_NEW(participant_t);
                     (void)snprintf(proc->proc.nspace, PMIX_MAX_NSLEN, "%s-%d", TEST_NAMESPACE, ns_id);
                     proc->proc.rank = rank;
-                    pmix_list_append(participants, &proc->super);
+                    unit_list_append(participants, &proc->super);
                 }
                 count = -1;
             } else if ('-' == *str && 0 != count) {
@@ -425,7 +457,7 @@ static int parse_token(char *str, int step, int store)
                         proc = PMIX_NEW(participant_t);
                         (void)snprintf(proc->proc.nspace, PMIX_MAX_NSLEN, "%s-%d", TEST_NAMESPACE, ns_id);
                         proc->proc.rank = i;
-                        pmix_list_append(participants, &proc->super);
+                        unit_list_append(participants, &proc->super);
                     }
                 }
                 remember = -1;
@@ -436,7 +468,7 @@ static int parse_token(char *str, int step, int store)
                 proc = PMIX_NEW(participant_t);
                 (void)snprintf(proc->proc.nspace, PMIX_MAX_NSLEN, "%s-%d", TEST_NAMESPACE, ns_id);
                 proc->proc.rank = rank;
-                pmix_list_append(participants, &proc->super);
+                unit_list_append(participants, &proc->super);
             }
         }
         break;
@@ -551,7 +583,7 @@ int parse_replace(char *replace_param, int store, int *key_num) {
             if (store) {
                 item = PMIX_NEW(key_replace_t);
                 item->key_idx = atoi(tmp_str);
-                pmix_list_append(&key_replace, &item->super);
+                unit_list_append(&key_replace, &item->super);
             }
         } else {
             ret = 1;

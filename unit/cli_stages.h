@@ -25,10 +25,8 @@
 #include <sys/time.h>
 #include <time.h>
 #include <errno.h>
-#include "src/include/pmix_globals.h"
+#include <event.h>
 #include "pmix_server.h"
-#include "src/class/pmix_list.h"
-#include "src/mca/ptl/base/base.h"
 
 #include "test_common.h"
 
@@ -38,7 +36,7 @@ typedef enum {
 } cli_state_t;
 
 typedef struct {
-    pmix_list_t modex;
+    unit_list_t modex;
     pid_t pid;
     int sd;
     pmix_event_t *ev;

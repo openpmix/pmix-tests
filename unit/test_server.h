@@ -36,7 +36,9 @@ typedef struct {
 
 struct server_info_t
 {
-    pmix_list_item_t super;
+    unit_list_item_t super;
+    char *name;
+    struct event_base *evbase;
     pid_t pid;
     int idx;
     int rd_fd;
@@ -51,7 +53,7 @@ PMIX_EXPORT PMIX_CLASS_DECLARATION(server_info_t);
 
 struct server_nspace_t
 {
-    pmix_list_item_t super;
+    unit_list_item_t super;
     char name[PMIX_MAX_NSLEN+1];
     size_t ntasks; /* total number of tasks in this namespace */
     size_t ltasks; /* local */
@@ -61,9 +63,9 @@ typedef struct server_nspace_t server_nspace_t;
 PMIX_EXPORT PMIX_CLASS_DECLARATION(server_nspace_t);
 
 extern int my_server_id;
-extern pmix_list_t *server_list;
+extern unit_list_t *server_list;
 extern server_info_t *my_server_info;
-extern pmix_list_t *server_nspace;
+extern unit_list_t *server_nspace;
 
 int server_init(test_params *params);
 int server_finalize(test_params *params, int local_fail);

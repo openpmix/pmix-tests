@@ -30,9 +30,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-
-#include "src/util/pmix_environ.h"
-#include "src/util/output.h"
+extern char **environ;
 
 #include "server_callbacks.h"
 #include "utils.h"

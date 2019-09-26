@@ -211,7 +211,7 @@ pmix_regex.o: pmix_regex.c \
  /Users/rhc/pmix/build/clean/include/pmix/src/include/pmix_globals.h \
  /Users/rhc/pmix/build/clean/include/pmix.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hash_table.h \
- /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_list.h \
+ /Users/rhc/pmix/build/clean/include/pmix/src/class/unit_list.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/event/pmix_event.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/mca/bfrops/bfrops.h \
  /Users/rhc/pmix/build/clean/include/pmix/src/mca/mca.h \
@@ -668,7 +668,7 @@ pmix_regex.o: pmix_regex.c \
 
 /Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_hash_table.h:
 
-/Users/rhc/pmix/build/clean/include/pmix/src/class/pmix_list.h:
+/Users/rhc/pmix/build/clean/include/pmix/src/class/unit_list.h:
 
 /Users/rhc/pmix/build/clean/include/pmix/src/event/pmix_event.h:
 

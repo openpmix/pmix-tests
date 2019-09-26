@@ -49,7 +49,7 @@ void cli_init(int nprocs)
         cli_info[n].ev = NULL;
         cli_info[n].pid = -1;
         cli_info[n].state = CLI_UNINIT;
-        PMIX_CONSTRUCT(&(cli_info[n].modex), pmix_list_t);
+        PMIX_CONSTRUCT(&(cli_info[n].modex), unit_list_t);
         for (i = 0; i < CLI_TERM+1; i++) {
             cli_info[n].next_state[i] = order[i];
         }
@@ -58,8 +58,10 @@ void cli_init(int nprocs)
     }
 }
 
-void cli_connect(cli_info_t *cli, int sd, pmix_event_base_t * ebase, event_callback_fn callback)
+void cli_connect(cli_info_t *cli, int sd, struct event_base * ebase, event_callback_fn callback)
 {
+    int flags;
+
     if( CLI_CONNECTED != cli->next_state[cli->state] ){
         TEST_ERROR(("Rank %d has bad next state: expect %d have %d!",
                      cli_rank(cli), CLI_CONNECTED, cli->next_state[cli->state]));
@@ -71,7 +73,11 @@ void cli_connect(cli_info_t *cli, int sd, pmix_event_base_t * ebase, event_callb
     cli->ev = pmix_event_new(ebase, sd,
                       EV_READ|EV_PERSIST, callback, cli);
     pmix_event_add(cli->ev,NULL);
-    pmix_ptl_base_set_nonblocking(sd);
+     /* setup the socket as non-blocking */
+    if (fcntl(sd, F_GETFL, 0) >= 0) {
+        flags |= O_NONBLOCK;
+        fcntl(sd, F_SETFL, flags);
+    }
     TEST_VERBOSE(("Connection accepted from rank %d", cli_rank(cli) ));
     cli->state = CLI_CONNECTED;
 }
@@ -115,7 +121,7 @@ void cli_disconnect(cli_info_t *cli)
     }
 
     TEST_VERBOSE(("Destruct modex list for the rank %d", cli_rank(cli)));
-    PMIX_LIST_DESTRUCT(&(cli->modex));
+    UNIT_LIST_DESTRUCT(&(cli->modex));
 
     cli->state = CLI_DISCONN;
 }

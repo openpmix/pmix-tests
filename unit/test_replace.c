@@ -31,7 +31,7 @@ static void get_cb(pmix_status_t status, pmix_value_t *kv, void *cbdata)
 static int key_is_replace(int key_idx) {
     key_replace_t *item;
 
-    PMIX_LIST_FOREACH(item, &key_replace, key_replace_t) {
+    UNIT_LIST_FOREACH(item, &key_replace, key_replace_t) {
         if (item->key_idx == key_idx)
             return 1;
     }
@@ -46,7 +46,7 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
     pmix_status_t rc;
     key_replace_t *item;
 
-    PMIX_CONSTRUCT(&key_replace, pmix_list_t);
+    PMIX_CONSTRUCT(&key_replace, unit_list_t);
     parse_replace(params.key_replace, 1, &key_cnt);
 
     for (key_idx = 0; key_idx < key_cnt; key_idx++) {
@@ -56,7 +56,7 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
         PUT(string, sval, PMIX_GLOBAL, 0, key_idx, 1);
         if (PMIX_SUCCESS != rc) {
             TEST_ERROR(("%s:%d: PMIx_Put failed: %d", my_nspace, my_rank, rc));
-            PMIX_LIST_DESTRUCT(&key_replace);
+            UNIT_LIST_DESTRUCT(&key_replace);
             return rc;
         }
     }
@@ -68,7 +68,7 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
     /* Submit the data */
     if (PMIX_SUCCESS != (rc = PMIx_Commit())) {
         TEST_ERROR(("%s:%d: PMIx_Commit failed: %d", my_nspace, my_rank, rc));
-        PMIX_LIST_DESTRUCT(&key_replace);
+        UNIT_LIST_DESTRUCT(&key_replace);
         PMIX_PROC_DESTRUCT(&proc);
         return PMIX_ERROR;
     }
@@ -76,19 +76,19 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
     FENCE(1, 1, (&proc), 1);
     if (PMIX_SUCCESS != rc) {
         TEST_ERROR(("%s:%d: PMIx_Fence failed: %d", my_nspace, my_rank, rc));
-        PMIX_LIST_DESTRUCT(&key_replace);
+        UNIT_LIST_DESTRUCT(&key_replace);
         PMIX_PROC_DESTRUCT(&proc);
         return rc;
     }
 
-    PMIX_LIST_FOREACH(item, &key_replace, key_replace_t) {
+    UNIT_LIST_FOREACH(item, &key_replace, key_replace_t) {
         memset(sval, 0, PMIX_MAX_NSLEN);
         sprintf(sval, "test_replace:%s:%d:%d: replaced key", my_nspace, my_rank, item->key_idx);
 
         PUT(string, sval, PMIX_GLOBAL, 0, item->key_idx, 1);
         if (PMIX_SUCCESS != rc) {
             TEST_ERROR(("%s:%d: PMIx_Put failed: %d", my_nspace, my_rank, rc));
-            PMIX_LIST_DESTRUCT(&key_replace);
+            UNIT_LIST_DESTRUCT(&key_replace);
             PMIX_PROC_DESTRUCT(&proc);
             return rc;
         }
@@ -98,7 +98,7 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
     /* Submit the data */
     if (PMIX_SUCCESS != (rc = PMIx_Commit())) {
         TEST_ERROR(("%s:%d: PMIx_Commit failed: %d", my_nspace, my_rank, rc));
-        PMIX_LIST_DESTRUCT(&key_replace);
+        UNIT_LIST_DESTRUCT(&key_replace);
         PMIX_PROC_DESTRUCT(&proc);
         return PMIX_ERROR;
     }
@@ -106,7 +106,7 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
     FENCE(1, 1, (&proc), 1);
     if (PMIX_SUCCESS != rc) {
         TEST_ERROR(("%s:%d: PMIx_Fence failed: %d", my_nspace, my_rank, rc));
-        PMIX_LIST_DESTRUCT(&key_replace);
+        UNIT_LIST_DESTRUCT(&key_replace);
         PMIX_PROC_DESTRUCT(&proc);
         return rc;
     }
@@ -124,13 +124,13 @@ int test_replace(char *my_nspace, pmix_rank_t my_rank, test_params params) {
         GET(string, sval, my_nspace, my_rank, 0, key_idx, 1, 1, 0);
         if (PMIX_SUCCESS != rc) {
             TEST_ERROR(("%s:%d: PMIx_Get of remote key on local proc", my_nspace, my_rank));
-            PMIX_LIST_DESTRUCT(&key_replace);
+            UNIT_LIST_DESTRUCT(&key_replace);
             PMIX_PROC_DESTRUCT(&proc);
             return PMIX_ERROR;
         }
     }
 
-    PMIX_LIST_DESTRUCT(&key_replace);
+    UNIT_LIST_DESTRUCT(&key_replace);
     PMIX_PROC_DESTRUCT(&proc);
     return PMIX_SUCCESS;
 }
