@@ -1,0 +1,24 @@
+These are unit tests for PMIx. They are designed to be built
+using a C compiler (specified by setting CC in the environment)
+and require the following:
+
+* you have set PMIXHOME in the environment to point to the
+  prefix location where PMIx was installed
+
+* you have set EVENTHOME in the environment to point to the
+  prefix location where libevent was installed
+
+If either PMIx or libevent (or both) were installed in default
+locations, then you don't need to provide these envars. The
+Makefile will search for the installation in the following
+locations (in precedence order):
+
+* /usr
+* /usr/local
+* /opt
+* /opt/local
+
+If it doesn't find an installation in any of those locations,
+the compile is likely to fail. Your only option at that point
+is to help the Makefile out by setting the appropriate envar
+as above.
