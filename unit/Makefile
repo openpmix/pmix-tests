@@ -38,7 +38,7 @@ endif
 endif
 
 ifdef PMIXHOME
-	export PMIXFIND=-I$(PMIXHOME)/include -L$(PMIXHOME)/lib
+	export PMIXFIND=-I$(PMIXHOME)/include -L$(PMIXHOME)/lib -L$(PMIXHOME)/lib64
 else
 	export PMIXFIND=
 endif
@@ -68,7 +68,7 @@ endif
 endif
 
 ifdef EVENTHOME
-	export EVENTFIND=-I$(EVENTHOME)/include -L$(EVENTHOME)/lib
+	export EVENTFIND=-I$(EVENTHOME)/include -L$(EVENTHOME)/lib -L$(EVENTHOME)/lib64
 else
 	export EVENTFIND=
 endif
