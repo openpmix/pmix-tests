@@ -75,19 +75,19 @@ endif
 
 
 pmix_test: pmix_test.c $(sources) test_server.c server_callbacks.c
-	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmix_test pmix_test.c $(sources) test_server.c server_callbacks.c -lpmix -levent
+	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmix_test pmix_test.c $(sources) test_server.c server_callbacks.c -lpmix -levent -lpthread
 
 pmix_client: pmix_client.c $(sources)
-	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmix_client pmix_client.c $(sources) -lpmix -levent
+	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmix_client pmix_client.c $(sources) -lpmix -levent -lpthread
 
 pmix_regex: pmix_regex.c $(sources) test_server.c server_callbacks.c
-	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmix_regex pmix_regex.c $(sources) test_server.c server_callbacks.c -lpmix -levent
+	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmix_regex pmix_regex.c $(sources) test_server.c server_callbacks.c -lpmix -levent -lpthread
 
 pmi_client: pmi_client.c $(sources)
-	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmi_client pmi_client.c $(sources) -lpmi -levent
+	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmi_client pmi_client.c $(sources) -lpmi -levent -lpthread
 
 pmi2_client: pmi2_client.c $(sources)
-	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmi2_client pmi2_client.c $(sources) -lpmi2 -levent
+	$(CC) -I./ $(PMIXFIND) $(EVENTFIND) -o pmi2_client pmi2_client.c $(sources) -lpmi2 -levent -lpthread
 
 -include $(SRC:%.c=%.d)
 
