@@ -59,8 +59,30 @@ crossversion/pmix-*
 crossversion/run_result.txt
 
 # unit tests
-pmi2_client
-pmi_client
-pmix_client
-pmix_regex
-pmix_test
+unit/.deps/
+unit/aclocal.m4
+unit/config.log
+unit/config.status
+unit/config/ar-lib
+unit/config/compile
+unit/config/config.guess
+unit/config/config.sub
+unit/config/depcomp
+unit/config/install-sh
+unit/config/libtool.m4
+unit/config/ltmain.sh
+unit/config/ltoptions.m4
+unit/config/ltsugar.m4
+unit/config/ltversion.m4
+unit/config/lt~obsolete.m4
+unit/config/missing
+unit/configure
+unit/libtool
+unit/ltmain.sh
+unit/pmi2_client
+unit/pmi_client
+unit/pmix_client
+unit/pmix_regex
+unit/pmix_test
+unit/Makefile
+unit/Makefile.in
