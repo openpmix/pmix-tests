@@ -13,7 +13,7 @@ AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
 
 echo "Configuring PMIx unit test suite"
-PMIX_CONFIGURE_SETUP
+PMIXUNIT_CONFIGURE_SETUP
 AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([1.10 foreign -Wall -Werror])
 
@@ -29,7 +29,7 @@ AC_DEFINE_UNQUOTED(PMIXTEST_ARCH, "$host",
     [Architecture that we are compiled for])
 
 # Define some basic useful values
-PMIX_BASIC_SETUP
+PMIXUNIT_BASIC_SETUP
 
 #
 # Find out if we're just making a distribution tarball and not going
@@ -79,12 +79,12 @@ LT_INIT([disable-shared])
 #
 # Setup hwloc
 #
-PMIX_UNIT_HWLOC_CONFIG
+PMIXUNIT_HWLOC_CONFIG
 
 #
 # Setup libevent
 #
-PMIX_UNIT_LIBEVENT_CONFIG
+PMIXUNIT_LIBEVENT_CONFIG
 
 #
 # Find PMIx installation

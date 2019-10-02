@@ -149,9 +149,6 @@ AC_DEFUN([PMIXUNIT_CHECK_PMIX],[
     AS_IF([test "$pmix_ext_install_dir" != "/usr"],
           [CPPFLAGS="-I$pmix_ext_install_dir/include $CPPFLAGS"
            LDFLAGS="-L$pmix_ext_install_libdir $LDFLAGS"])
-
-    CPPFLAGS="$CPPFLAGS -I$pmix_ext_install_dir/include"
-    LDFLAGS="$LDFLAGS -L$pmix_ext_install_libdir"
     LIBS="$LIBS -lpmix"
 
     pmixunit_external_pmix_happy=yes

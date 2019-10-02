@@ -22,11 +22,11 @@
 # $HEADER$
 #
 
-# _PMIX_UNIT_CHECK_PACKAGE_HEADER(prefix, header, dir-prefix,
+# _PMIXUNIT_CHECK_PACKAGE_HEADER(prefix, header, dir-prefix,
 #                            [action-if-found], [action-if-not-found],
 #                            includes)
 # --------------------------------------------------------------------
-AC_DEFUN([_PMIX_UNIT_CHECK_PACKAGE_HEADER], [
+AC_DEFUN([_PMIXUNIT_CHECK_PACKAGE_HEADER], [
     # This is stolen from autoconf to peek under the covers to get the
     # cache variable for the library check.  one should not copy this
     # code into other places unless you want much pain and suffering
@@ -73,11 +73,11 @@ AC_DEFUN([_PMIX_UNIT_CHECK_PACKAGE_HEADER], [
 ])
 
 
-# _PMIX_UNIT_CHECK_PACKAGE_LIB(prefix, library, function, extra-libraries,
+# _PMIXUNIT_CHECK_PACKAGE_LIB(prefix, library, function, extra-libraries,
 #                         dir-prefix, libdir,
 #                         [action-if-found], [action-if-not-found]])
 # --------------------------------------------------------------------
-AC_DEFUN([_PMIX_UNIT_CHECK_PACKAGE_LIB], [
+AC_DEFUN([_PMIXUNIT_CHECK_PACKAGE_LIB], [
     # This is stolen from autoconf to peek under the covers to get the
     # cache variable for the library check.  one should not copy this
     # code into other places unless you want much pain and suffering
@@ -172,7 +172,7 @@ AC_DEFUN([_PMIX_UNIT_CHECK_PACKAGE_LIB], [
 ])
 
 
-# PMIX_UNIT_CHECK_PACKAGE(prefix,
+# PMIXUNIT_CHECK_PACKAGE(prefix,
 #                    header,
 #                    library,
 #                    function,
@@ -186,7 +186,7 @@ AC_DEFUN([_PMIX_UNIT_CHECK_PACKAGE_LIB], [
 # located in dir-prefix, possibly with libs in libdir-prefix.
 # Both dir-prefix and libdir-prefix can be empty.  Will set
 # prefix_{CPPFLAGS, LDFLAGS, LIBS} as needed
-AC_DEFUN([PMIX_UNIT_CHECK_PACKAGE],[
+AC_DEFUN([PMIXUNIT_CHECK_PACKAGE],[
     pmix_unit_check_package_$1_save_CPPFLAGS="$CPPFLAGS"
     pmix_unit_check_package_$1_save_LDFLAGS="$LDFLAGS"
     pmix_unit_check_package_$1_save_LIBS="$LIBS"
@@ -195,8 +195,8 @@ AC_DEFUN([PMIX_UNIT_CHECK_PACKAGE],[
     pmix_unit_check_package_$1_orig_LDFLAGS="$$1_LDFLAGS"
     pmix_unit_check_package_$1_orig_LIBS="$$1_LIBS"
 
-    _PMIX_UNIT_CHECK_PACKAGE_HEADER([$1], [$2], [$6],
-          [_PMIX_UNIT_CHECK_PACKAGE_LIB([$1], [$3], [$4], [$5], [$6], [$7],
+    _PMIXUNIT_CHECK_PACKAGE_HEADER([$1], [$2], [$6],
+          [_PMIXUNIT_CHECK_PACKAGE_LIB([$1], [$3], [$4], [$5], [$6], [$7],
                 [pmix_unit_check_package_happy="yes"],
                 [pmix_unit_check_package_happy="no"])],
           [pmix_unit_check_package_happy="no"],
