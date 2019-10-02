@@ -13,7 +13,8 @@ AC_CONFIG_AUX_DIR([config])
 AC_CONFIG_MACRO_DIR([config])
 
 echo "Configuring PMIx unit test suite"
-
+PMIX_CONFIGURE_SETUP
+AC_CANONICAL_TARGET
 AM_INIT_AUTOMAKE([1.10 foreign -Wall -Werror])
 
 # If Automake supports silent rules, enable them.
@@ -26,6 +27,9 @@ m4_ifdef([AM_SILENT_RULES], [AM_SILENT_RULES([yes])])
 AC_CANONICAL_HOST
 AC_DEFINE_UNQUOTED(PMIXTEST_ARCH, "$host",
     [Architecture that we are compiled for])
+
+# Define some basic useful values
+PMIX_BASIC_SETUP
 
 #
 # Find out if we're just making a distribution tarball and not going
@@ -71,6 +75,16 @@ fi
 # but it is necessary in AM 1.12.x.
 ifdef([AM_PROG_AR], [AM_PROG_AR])
 LT_INIT([disable-shared])
+
+#
+# Setup hwloc
+#
+PMIX_UNIT_HWLOC_CONFIG
+
+#
+# Setup libevent
+#
+PMIX_UNIT_LIBEVENT_CONFIG
 
 #
 # Find PMIx installation
