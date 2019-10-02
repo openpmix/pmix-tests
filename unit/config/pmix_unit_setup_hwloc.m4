@@ -12,8 +12,8 @@
 
 # MCA_hwloc_CONFIG([action-if-found], [action-if-not-found])
 # --------------------------------------------------------------------
-AC_DEFUN([PMIX_UNIT_HWLOC_CONFIG],[
-    PMIX_UNIT_VAR_SCOPE_PUSH([pmix_unit_hwloc_dir pmix_unit_hwloc_libdir pmix_unit_hwloc_standard_lib_location pmix_unit_hwloc_standard_header_location])
+AC_DEFUN([PMIXUNIT_HWLOC_CONFIG],[
+    PMIXUNIT_VAR_SCOPE_PUSH([pmix_unit_hwloc_dir pmix_unit_hwloc_libdir pmix_unit_hwloc_standard_lib_location pmix_unit_hwloc_standard_header_location])
 
     AC_ARG_WITH([hwloc-header],
                 [AC_HELP_STRING([--with-hwloc-header=HEADER],
@@ -29,6 +29,9 @@ AC_DEFUN([PMIX_UNIT_HWLOC_CONFIG],[
                                 [Search for hwloc libraries in DIR ])])
 
     pmix_unit_hwloc_support=0
+    pmix_unit_check_hwloc_save_CPPFLAGS="$CPPFLAGS"
+    pmix_unit_check_hwloc_save_LDFLAGS="$LDFLAGS"
+    pmix_unit_check_hwloc_save_LIBS="$LIBS"
 
     if test "$with_hwloc" != "no"; then
         AC_MSG_CHECKING([for hwloc in])
@@ -67,7 +70,7 @@ AC_DEFUN([PMIX_UNIT_HWLOC_CONFIG],[
               [pmix_unit_hwloc_libdir="$with_hwloc_libdir"
                pmix_unit_hwloc_standard_lib_location=no])
 
-        PMIX_UNIT_CHECK_PACKAGE([pmix_unit_hwloc],
+        PMIXUNIT_CHECK_PACKAGE([pmix_unit_hwloc],
                            [hwloc.h],
                            [hwloc],
                            [hwloc_topology_init],
@@ -76,13 +79,6 @@ AC_DEFUN([PMIX_UNIT_HWLOC_CONFIG],[
                            [$pmix_unit_hwloc_libdir],
                            [pmix_unit_hwloc_support=1],
                            [pmix_unit_hwloc_support=0])
-
-        AS_IF([test "$pmix_unit_hwloc_standard_header_location" != "yes"],
-              [PMIX_UNIT_FLAGS_APPEND_UNIQ(CPPFLAGS, $pmix_unit_hwloc_CPPFLAGS)])
-
-        AS_IF([test "$pmix_unit_hwloc_standard_lib_location" != "yes"],
-              [PMIX_UNIT_FLAGS_APPEND_UNIQ(LDFLAGS, $pmix_unit_hwloc_LDFLAGS)])
-        PMIX_UNIT_FLAGS_APPEND_UNIQ(LIBS, $pmix_unit_hwloc_LIBS)
     fi
 
     if test ! -z "$with_hwloc" && test "$with_hwloc" != "no" && test "$pmix_unit_hwloc_support" != "1"; then
@@ -90,7 +86,7 @@ AC_DEFUN([PMIX_UNIT_HWLOC_CONFIG],[
         AC_MSG_ERROR([CANNOT CONTINUE])
     fi
 
-    if test $pmix_unit_hwloc_support = "1"; then
+    if test "$pmix_unit_hwloc_support" = "1"; then
         AC_MSG_CHECKING([if external hwloc version is 1.5 or greater])
         AC_COMPILE_IFELSE(
               [AC_LANG_PROGRAM([[#include <hwloc.h>]],
@@ -104,19 +100,27 @@ AC_DEFUN([PMIX_UNIT_HWLOC_CONFIG],[
                AC_MSG_ERROR([Cannot continue])])
     fi
 
+    CPPFLAGS="$pmix_unit_check_hwloc_save_CPPFLAGS"
+    LDFLAGS="$pmix_unit_check_hwloc_save_LDFLAGS"
+    LIBS="$pmix_unit_check_hwloc_save_LIBS"
+
     AC_MSG_CHECKING([will hwloc support be built])
     if test "$pmix_unit_hwloc_support" != "1"; then
         AC_MSG_RESULT([no])
         pmix_unit_hwloc_source=none
         pmix_unit_hwloc_support_will_build=no
+        PMIX_HWLOC_HEADER=
     else
         AC_MSG_RESULT([yes])
         pmix_unit_hwloc_source=$pmix_unit_hwloc_dir
         pmix_unit_hwloc_support_will_build=yes
+        # Set output variables
+        PMIX_HWLOC_HEADER="<hwloc.h>"
+        AS_IF([test "$pmix_unit_hwloc_standard_header_location" != "yes"],
+              [PMIXUNIT_FLAGS_APPEND_UNIQ(CPPFLAGS, $pmix_unit_hwloc_CPPFLAGS)
+               PMIXUNIT_FLAGS_APPEND_UNIQ(LDFLAGS, $pmix_unit_hwloc_LDFLAGS)])
+        PMIXUNIT_FLAGS_APPEND_UNIQ(LIBS, $pmix_unit_hwloc_LIBS)
     fi
 
-    # Set output variables
-    PMIX_UNIT_HWLOC_HEADER="<hwloc.h>"
-
-    PMIX_UNIT_VAR_SCOPE_POP
+    PMIXUNIT_VAR_SCOPE_POP
 ])dnl

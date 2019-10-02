@@ -39,7 +39,7 @@ dnl ON AN "AS IS" BASIS, AND THE UNIVERSITY OF CALIFORNIA HAS NO OBLIGATION TO
 dnl PROVIDE MAINTENANCE, SUPPORT, UPDATES, ENHANCEMENTS, OR MODIFICATIONS.
 dnl
 
-AC_DEFUN([PMIX_UNIT_CONFIGURE_SETUP],[
+AC_DEFUN([PMIXUNIT_CONFIGURE_SETUP],[
 
 # Some helper script functions.  Unfortunately, we cannot use $1 kinds
 # of arugments here because of the m4 substitution.  So we have to set
@@ -52,7 +52,7 @@ pmix_unit_show_title() {
 == ${1}
 ============================================================================
 EOF
-  PMIX_UNIT_LOG_MSG([=== ${1}], 1)
+  PMIXUNIT_LOG_MSG([=== ${1}], 1)
 }
 
 
@@ -61,7 +61,7 @@ pmix_unit_show_subtitle() {
 
 *** ${1}
 EOF
-  PMIX_UNIT_LOG_MSG([*** ${1}], 1)
+  PMIXUNIT_LOG_MSG([*** ${1}], 1)
 }
 
 
@@ -70,7 +70,7 @@ pmix_unit_show_subsubtitle() {
 
 +++ ${1}
 EOF
-  PMIX_UNIT_LOG_MSG([+++ ${1}], 1)
+  PMIXUNIT_LOG_MSG([+++ ${1}], 1)
 }
 
 pmix_unit_show_subsubsubtitle() {
@@ -78,7 +78,7 @@ pmix_unit_show_subsubsubtitle() {
 
 --- ${1}
 EOF
-  PMIX_UNIT_LOG_MSG([--- ${1}], 1)
+  PMIXUNIT_LOG_MSG([--- ${1}], 1)
 }
 
 pmix_unit_show_verbose() {
@@ -86,7 +86,7 @@ pmix_unit_show_verbose() {
       cat <<EOF
 +++ VERBOSE: ${1}
 EOF
-      PMIX_UNIT_LOG_MSG([--- ${1}], 1)
+      PMIXUNIT_LOG_MSG([--- ${1}], 1)
   fi
 }
 
@@ -94,21 +94,21 @@ EOF
 # Save some stats about this build
 #
 
-PMIX_UNIT_CONFIGURE_USER="`whoami`"
-PMIX_UNIT_CONFIGURE_HOST="`(hostname || uname -n) 2> /dev/null | sed 1q`"
-PMIX_UNIT_CONFIGURE_DATE="`date`"
+PMIXUNIT_CONFIGURE_USER="`whoami`"
+PMIXUNIT_CONFIGURE_HOST="`(hostname || uname -n) 2> /dev/null | sed 1q`"
+PMIXUNIT_CONFIGURE_DATE="`date`"
 
 #
 # Save these details so that they can be used in pmix_unit_info later
 #
-AC_SUBST(PMIX_UNIT_CONFIGURE_USER)
-AC_DEFINE_UNQUOTED([PMIX_UNIT_CONFIGURE_USER], "$PMIX_UNIT_CONFIGURE_USER",
+AC_SUBST(PMIXUNIT_CONFIGURE_USER)
+AC_DEFINE_UNQUOTED([PMIXUNIT_CONFIGURE_USER], "$PMIXUNIT_CONFIGURE_USER",
                    [User who built PMIx_unit])
-AC_SUBST(PMIX_UNIT_CONFIGURE_HOST)
-AC_DEFINE_UNQUOTED([PMIX_UNIT_CONFIGURE_HOST], "$PMIX_UNIT_CONFIGURE_HOST",
+AC_SUBST(PMIXUNIT_CONFIGURE_HOST)
+AC_DEFINE_UNQUOTED([PMIXUNIT_CONFIGURE_HOST], "$PMIXUNIT_CONFIGURE_HOST",
                    [Hostname where PMIx_unit was built])
-AC_SUBST(PMIX_UNIT_CONFIGURE_DATE)
-AC_DEFINE_UNQUOTED([PMIX_UNIT_CONFIGURE_DATE], "$PMIX_UNIT_CONFIGURE_DATE",
+AC_SUBST(PMIXUNIT_CONFIGURE_DATE)
+AC_DEFINE_UNQUOTED([PMIXUNIT_CONFIGURE_DATE], "$PMIXUNIT_CONFIGURE_DATE",
                    [Date when PMIx_unit was built])
 ])dnl
 
@@ -116,7 +116,7 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-AC_DEFUN([PMIX_UNIT_BASIC_SETUP],[
+AC_DEFUN([PMIXUNIT_BASIC_SETUP],[
 
 #
 # Make automake clean emacs ~ files for "make clean"
@@ -200,7 +200,7 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-AC_DEFUN([PMIX_UNIT_LOG_MSG],[
+AC_DEFUN([PMIXUNIT_LOG_MSG],[
 # 1 is the message
 # 2 is whether to put a prefix or not
 if test -n "$2"; then
@@ -213,7 +213,7 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-AC_DEFUN([PMIX_UNIT_LOG_FILE],[
+AC_DEFUN([PMIXUNIT_LOG_FILE],[
 # 1 is the filename
 if test -n "$1" && test -f "$1"; then
     cat $1 >&5
@@ -223,14 +223,14 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-AC_DEFUN([PMIX_UNIT_LOG_COMMAND],[
+AC_DEFUN([PMIXUNIT_LOG_COMMAND],[
 # 1 is the command
 # 2 is actions to do if success
 # 3 is actions to do if fail
 echo "configure:__oline__: $1" >&5
 $1 1>&5 2>&1
 pmix_unit_status=$?
-PMIX_UNIT_LOG_MSG([\$? = $pmix_unit_status], 1)
+PMIXUNIT_LOG_MSG([\$? = $pmix_unit_status], 1)
 if test "$pmix_unit_status" = "0"; then
     unset pmix_unit_status
     $2
@@ -243,7 +243,7 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-AC_DEFUN([PMIX_UNIT_UNIQ],[
+AC_DEFUN([PMIXUNIT_UNIQ],[
 # 1 is the variable name to be uniq-ized
 pmix_unit_name=$1
 
@@ -329,7 +329,7 @@ dnl #######################################################################
 dnl #######################################################################
 
 # Remove all duplicate -I, -L, and -l flags from the variable named $1
-AC_DEFUN([PMIX_UNIT_FLAGS_UNIQ],[
+AC_DEFUN([PMIXUNIT_FLAGS_UNIQ],[
     # 1 is the variable name to be uniq-ized
     pmix_unit_name=$1
 
@@ -425,13 +425,13 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-# PMIX_UNIT_APPEND_UNIQ(variable, new_argument)
+# PMIXUNIT_APPEND_UNIQ(variable, new_argument)
 # ----------------------------------------
 # Append new_argument to variable if not already in variable.  This assumes a
 # space seperated list.
 #
 # This could probably be made more efficient :(.
-AC_DEFUN([PMIX_UNIT_APPEND_UNIQ], [
+AC_DEFUN([PMIXUNIT_APPEND_UNIQ], [
 for arg in $2; do
     pmix_unit_found=0;
     for val in ${$1}; do
@@ -455,7 +455,7 @@ dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-# PMIX_UNIT_FLAGS_APPEND_UNIQ(variable, new_argument)
+# PMIXUNIT_FLAGS_APPEND_UNIQ(variable, new_argument)
 # ----------------------------------------------
 # Append new_argument to variable if:
 #
@@ -463,8 +463,8 @@ dnl #######################################################################
 # - the argument begins with -I, -L, or -l, and it's not already in variable
 #
 # This macro assumes a space seperated list.
-AC_DEFUN([PMIX_UNIT_FLAGS_APPEND_UNIQ], [
-    PMIX_UNIT_VAR_SCOPE_PUSH([pmix_unit_tmp pmix_unit_append])
+AC_DEFUN([PMIXUNIT_FLAGS_APPEND_UNIQ], [
+    PMIXUNIT_VAR_SCOPE_PUSH([pmix_unit_tmp pmix_unit_append])
 
     for arg in $2; do
         pmix_unit_tmp=`echo $arg | cut -c1-2`
@@ -477,7 +477,7 @@ AC_DEFUN([PMIX_UNIT_FLAGS_APPEND_UNIQ], [
               [AS_IF([test -z "$$1"], [$1=$arg], [$1="$$1 $arg"])])
     done
 
-    PMIX_UNIT_VAR_SCOPE_POP
+    PMIXUNIT_VAR_SCOPE_POP
 ])
 
 dnl #######################################################################
@@ -490,11 +490,11 @@ dnl #######################################################################
 # ~/.whatever file (and we do not want the error messages to be part
 # of the assignment in foo=`which <prog>`). This macro ensures that we
 # get a sane executable value.
-AC_DEFUN([PMIX_UNIT_WHICH],[
+AC_DEFUN([PMIXUNIT_WHICH],[
 # 1 is the variable name to do "which" on
 # 2 is the variable name to assign the return value to
 
-PMIX_UNIT_VAR_SCOPE_PUSH([pmix_unit_prog pmix_unit_file pmix_unit_dir pmix_unit_sentinel])
+PMIXUNIT_VAR_SCOPE_PUSH([pmix_unit_prog pmix_unit_file pmix_unit_dir pmix_unit_sentinel])
 
 pmix_unit_prog=$1
 
@@ -508,16 +508,16 @@ for pmix_unit_dir in $PATH; do
 done
 IFS=$IFS_SAVE
 
-PMIX_UNIT_VAR_SCOPE_POP
+PMIXUNIT_VAR_SCOPE_POP
 ])dnl
 
 dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-# Declare some variables; use PMIX_UNIT_VAR_SCOPE_END to ensure that they
+# Declare some variables; use PMIXUNIT_VAR_SCOPE_END to ensure that they
 # are cleaned up / undefined.
-AC_DEFUN([PMIX_UNIT_VAR_SCOPE_PUSH],[
+AC_DEFUN([PMIXUNIT_VAR_SCOPE_PUSH],[
 
     # Is the private index set?  If not, set it.
     if test "x$pmix_unit_scope_index" = "x"; then
@@ -534,7 +534,7 @@ AC_DEFUN([PMIX_UNIT_VAR_SCOPE_PUSH],[
 
         if test "x$pmix_unit_str" != "x"; then
             AC_MSG_WARN([Found configure shell variable clash!])
-            AC_MSG_WARN([[PMIX_UNIT_VAR_SCOPE_PUSH] called on "$pmix_unit_var",])
+            AC_MSG_WARN([[PMIXUNIT_VAR_SCOPE_PUSH] called on "$pmix_unit_var",])
             AC_MSG_WARN([but it is already defined with value "$pmix_unit_str"])
             AC_MSG_WARN([This usually indicates an error in configure.])
             AC_MSG_ERROR([Cannot continue])
@@ -552,12 +552,12 @@ AC_DEFUN([PMIX_UNIT_VAR_SCOPE_PUSH],[
 ])dnl
 
 # Unset a bunch of variables that were previously set
-AC_DEFUN([PMIX_UNIT_VAR_SCOPE_POP],[
+AC_DEFUN([PMIXUNIT_VAR_SCOPE_POP],[
     # Unwind the index
     pmix_unit_scope_index=`expr $pmix_unit_scope_index - 1`
     pmix_unit_scope_test=`expr $pmix_unit_scope_index \> 0`
     if test "$pmix_unit_scope_test" = "0"; then
-        AC_MSG_WARN([[PMIX_UNIT_VAR_SCOPE_POP] popped too many PMIX_UNIT configure scopes.])
+        AC_MSG_WARN([[PMIXUNIT_VAR_SCOPE_POP] popped too many PMIX_UNIT configure scopes.])
         AC_MSG_WARN([This usually indicates an error in configure.])
         AC_MSG_ERROR([Cannot continue])
     fi
@@ -578,12 +578,12 @@ dnl #######################################################################
 dnl #######################################################################
 
 #
-# PMIX_UNIT_WITH_OPTION_MIN_MAX_VALUE(NAME,DEFAULT_VALUE,LOWER_BOUND,UPPER_BOUND)
-# Defines a variable PMIX_UNIT_MAX_xxx, with "xxx" being specified as parameter $1 as "variable_name".
+# PMIXUNIT_WITH_OPTION_MIN_MAX_VALUE(NAME,DEFAULT_VALUE,LOWER_BOUND,UPPER_BOUND)
+# Defines a variable PMIXUNIT_MAX_xxx, with "xxx" being specified as parameter $1 as "variable_name".
 # If not set at configure-time using --with-max-xxx, the default-value ($2) is assumed.
 # If set, value is checked against lower (value >= $3) and upper bound (value <= $4)
 #
-AC_DEFUN([PMIX_UNIT_WITH_OPTION_MIN_MAX_VALUE], [
+AC_DEFUN([PMIXUNIT_WITH_OPTION_MIN_MAX_VALUE], [
     max_value=[$2]
     AC_MSG_CHECKING([maximum length of ]m4_translit($1, [_], [ ]))
     AC_ARG_WITH([max-]m4_translit($1, [_], [-]),
@@ -604,21 +604,21 @@ AC_DEFUN([PMIX_UNIT_WITH_OPTION_MIN_MAX_VALUE], [
         max_value=$with_max_[$1]
     fi
     AC_MSG_RESULT([$max_value])
-    AC_DEFINE_UNQUOTED([PMIX_UNIT_MAX_]m4_toupper($1), $max_value,
+    AC_DEFINE_UNQUOTED([PMIXUNIT_MAX_]m4_toupper($1), $max_value,
                        [Maximum length of ]m4_translit($1, [_], [ ])[s (default is $2)])
-    [PMIX_UNIT_MAX_]m4_toupper($1)=$max_value
-    AC_SUBST([PMIX_UNIT_MAX_]m4_toupper($1))
+    [PMIXUNIT_MAX_]m4_toupper($1)=$max_value
+    AC_SUBST([PMIXUNIT_MAX_]m4_toupper($1))
 ])dnl
 
 dnl #######################################################################
 dnl #######################################################################
 dnl #######################################################################
 
-# Usage: PMIX_UNIT_COMPUTE_MAX_VALUE(number_bytes, variable_to_set, action if overflow)
+# Usage: PMIXUNIT_COMPUTE_MAX_VALUE(number_bytes, variable_to_set, action if overflow)
 # Compute maximum value of datatype of
 # number_bytes, setting the result in the second argument.  Assumes a
 # signed datatype.
-AC_DEFUN([PMIX_UNIT_COMPUTE_MAX_VALUE], [
+AC_DEFUN([PMIXUNIT_COMPUTE_MAX_VALUE], [
     # This is more complicated than it really should be.  But some
     # expr implementations (OpenBSD) have an expr with a max value of
     # 2^31 - 1, and we sometimes want to compute the max value of a

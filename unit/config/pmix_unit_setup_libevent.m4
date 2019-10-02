@@ -14,8 +14,8 @@
 
 # MCA_libevent_CONFIG([action-if-found], [action-if-not-found])
 # --------------------------------------------------------------------
-AC_DEFUN([PMIX_UNIT_LIBEVENT_CONFIG],[
-    PMIX_UNIT_VAR_SCOPE_PUSH([pmix_unit_event_dir pmix_unit_event_libdir pmix_unit_event_defaults])
+AC_DEFUN([PMIXUNIT_LIBEVENT_CONFIG],[
+    PMIXUNIT_VAR_SCOPE_PUSH([pmix_unit_event_dir pmix_unit_event_libdir pmix_unit_event_defaults])
 
     AC_ARG_WITH([libevent-header],
                 [AC_HELP_STRING([--with-libevent-header=HEADER],
@@ -72,7 +72,7 @@ AC_DEFUN([PMIX_UNIT_LIBEVENT_CONFIG],[
         AS_IF([test ! -z "$libeventdir_prefix" && "$libeventdir_prefix" != "yes"],
               [pmix_unit_event_libdir="$libeventdir_prefix"])
 
-        PMIX_UNIT_CHECK_PACKAGE([pmix_unit_libevent],
+        PMIXUNIT_CHECK_PACKAGE([pmix_unit_libevent],
                            [event.h],
                            [event],
                            [event_config_new],
@@ -81,11 +81,6 @@ AC_DEFUN([PMIX_UNIT_LIBEVENT_CONFIG],[
                            [$pmix_unit_event_libdir],
                            [pmix_unit_libevent_support=1],
                            [pmix_unit_libevent_support=0])
-
-        AS_IF([test "$pmix_unit_event_defaults" = "no"],
-              [PMIX_UNIT_FLAGS_APPEND_UNIQ(CPPFLAGS, $pmix_unit_libevent_CPPFLAGS)
-               PMIX_UNIT_FLAGS_APPEND_UNIQ(LDFLAGS, $pmix_unit_libevent_LDFLAGS)])
-        PMIX_UNIT_FLAGS_APPEND_UNIQ(LIBS, $pmix_unit_libevent_LIBS)
 
         if test $pmix_unit_libevent_support -eq 1; then
             # Ensure that this libevent has the symbol
@@ -116,31 +111,24 @@ AC_DEFUN([PMIX_UNIT_LIBEVENT_CONFIG],[
     if test $pmix_unit_libevent_support -eq 1; then
         AC_MSG_RESULT([yes])
         # Set output variables
-        PMIX_UNIT_EVENT_HEADER="<event.h>"
-        PMIX_UNIT_EVENT2_THREAD_HEADER="<event2/thread.h>"
-        AC_DEFINE_UNQUOTED([PMIX_UNIT_EVENT_HEADER], [$PMIX_UNIT_EVENT_HEADER],
+        AC_MSG_CHECKING([libevent header])
+        AC_DEFINE_UNQUOTED([PMIX_EVENT_HEADER], [$PMIX_EVENT_HEADER],
                            [Location of event.h])
+        AC_MSG_RESULT([$PMIX_EVENT_HEADER])
+        AC_MSG_CHECKING([libevent2/thread header])
+        AC_DEFINE_UNQUOTED([PMIX_EVENT2_THREAD_HEADER], [$PMIX_EVENT2_THREAD_HEADER],
+                           [Location of event2/thread.h])
+        AC_MSG_RESULT([$PMIX_EVENT2_THREAD_HEADER])
         pmix_unit_libevent_source=$pmix_unit_event_dir
         AS_IF([test "$pmix_unit_event_defaults" = "no"],
-              [PMIX_UNIT_FLAGS_APPEND_UNIQ(CPPFLAGS, $pmix_unit_libevent_CPPFLAGS)
-               PMIX_UNIT_FLAGS_APPEND_UNIQ(LDFLAGS, $pmix_unit_libevent_LDFLAGS)])
-        PMIX_UNIT_FLAGS_APPEND_UNIQ(LIBS, $pmix_unit_libevent_LIBS)
+              [PMIXUNIT_FLAGS_APPEND_UNIQ(CPPFLAGS, $pmix_unit_libevent_CPPFLAGS)
+               PMIXUNIT_FLAGS_APPEND_UNIQ(LDFLAGS, $pmix_unit_libevent_LDFLAGS)])
+        PMIXUNIT_FLAGS_APPEND_UNIQ(LIBS, $pmix_unit_libevent_LIBS)
     else
         AC_MSG_RESULT([no])
     fi
 
-    if test $pmix_unit_libevent_support -eq 1; then
-        AC_MSG_CHECKING([libevent header])
-        AC_DEFINE_UNQUOTED([PMIX_UNIT_EVENT_HEADER], [$PMIX_UNIT_EVENT_HEADER],
-                           [Location of event.h])
-        AC_MSG_RESULT([$PMIX_UNIT_EVENT_HEADER])
-        AC_MSG_CHECKING([libevent2/thread header])
-        AC_DEFINE_UNQUOTED([PMIX_UNIT_EVENT2_THREAD_HEADER], [$PMIX_UNIT_EVENT2_THREAD_HEADER],
-                           [Location of event2/thread.h])
-        AC_MSG_RESULT([$PMIX_UNIT_EVENT2_THREAD_HEADER])
-    fi
+    AC_DEFINE_UNQUOTED([PMIX_HAVE_LIBEVENT], [$pmix_unit_libevent_support], [Whether we are building against libevent])
 
-    AC_DEFINE_UNQUOTED([PMIX_UNIT_HAVE_LIBEVENT], [$pmix_unit_libevent_support], [Whether we are building against libevent])
-
-    PMIX_UNIT_VAR_SCOPE_POP
+    PMIXUNIT_VAR_SCOPE_POP
 ])dnl
