@@ -253,18 +253,19 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
+    timeout_str = "timeout --preserve-status -k 35 30 "
     if test_client:
         test_name = "Client"
         test_bin = client_build_dir + "/test/simple/simpclient"
-        cmd = "./simptest -n 2 -e " + test_bin
+        cmd = timeout_str + "./simptest -n 2 -e " + test_bin
     elif test_check is not None:
         test_name = "Make Check"
         test_bin = client_build_dir + "/test/pmix_client"
-        cmd = "./pmix_test " + test_check  + test_bin
+        cmd = timeout_str + "./pmix_test " + test_check  + test_bin
     else:
         test_name = "Tool"
         test_bin = client_build_dir + "/test/simple/simptool"
-        cmd = "./simptest -e " + test_bin
+        cmd = timeout_str + "./simptest -e " + test_bin
 
     # Check if the test binary exists
     if os.path.isfile(test_bin) is False:
