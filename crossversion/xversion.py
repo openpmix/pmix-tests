@@ -15,12 +15,15 @@ import subprocess
 import shutil
 
 # put this in one place
-supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
+# TEMP: REMOVE MASTER AND V3.1 BRANCHES
+supported_versions = ["v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
 pmix_install_dir  = ""
 pmix_build_dir    = ""
+
+timeout_cmd = "timeout"
 
 args = None
 output_file = os.getcwd() + "/build_output.txt"
@@ -253,7 +256,7 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
-    timeout_str = "timeout --preserve-status -k 35 30 "
+    timeout_str = "gtimeout --preserve-status -k 35 30 "
     if test_client:
         test_name = "Client"
         test_bin = client_build_dir + "/test/simple/simpclient"
@@ -416,6 +419,9 @@ if __name__ == "__main__":
     invalid_tool_pairs.append(["v2.0","v3.0"])
     invalid_tool_pairs.append(["v2.0","v2.2"])
     invalid_tool_pairs.append(["v2.0","v2.1"])
+    #
+    invalid_tool_pairs.append(["v2.2", "v3.0"])
+    invalid_tool_pairs.append(["v2.2", "v2.2"])
 
     # 'server' -> 'client' "make check" pairs that are not supported
     # NOTE: we will first check the overall pairing per the above
@@ -464,6 +470,13 @@ if __name__ == "__main__":
     except KeyError as e:
         # Ignore if envar is not set
         pass
+
+    # find the timeout command - if on Mac, this may well
+    # be "gtimeout", so check for it
+    for path in os.environ["PATH"].split(os.pathsep):
+        fpath = os.path.join(path, "gtimeout")
+        if os.path.isfile(fpath) and os.access(fpath, os.X_OK):
+            timeout_cmd = "gtimeout"
 
     # Build everything necessary
     if args.no_build is False:
