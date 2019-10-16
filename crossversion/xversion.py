@@ -23,7 +23,7 @@ pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
 pmix_install_dir  = ""
 pmix_build_dir    = ""
 
-timeout_cmd = "timeout"
+timeout_cmd = None
 
 args = None
 output_file = os.getcwd() + "/build_output.txt"
@@ -256,7 +256,11 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
-    timeout_str = "gtimeout --preserve-status -k 35 30 "
+    if timeout_cmd is not None:
+        timeout_str = timeout_cmd + " --preserve-status -k 35 30 "
+    else:
+        timeout_str = ""
+
     if test_client:
         test_name = "Client"
         test_bin = client_build_dir + "/test/simple/simpclient"
@@ -477,6 +481,9 @@ if __name__ == "__main__":
         fpath = os.path.join(path, "gtimeout")
         if os.path.isfile(fpath) and os.access(fpath, os.X_OK):
             timeout_cmd = "gtimeout"
+        fpath = os.path.join(path, "timeout")
+        if os.path.isfile(fpath) and os.access(fpath, os.X_OK):
+            timeout_cmd = "timeout"
 
     # Build everything necessary
     if args.no_build is False:
