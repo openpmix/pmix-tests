@@ -16,7 +16,7 @@ import shutil
 
 # put this in one place
 # TEMP: REMOVE MASTER AND V3.1 BRANCHES
-supported_versions = ["v3.0", "v2.2", "v2.1", "v2.0", "v1.2"]
+supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
@@ -55,8 +55,8 @@ make_check_tests = ["-n 4 --ns-dist 3:1 --fence \"[db | 0:0-2;1:0]\" -e ",
                     "-n 5 --test-resolve-peers --ns-dist \"1:2:2\" -e ",
                     "-n 5 --test-replace 100:0,1,10,50,99 -e ",
                     "-n 5 --test-internal 10 -e ",
-                    "-s 2 -n 2 --job-fence -e ",
-                    "-s 2 -n 2 --job-fence -c -e "]
+                    "-s 1 -n 2 --job-fence -e ",
+                    "-s 1 -n 2 --job-fence -c -e "]
 
 class BuildInfo:
     def __init__(self):
@@ -398,19 +398,11 @@ if __name__ == "__main__":
         clients.append(bld.branch)
 
     # 'server' -> 'client' pairs that are not supported
-    invalid_pairs.append(["v1.2","master"])
-    invalid_pairs.append(["v1.2","v3.1"])
-    invalid_pairs.append(["v1.2","v3.0"])
-    invalid_pairs.append(["v1.2","v2.2"])
-    invalid_pairs.append(["v1.2","v2.1"])
-    invalid_pairs.append(["v1.2","v2.0"])
-    # --
     invalid_pairs.append(["v2.0","master"])
     invalid_pairs.append(["v2.0","v3.1"])
     invalid_pairs.append(["v2.0","v3.0"])
     invalid_pairs.append(["v2.0","v2.2"])
     invalid_pairs.append(["v2.0","v2.1"])
-    invalid_pairs.append(["v2.0","v1.2"])
 
     # 'server' -> 'client' tool pairings that are not supported
     invalid_tool_pairs.append(["v2.1","master"])
@@ -423,16 +415,11 @@ if __name__ == "__main__":
     invalid_tool_pairs.append(["v2.0","v3.0"])
     invalid_tool_pairs.append(["v2.0","v2.2"])
     invalid_tool_pairs.append(["v2.0","v2.1"])
-    #
-    invalid_tool_pairs.append(["v2.2", "v3.0"])
-    invalid_tool_pairs.append(["v2.2", "v2.2"])
 
     # 'server' -> 'client' "make check" pairs that are not supported
     # NOTE: we will first check the overall pairing per the above
     # invalid_pairs settings, and then we will check for a specific
     # test that is not supported by the target branch
-    invalid_make_check_tests.append(["v1.2", "test-resolve-peers"])
-    invalid_make_check_tests.append(["v1.2", "test-replace"])
     invalid_make_check_tests.append(["v2.0", "test-resolve-peers"])
 
     # PR_TARGET_BRANCH is an envar set by Jenkins CI to indicate the target branch
@@ -441,20 +428,12 @@ if __name__ == "__main__":
     target_branch = None
     try:
         target_branch = os.environ['PR_TARGET_BRANCH']
-        if target_branch == "v1.2":
+        if target_branch == "v2.0":
             invalid_pairs.append([bld.branch,"master"])
             invalid_pairs.append([bld.branch,"v3.1"])
             invalid_pairs.append([bld.branch,"v3.0"])
             invalid_pairs.append([bld.branch,"v2.2"])
             invalid_pairs.append([bld.branch,"v2.1"])
-            invalid_pairs.append([bld.branch,"v2.0"])
-        elif target_branch == "v2.0":
-            invalid_pairs.append([bld.branch,"master"])
-            invalid_pairs.append([bld.branch,"v3.1"])
-            invalid_pairs.append([bld.branch,"v3.0"])
-            invalid_pairs.append([bld.branch,"v2.2"])
-            invalid_pairs.append([bld.branch,"v2.1"])
-            invalid_pairs.append([bld.branch,"v1.2"])
             # --
             invalid_tool_pairs.append([bld.branch,"master"])
             invalid_tool_pairs.append([bld.branch,"v3.1"])
@@ -467,10 +446,8 @@ if __name__ == "__main__":
             invalid_tool_pairs.append([bld.branch,"v3.0"])
             invalid_tool_pairs.append([bld.branch,"v2.2"])
         else:
-            invalid_pairs.append(["v1.2",bld.branch])
             invalid_pairs.append(["v2.0",bld.branch])
             invalid_tool_pairs.append(["v2.0",bld.branch])
-            invalid_tool_pairs.append(["v2.1",bld.branch])
     except KeyError as e:
         # Ignore if envar is not set
         pass
@@ -546,10 +523,6 @@ if __name__ == "__main__":
                 for pair in invalid_tool_pairs:
                     if bld_server.branch is pair[0] and bld_client.branch is pair[1]:
                         is_valid = False
-
-                # v1.2 does not support Tools
-                if bld_server.branch == "v1.2" or bld_client.branch == "v1.2":
-                    is_valid = False
 
                 if is_valid:
                     print("="*70)
