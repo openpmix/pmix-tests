@@ -15,7 +15,6 @@ import subprocess
 import shutil
 
 # put this in one place
-# TEMP: REMOVE MASTER AND V3.1 BRANCHES
 supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
@@ -332,7 +331,7 @@ if __name__ == "__main__":
     parser.add_argument("--basedir", help="Base directory", action="store", dest="basedir", default=defbasedir)
     parser.add_argument("--skip-client", help="Skip Client tests", action="store_true")
     parser.add_argument("--skip-tool", help="Skip Tool tests", action="store_true")
-    parser.add_argument("--make-check", help="Run make check tests", action="store_true")
+    parser.add_argument("--make-check", help="Run make check tests [DISABLED]", action="store_true")
     parser.add_argument("--with-libevent", help="Where libevent is located", action="store", dest="libevent", default="")
     parser.add_argument("--with-hwloc", help="Where hwloc is located", action="store", dest="hwloc", default="")
     parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
@@ -345,6 +344,8 @@ if __name__ == "__main__":
 
     parser.parse_args()
     args = parser.parse_args()
+    # TEMP: turn OFF the make-check tests until they can be repaired
+    args.make_check = False
 
     if args.quiet is True:
         if os.path.exists(output_file):
@@ -409,6 +410,7 @@ if __name__ == "__main__":
     invalid_tool_pairs.append(["v2.1","v3.1"])
     invalid_tool_pairs.append(["v2.1","v3.0"])
     invalid_tool_pairs.append(["v2.1","v2.2"])
+    invalid_tool_pairs.append(["v2.1","v2.0"])
     # --
     invalid_tool_pairs.append(["v2.0","master"])
     invalid_tool_pairs.append(["v2.0","v3.1"])
@@ -445,6 +447,7 @@ if __name__ == "__main__":
             invalid_tool_pairs.append([bld.branch,"v3.1"])
             invalid_tool_pairs.append([bld.branch,"v3.0"])
             invalid_tool_pairs.append([bld.branch,"v2.2"])
+            invalid_tool_pairs.append([bld.branch,"v2.0"])
         else:
             invalid_pairs.append(["v2.0",bld.branch])
             invalid_tool_pairs.append(["v2.0",bld.branch])
@@ -458,9 +461,11 @@ if __name__ == "__main__":
         fpath = os.path.join(path, "gtimeout")
         if os.path.isfile(fpath) and os.access(fpath, os.X_OK):
             timeout_cmd = "gtimeout"
+            break
         fpath = os.path.join(path, "timeout")
         if os.path.isfile(fpath) and os.access(fpath, os.X_OK):
             timeout_cmd = "timeout"
+            break
 
     # Build everything necessary
     if args.no_build is False:
@@ -561,26 +566,33 @@ if __name__ == "__main__":
                                 final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch + "  [" + test + "]")
                                 count_failed_check += 1
 
-    print("")
-    print("="*70)
-    if args.no_build is False:
-        print("="*30 + " Summary (Build) " + "="*30)
-        for line in final_summary_build:
-            print line
+    final_len = len(final_summary_build) + len(final_summary_client) + len(final_summary_tool) + len(final_summary_check)
+    if 0 < final_len:
+        print("")
+        print("="*70)
+        if args.no_build is False:
+            print("="*30 + " Summary (Build) " + "="*30)
+            for line in final_summary_build:
+                print line
 
-    if args.no_run is False and args.skip_client is False:
-        print("="*30 + " Summary (Client) " + "="*30)
-        for line in final_summary_client:
-            print line
+        if args.no_run is False and args.skip_client is False:
+            print("="*30 + " Summary (Client) " + "="*30)
+            for line in final_summary_client:
+                print line
 
-    if args.no_run is False and args.skip_tool is False:
-        print("="*30 + " Summary (Tool) " + "="*30)
-        for line in final_summary_tool:
-            print line
+        if args.no_run is False and args.skip_tool is False:
+            print("="*30 + " Summary (Tool) " + "="*30)
+            for line in final_summary_tool:
+                print line
 
-    if args.no_run is False and args.make_check is True:
-        print("="*30 + " Summary (Make Check Failures) " + "="*30)
-        for line in final_summary_check:
-            print line
+        if args.no_run is False and args.make_check is True:
+            print("="*30 + " Summary (Make Check Failures) " + "="*30)
+            for line in final_summary_check:
+                print line
+
+        print("")
+        print("="*70)
+    else:
+        print("Tests completed OK")
 
     sys.exit(count_failed + count_failed_tool + count_failed_check)
