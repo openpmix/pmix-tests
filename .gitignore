@@ -57,6 +57,7 @@ multibeat/jctrl
 crossversion/install
 crossversion/pmix-*
 crossversion/run_result.txt
+crossversion/build_output.txt
 
 # unit tests
 unit/.deps/
