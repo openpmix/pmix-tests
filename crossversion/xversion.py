@@ -243,6 +243,7 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     test_bin = ""
     cmd = ""
 
+    os.environ["PMIX_MCA_gds"] = "hash"
     if test_client is False and test_tool is False and test_check is None:
         print("Error: No test specified.")
         return 42
