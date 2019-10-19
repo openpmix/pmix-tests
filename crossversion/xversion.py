@@ -245,7 +245,6 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     test_bin = ""
     cmd = ""
 
-    os.environ["PMIX_MCA_gds"] = "hash"
     if test_client is False and test_tool is False and test_check is None:
         print("Error: No test specified.")
         return 42
@@ -274,7 +273,7 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     else:
         test_name = "Tool"
         test_bin = client_build_dir + "/test/simple/simptool"
-        cmd = timeout_str + "./simptest -n 1 -e " + test_bin
+        cmd = timeout_str + "./simptest -n 1 --xversion -e " + test_bin
 
     # Check if the test binary exists
     if os.path.isfile(test_bin) is False:
