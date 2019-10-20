@@ -453,6 +453,7 @@ if __name__ == "__main__":
         else:
             invalid_pairs.append(["v2.0",bld.branch])
             invalid_tool_pairs.append(["v2.0",bld.branch])
+            invalid_tool_pairs.append(["v2.1",bld.branch])
     except KeyError as e:
         # Ignore if envar is not set
         pass
