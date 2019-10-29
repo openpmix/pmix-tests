@@ -15,9 +15,7 @@ import subprocess
 import shutil
 
 # put this in one place
-# TURN OFF v2.0 WHILE GDS/HASH IS FORCED AS IT DOESN'T SUPPORT
-# NON-DSTORE OPS
-supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1"]
+supported_versions = ["master", "v3.1", "v3.0", "v2.2", "v2.1", "v2.0"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
@@ -346,8 +344,6 @@ if __name__ == "__main__":
 
     parser.parse_args()
     args = parser.parse_args()
-    # TEMP: turn OFF the make-check tests until they can be repaired
-    args.make_check = False
 
     if args.quiet is True:
         if os.path.exists(output_file):
