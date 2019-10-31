@@ -302,9 +302,18 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
 
     if args.quiet is False or 0 != ret:
         print("-----> : Test output")
+        num_lines = 0
+        num_lines_skipped = 0
         with open(result_file, 'r') as logfile:
             for line in logfile:
-                print(line),
+                num_lines += 1
+                if args.max_output_lines > 0 and num_lines > args.max_output_lines:
+                    num_lines_skipped += 1
+                else:
+                    print(line),
+        if num_lines_skipped > 0:
+            print("!! Warning !! Skipped the last %d of %d lines of output." % (num_lines_skipped, num_lines))
+
         print("")
     else:
         print("-----> : Test output (Not shown)")
@@ -341,6 +350,7 @@ if __name__ == "__main__":
     parser.add_argument("--with-repo", help="Use this GitHub repo", action="store", dest="gh_repo", default="")
     parser.add_argument("--with-branch", help="Build this GitHub branch", action="store", dest="gh_branch", default="")
     parser.add_argument("--with-src", help="Use this source directory", action="store", dest="raw_src", default="")
+    parser.add_argument("--max-output-lines", help="Maximum number of lines of error output to display (0=all)", type=int, action="store", dest="max_output_lines", default="100")
 
     parser.parse_args()
     args = parser.parse_args()
