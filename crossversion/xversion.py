@@ -24,6 +24,9 @@ pmix_build_dir    = ""
 
 timeout_cmd = None
 
+# Experimental - Set to 'True' to use the pmix_tests version of the client/server tests
+use_pmix_tests = False
+
 args = None
 output_file = os.getcwd() + "/build_output.txt"
 result_file = os.getcwd() + "/run_result.txt"
@@ -80,6 +83,37 @@ class BuildInfo:
 
     def display(self):
         print("Branch: %6s" % (self.branch))
+
+def build_test_tree(bld, built_new, logfile=None):
+    global pmix_build_dir
+    global pmix_install_dir
+    global output_file
+    global args
+
+    orig_dir = os.getcwd()
+
+    local_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
+    local_install_dir = pmix_install_dir + "/" + bld.build_base_dir
+    local_testing_dir = local_install_dir + "/" + "pmix-tests"
+
+    # If this is not a new build, and the testing directory exists then assume it is up to date
+    if built_new is False:
+        if os.path.isdir(local_testing_dir):
+            print("Skip: Testing directory already exists ("+local_testing_dir+") and branch ("+bld.branch+") has no updates")
+            return 0
+
+    print("============ PMIx Build: "+bld.branch+" : Create pmix-tests")
+    ret = subprocess.call(["cp", "-R", "/home/pmixer/pmix-tests/simple/", local_testing_dir], stdout=logfile, stderr=logfile, shell=False)
+    if 0 != ret:
+        os.chdir(orig_dir)
+        return ret
+    os.chdir(local_testing_dir)
+    ret = subprocess.call(["make", "all_static"], stdout=logfile, stderr=logfile, shell=False)
+    if 0 != ret:
+        os.chdir(orig_dir)
+        return ret
+
+    print("Pass: Testing directory: "+local_testing_dir)
 
 def build_tree(bld, logfile=None):
     global pmix_build_dir
@@ -253,7 +287,9 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     orig_dir = os.getcwd()
 
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
+    client_testing_dir = pmix_install_dir + "/" + bld_client.build_base_dir + "/" + "pmix-tests"
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
+    server_testing_dir = pmix_install_dir + "/" + bld_server.build_base_dir + "/" + "pmix-tests"
 
     if timeout_cmd is not None:
         timeout_str = timeout_cmd + " --preserve-status -k 35 30 "
@@ -262,14 +298,19 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
 
     if test_client:
         test_name = "Client"
-        test_bin = client_build_dir + "/test/simple/simpclient"
+        if use_pmix_tests:
+            test_bin = client_testing_dir + "/simpclient"
+        else:
+            test_bin = client_build_dir + "/test/simple/simpclient"
         cmd = timeout_str + "./simptest -n 2 -xversion -e " + test_bin
     elif test_check is not None:
         test_name = "Make Check"
+        # (Not in pmix-tests yet.
         test_bin = client_build_dir + "/test/pmix_client"
         cmd = timeout_str + "./pmix_test " + test_check  + test_bin
     else:
         test_name = "Tool"
+        # (Not in pmix-tests yet.
         test_bin = client_build_dir + "/test/simple/simptool"
         cmd = timeout_str + "./simptest -n 1 --xversion -e " + test_bin
 
@@ -285,7 +326,10 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         print("Server : " + os.getcwd() )
         print("Command: cd " + os.getcwd() + " ; " + cmd)
     else:
-        os.chdir(server_build_dir + "/test/simple")
+        if test_client and use_pmix_tests:
+            os.chdir(server_testing_dir)
+        else:
+            os.chdir(server_build_dir + "/test/simple")
         print("-----> : Run "+test_name)
         print("%10s: %s" % (test_name, test_bin) )
         print("Server : " + os.getcwd() )
@@ -317,6 +361,9 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         print("")
     else:
         print("-----> : Test output (Not shown)")
+
+    if os.path.isfile(result_file):
+        os.remove(result_file)
 
     os.chdir(orig_dir)
 
@@ -364,6 +411,10 @@ if __name__ == "__main__":
         args.basedir = defbasedir + args.basedir[1:]
     pmix_install_dir = args.basedir + "/install"
     pmix_build_dir = args.basedir
+
+    # Create the install directory if it does not exist
+    if os.path.isdir(pmix_install_dir) is False:
+        os.makedirs(pmix_install_dir)
 
     # setup server list
     if "all" in args.servers:
@@ -501,6 +552,18 @@ if __name__ == "__main__":
             else:
                 final_summary_build.append("Build ***FAILED***: "+bld_server.branch+" -> "+bld_server.build_base_dir)
                 count_failed += 1
+
+            # Check on the testing repo
+            if 0 == ret or 1 == ret:
+                print("============ PMIx Unit Tests: "+bld_server.branch+" =====================")
+                if args.quiet is True:
+                    with open(output_file, 'a') as logfile:
+                        logfile.write("============ PMIx Unit Tests: "+bld_server.branch+" =====================")
+                        logfile.flush()
+                        ret = build_test_tree(bld_server, 0 == ret, logfile)
+                else:
+                    ret = build_test_tree(bld_server, 0 == ret)
+
 
     # Run the cross-version test - Client
     if args.no_run is False and args.skip_client is False:
