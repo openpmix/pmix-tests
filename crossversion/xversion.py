@@ -103,6 +103,14 @@ def build_test_tree(bld, built_new, logfile=None):
             return 0
 
     print("============ PMIx Build: "+bld.branch+" : Create pmix-tests")
+    if "LIBEVENT_HOME" not in os.environ:
+        os.environ["LIBEVENT_HOME"] = args.libevent
+    if "v1" in bld.branch:
+        os.environ["HWLOC_HOME"] = args.hwloc1
+    else:
+        os.environ["HWLOC_HOME"] = args.hwloc
+    os.environ["PMIX_HOME"] = local_install_dir
+
     ret = subprocess.call(["cp", "-R", "/home/pmixer/pmix-tests/simple/", local_testing_dir], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
@@ -285,6 +293,9 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         return 42
 
     orig_dir = os.getcwd()
+    if "LD_LIBRARY_PATH" not in os.environ:
+        os.environ["LD_LIBRARY_PATH"] = ""
+    orig_ld_library_path = os.environ["LD_LIBRARY_PATH"]
 
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     client_testing_dir = pmix_install_dir + "/" + bld_client.build_base_dir + "/" + "pmix-tests"
@@ -300,6 +311,14 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         test_name = "Client"
         if use_pmix_tests:
             test_bin = client_testing_dir + "/simpclient"
+            if args.libevent is not None:
+                os.environ["LD_LIBRARY_PATH"] = os.environ["LD_LIBRARY_PATH"] + ":" + args.libevent + "/lib"
+            if "v1" in bld.branch:
+                if args.hwloc1 is not None:
+                    os.environ["LD_LIBRARY_PATH"] = os.environ["LD_LIBRARY_PATH"] + ":" + args.hwloc1 + "/lib"
+            else:
+                if args.hwloc is not None:
+                    os.environ["LD_LIBRARY_PATH"] = os.environ["LD_LIBRARY_PATH"] + ":" + args.hwloc + "/lib"
         else:
             test_bin = client_build_dir + "/test/simple/simpclient"
         cmd = timeout_str + "./simptest -n 2 -xversion -e " + test_bin
@@ -317,6 +336,8 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     # Check if the test binary exists
     if os.path.isfile(test_bin) is False:
         print("Error: Test binary (%s) does not exist." % (test_bin))
+        os.chdir(orig_dir)
+        os.environ["LD_LIBRARY_PATH"] = orig_ld_library_path
         return 1
 
     if test_check is not None:
@@ -366,6 +387,7 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         os.remove(result_file)
 
     os.chdir(orig_dir)
+    os.environ["LD_LIBRARY_PATH"] = orig_ld_library_path
 
     return ret
 
