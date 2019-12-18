@@ -87,3 +87,10 @@ unit/pmix_regex
 unit/pmix_test
 unit/Makefile
 unit/Makefile.in
+
+# PRRTE Unit tests
+prrte/hello_world/hello
+prrte/hello_world/output.txt
+prrte/hello_world/output-hn.txt
+prrte/cycle/output.txt
+prrte/cycle/init_finalize_pmix
