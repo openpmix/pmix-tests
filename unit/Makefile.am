@@ -14,13 +14,13 @@ sources = cli_stages.c test_cd.c test_common.c test_error.c \
 		test_spawn.c utils.c argv.c pmix_object.c unit_list.c unit_progress_threads.c
 
 pmix_test_SOURCES = pmix_test.c $(sources) test_server.c server_callbacks.c
-pmi_test_LDADD = -lpthread
+pmix_test_LDADD = -lpthread
 
 pmix_client_SOURCES =  pmix_client.c $(sources)
-pmi_client_LDADD = -lpthread
+pmix_client_LDADD = -lpthread
 
 pmix_regex_SOURCES =  pmix_regex.c $(sources) test_server.c server_callbacks.c
-pmi_regex_LDADD = -lpthread
+pmix_regex_LDADD = -lpthread
 
 pmi_client_SOURCES = pmi_client.c $(sources)
 pmi_client_LDADD = -lpmi -lpthread
