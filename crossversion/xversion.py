@@ -53,9 +53,7 @@ make_check_tests = ["-n 4 --ns-dist 3:1 --fence \"[db | 0:0-2;1:0]\" -e ",
                     "-n 2 --test-connect -e ",
                     "-n 5 --test-resolve-peers --ns-dist \"1:2:2\" -e ",
                     "-n 5 --test-replace 100:0,1,10,50,99 -e ",
-                    "-n 5 --test-internal 10 -e ",
-                    "-s 2 -n 2 --job-fence -e ",
-                    "-s 2 -n 2 --job-fence -c -e "]
+                    "-n 5 --test-internal 10 -e "]
 
 class BuildInfo:
     def __init__(self):
