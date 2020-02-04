@@ -1,0 +1,3 @@
+# Activate the PRRTE CI on any PR that changes the PRRTE test suite
+PRRTE_CI:
+  - prrte/**/*
