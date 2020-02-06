@@ -27,8 +27,8 @@ The CI infrastructure defines two environment variables to be used in the test p
  2. Create a build script named `build.sh`
     - CI will call this exactly one time.
  3. Create a run script named `run.sh`
-    - The script is responsible for (1) starting `prte`, (2) runing your test, and (3) shutting down `prte`.
-    - CI wil call this exactly one time (with a timeout in case it hangs).
+    - The script is responsible for (1) starting `prte`, (2) running your test, and (3) shutting down `prte`.
+    - CI will call this exactly one time (with a timeout in case it hangs).
  4. Add your directory name to the `.ci-tests` and/or `.ci-scale-tests` files in this directory in the order that they should be executed.
     - Note that adding the directory is not sufficient to have CI run the test, it must be in the file.
     - The `.ci-tests` file is used when running at small scales.
