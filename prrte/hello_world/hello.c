@@ -33,7 +33,7 @@ int main(int argc, char **argv)
     gethostname(hostname, 1024);
 
     if( PMIX_SUCCESS != (rc = PMIx_Init(&myproc, NULL, 0)) ) {
-        fprintf(stderr, "ERROR: PMIx_Init failed (%d on %s): %d\n", (unsigned long)pid, hostname, rc);
+        fprintf(stderr, "ERROR: PMIx_Init failed (%lu on %s): %d\n", (unsigned long)pid, hostname, rc);
         exit(1);
     }
 
@@ -43,7 +43,7 @@ int main(int argc, char **argv)
 
     // Job size
     if( PMIX_SUCCESS != (rc = PMIx_Get(&proc_wildcard, PMIX_JOB_SIZE, NULL, 0, &val)) ) {
-        fprintf(stderr, "ERROR: PMIx_Get(PMIX_JOB_SIZE) failed (%d on %s): %d\n", (unsigned long)pid, hostname, rc);
+        fprintf(stderr, "ERROR: PMIx_Get(PMIX_JOB_SIZE) failed (%lu on %s): %d\n", (unsigned long)pid, hostname, rc);
         exit(1);
     }
     job_size = val->data.uint32;
@@ -51,7 +51,7 @@ int main(int argc, char **argv)
 
     // Number of ranks on this node
     if( PMIX_SUCCESS != (rc = PMIx_Get(&proc_wildcard, PMIX_LOCAL_SIZE, NULL, 0, &val)) ) {
-        fprintf(stderr, "ERROR: PMIx_Get(PMIX_LOCAL_SIZE) failed (%d on %s): %d\n", (unsigned long)pid, hostname, rc);
+        fprintf(stderr, "ERROR: PMIx_Get(PMIX_LOCAL_SIZE) failed (%lu on %s): %d\n", (unsigned long)pid, hostname, rc);
         exit(1);
     }
     local_size = val->data.uint32;
@@ -59,20 +59,20 @@ int main(int argc, char **argv)
 
     // My local rank on this node
     if( PMIX_SUCCESS != (rc = PMIx_Get(&myproc, PMIX_LOCAL_RANK, NULL, 0, &val)) ) {
-        fprintf(stderr, "ERROR: PMIx_Get(PMIX_LOCAL_RANK) failed (%d on %s): %d\n", (unsigned long)pid, hostname, rc);
+        fprintf(stderr, "ERROR: PMIx_Get(PMIX_LOCAL_RANK) failed (%lu on %s): %d\n", (unsigned long)pid, hostname, rc);
         exit(1);
     }
     local_rank = val->data.uint16;
     PMIX_VALUE_RELEASE(val);
 
-    printf("%d/%d [%d/%d] Hello World from %s (pid %d)\n",
+    printf("%d/%d [%d/%d] Hello World from %s (pid %lu)\n",
            myproc.rank, job_size,
            local_rank, local_size,
            hostname, (unsigned long)pid);
 
 
     if (PMIX_SUCCESS != (rc = PMIx_Finalize(NULL, 0))) {
-        fprintf(stderr, "ERROR: PMIx_Finalize failed (%d on %s): %d (%s)\n", (unsigned long)pid, hostname, rc, PMIx_Error_string(rc));
+        fprintf(stderr, "ERROR: PMIx_Finalize failed (%lu on %s): %d (%s)\n", (unsigned long)pid, hostname, rc, PMIx_Error_string(rc));
         exit(1);
     }
 
