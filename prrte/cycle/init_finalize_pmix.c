@@ -26,12 +26,12 @@ int main(int argc, char **argv)
     gethostname(hostname, 1024);
 
     if( PMIX_SUCCESS != (rc = PMIx_Init(&myproc, NULL, 0)) ) {
-        fprintf(stderr, "ERROR: PMIx_Init failed (%d on %s): %d\n", (unsigned long)pid, hostname, rc);
+        fprintf(stderr, "ERROR: PMIx_Init failed (%lu on %s): %d\n", (unsigned long)pid, hostname, rc);
         exit(1);
     }
 
     if (PMIX_SUCCESS != (rc = PMIx_Finalize(NULL, 0))) {
-        fprintf(stderr, "ERROR: PMIx_Finalize failed (%d on %s): %d (%s)\n", (unsigned long)pid, hostname, rc, PMIx_Error_string(rc));
+        fprintf(stderr, "ERROR: PMIx_Finalize failed (%lu on %s): %d (%s)\n", (unsigned long)pid, hostname, rc, PMIx_Error_string(rc));
         exit(1);
     }
 
