@@ -94,3 +94,5 @@ prrte/hello_world/output.txt
 prrte/hello_world/output-hn.txt
 prrte/cycle/output.txt
 prrte/cycle/init_finalize_pmix
+prrte/prun-wrapper/output*.txt
+prrte/prun-wrapper/bin
