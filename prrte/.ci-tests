@@ -1,4 +1,6 @@
 # Start with the basics
 hello_world
+# 'prun' all in one wrapper like some downstream projects use
+prun-wrapper
 # Apply some pressure on the handling of fast running jobs
 cycle
