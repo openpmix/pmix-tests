@@ -22,9 +22,9 @@ _shutdown()
 # Start the DVM
 # ---------------------------------------
 if [ "x" = "x$CI_HOSTFILE" ] ; then
-    prte &
+    prte --daemonize
 else
-    prte --hostfile $CI_HOSTFILE &
+    prte --daemonize --hostfile $CI_HOSTFILE
 fi
 
 # Wait for DVM to start
