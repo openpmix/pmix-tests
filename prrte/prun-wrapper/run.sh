@@ -22,11 +22,15 @@ if [ "x" != "x$CI_HOSTFILE" ] ; then
     _DASH_HOST_NUM_NODES=2
 fi
 
+# ---------------------------------------
+# MCA parameter indicating that we are testing the proxy launch functionality
+# ---------------------------------------
+export PRRTE_MCA_schizo_base_test_proxy_launch=1
 
 # ---------------------------------------
 # Run the test - Hostname with --hostfile
 # ---------------------------------------
-./bin/myrun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
+prun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results
@@ -50,7 +54,9 @@ fi
 # ---------------------------------------
 # Run the test - Hostname with --hostfile and full path
 # ---------------------------------------
-$PWD/bin/myrun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
+ABS_PATH=`which prun`
+ABS_PATH=`dirname $ABS_PATH`
+$ABS_PATH/prun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results
@@ -75,7 +81,7 @@ fi
 # ---------------------------------------
 # Run the test - Hostname with --host
 # ---------------------------------------
-./bin/myrun --map-by ppr:5:node ${_DASH_HOST_ARG} hostname 2>&1 | tee output-hn.txt
+prun --map-by ppr:5:node ${_DASH_HOST_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results
@@ -100,7 +106,7 @@ fi
 # ---------------------------------------
 # Run the test - Hello World (PMIx) with --hostfile
 # ---------------------------------------
-./bin/myrun --map-by ppr:5:node ${_HOSTFILE_ARG} ../hello_world/hello 2>&1 | tee output.txt
+prun --map-by ppr:5:node ${_HOSTFILE_ARG} ../hello_world/hello 2>&1 | tee output.txt
 
 # ---------------------------------------
 # Verify the results
@@ -120,7 +126,7 @@ fi
 # ---------------------------------------
 # Run the test - Hello World (PMIx) with --hostfile
 # ---------------------------------------
-./bin/myrun --map-by ppr:5:node ${_DASH_HOST_ARG} ../hello_world/hello 2>&1 | tee output.txt
+prun --map-by ppr:5:node ${_DASH_HOST_ARG} ../hello_world/hello 2>&1 | tee output.txt
 
 # ---------------------------------------
 # Verify the results
