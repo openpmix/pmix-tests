@@ -12,7 +12,7 @@ _shutdown()
     # ---------------------------------------
     # Cleanup DVM
     # ---------------------------------------
-    prun --terminate
+    pterm
 
     exit $FINAL_RTN
 }
