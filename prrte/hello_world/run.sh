@@ -21,9 +21,9 @@ _shutdown()
 # Start the DVM
 # ---------------------------------------
 if [ "x" = "x$CI_HOSTFILE" ] ; then
-    prte --daemonize
+    prte --no-ready-msg &
 else
-    prte --daemonize --hostfile $CI_HOSTFILE
+    prte --no-ready-msg --hostfile $CI_HOSTFILE &
 fi
 
 date
