@@ -25,7 +25,7 @@ fi
 # ---------------------------------------
 # Run the test - Hostname with --hostfile
 # ---------------------------------------
-prte --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
+prterun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results
@@ -49,9 +49,9 @@ fi
 # ---------------------------------------
 # Run the test - Hostname with --hostfile and full path
 # ---------------------------------------
-ABS_PATH=`which prte`
+ABS_PATH=`which prterun`
 ABS_PATH=`dirname $ABS_PATH`
-$ABS_PATH/prte --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
+$ABS_PATH/prterun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results
@@ -76,7 +76,7 @@ fi
 # ---------------------------------------
 # Run the test - Hostname with --host
 # ---------------------------------------
-prte --map-by ppr:5:node ${_DASH_HOST_ARG} hostname 2>&1 | tee output-hn.txt
+prterun --map-by ppr:5:node ${_DASH_HOST_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results
@@ -101,7 +101,7 @@ fi
 # ---------------------------------------
 # Run the test - Hello World (PMIx) with --hostfile
 # ---------------------------------------
-prte --map-by ppr:5:node ${_HOSTFILE_ARG} ../hello_world/hello 2>&1 | tee output.txt
+prterun --map-by ppr:5:node ${_HOSTFILE_ARG} ../hello_world/hello 2>&1 | tee output.txt
 
 # ---------------------------------------
 # Verify the results
@@ -121,7 +121,7 @@ fi
 # ---------------------------------------
 # Run the test - Hello World (PMIx) with --hostfile
 # ---------------------------------------
-prte --map-by ppr:5:node ${_DASH_HOST_ARG} ../hello_world/hello 2>&1 | tee output.txt
+prterun --map-by ppr:5:node ${_DASH_HOST_ARG} ../hello_world/hello 2>&1 | tee output.txt
 
 # ---------------------------------------
 # Verify the results
