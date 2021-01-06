@@ -4,3 +4,5 @@ hello_world
 prun-wrapper
 # Apply some pressure on the handling of fast running jobs
 cycle
+# PMIx Tool (Debugger) Unit Tests
+debug

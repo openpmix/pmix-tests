@@ -96,3 +96,12 @@ prrte/cycle/output.txt
 prrte/cycle/init_finalize_pmix
 prrte/prun-wrapper/output*.txt
 prrte/prun-wrapper/bin
+prrte/debug/attach
+prrte/debug/daemon
+prrte/debug/direct
+prrte/debug/hello
+prrte/debug/tcfilter
+prrte/debug/direct-cospawn.stderr
+prrte/debug/direct-cospawn.stdout
+prrte/debug/direct.stderr
+prrte/debug/direct.stdout
