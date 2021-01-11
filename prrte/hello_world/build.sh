@@ -21,3 +21,20 @@ echo "Building PMIx Hello World"
 echo "=========================="
 
 ${PCC} hello.c -o hello
+
+echo "=========================="
+echo "My environment"
+echo "=========================="
+env | sort
+
+echo "=========================="
+echo "My working dir"
+echo "=========================="
+ls -la /workspace/
+echo "----"
+ls -la /workspace/exports
+echo "----"
+ls -la /workspace/prrte-src/examples
+echo "----"
+ls -la ${CI_PRRTE_SRC}/examples
+echo "---- DONE"
