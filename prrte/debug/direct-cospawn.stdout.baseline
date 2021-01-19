@@ -1,0 +1,31 @@
+daemon-2  :001: Debugger daemon ns @NS<0> rank 2 pid @PID<0>: Running
+daemon-2  :002: evhandler_reg_callbk called by daemon as registration callback
+daemon-2  :003: [@NS<0>:2:@PID<0>] Debugging '@NS<0>'
+daemon-2  :004: [@NS<0>:2:@PID<0>] my local rank 2
+daemon-2  :005: [@NS<0>:2:@PID<0>] registering for termination of '@NS<0>'
+daemon-2  :006: evhandler_reg_callbk called by daemon as registration callback
+daemon-2  :007: cbfunc called as daemon callback for PMIx_Query
+daemon-2  :008: Transferring pmix.qry.lptable
+daemon-2  :009: [@NS<0>:2:@PID<0>] Local proctable received for nspace '@NS<0>' has 3 entries
+daemon-2  :010: Proctable[0], namespace @NS<0> rank 0 exec hello
+daemon-2  :011: Proctable[1], namespace @NS<0> rank 1 exec hello
+daemon-2  :012: Proctable[2], namespace @NS<0> rank 2 exec daemon
+daemon-2  :013: [@NS<0>:2:@PID<0>] Sending release
+daemon-2  :014: Debugger daemon ns @NS<0> rank 2 pid @PID<0>: Finalizing
+daemon-2  :015: Debugger daemon ns @NS<0> rank 2 pid @PID<0>:PMIx_Finalize successfully completed
+direct    :001: Debugger ns @NS<1> rank 0 pid @PID<1>: Running
+direct    :002: evhandler_reg_callbk called to register callback
+direct    :003: Called cbfunc as callback for PMIx_Query
+direct    :004: Key pmix.qry.spawn Type PMIX_STRING(3)
+direct    :005: Key pmix.qry.debug Type PMIX_STRING(3)
+direct    :006: Calling cospawn_launch to spawn application processes and debugger daemon
+direct    :007: Application namespace is @NS<0>
+direct    :008: evhandler_reg_callbk called to register callback
+direct    :009: release_fn called as callback for event=JOB ENDED source=@NS<0>:0
+direct    :010: DEBUGGER NOTIFIED THAT JOB @NS<0> TERMINATED 
+hello-0   :001: Client ns @NS<0> rank 0 pid @PID<2>: Running on host @HOST<0> localrank 0
+hello-0   :002: Client ns @NS<0> rank 0: Finalizing
+hello-0   :003: Client ns @NS<0> rank 0:PMIx_Finalize successfully completed
+hello-1   :001: Client ns @NS<0> rank 1 pid @PID<3>: Running on host @HOST<0> localrank 1
+hello-1   :002: Client ns @NS<0> rank 1: Finalizing
+hello-1   :003: Client ns @NS<0> rank 1:PMIx_Finalize successfully completed
