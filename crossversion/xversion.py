@@ -171,7 +171,7 @@ def build_tree(bld, logfile=None):
         ret = subprocess.call(["./autogen.sh"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
-        return ret
+        return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Configure")
     if "v1" in bld.branch:
@@ -209,26 +209,26 @@ def build_tree(bld, logfile=None):
 
     if 0 != ret:
         os.chdir(orig_dir)
-        return ret
+        return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Make")
     ret = subprocess.call(["make"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
-        return ret
+        return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Make Install")
     ret = subprocess.call(["make", "install"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
-        return ret
+        return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Make Test")
     os.chdir(local_build_dir + "/test/simple")
     ret = subprocess.call(["make"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
-        return ret
+        return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Done " + orig_dir)
     os.chdir(orig_dir)
