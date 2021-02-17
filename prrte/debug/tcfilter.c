@@ -10,22 +10,25 @@
 static char *pid_pattern = "pid ([0-9]+):?";
 static regex_t pid_regex;
   // Regex to match strings like 'prte-f8n07139407.12'
+  // or 'prte-f8n07139407@12'
 static char *namespace_pattern =
-            "([a-z]+-[a-zA-Z0-9\\-_.]+\\.[0-9]+)";
+            "([a-zA-Z]+[a-zA-Z0-9_.-]+[@.][0-9]+)";
 static regex_t namespace_regex;
 static char *namespace_pattern2 =
-            "namespace=([a-z]+-[a-zA-Z0-9\\-_.]+)";
+            "namespace=([a-zA-Z]+[a-zA-Z0-9_@.-]+)";
 static regex_t namespace_regex2;
   // Regex to match strings like 'prte-f8n07139407.12:141379'
+  // or 'prte-f8n07139407@12:141379'.
   // To avoid ambiguity with ranks and pids, assume a pid is always > 100
   // and a rank is always < 100. This may need to be revisited if tests are
   // run in a container environment and the first application pid is < 100
 static char *nspace_pid_pattern = 
-            "([a-z]+-[a-zA-Z0-9\\-_.]+\\.[0-9]+):([0-9]{2,8})";
+            "([a-zA-Z]+[a-zA-Z0-9_.-]+[@.][0-9]+):([0-9]{2,8})";
 static regex_t nspace_pid_regex;
   // Regex to match strings like 'prte-f8n07139407.12:0:141379'
+  // or 'prte-f8n07139407@12:0:141379'
 static char *nspace_rank_pid_pattern = 
-            "([a-z]+-[a-zA-Z0-9\\-_.]+\\.[0-9]+):-?[0-9]+:([0-9]+)";
+            "([a-zA-Z]+[a-zA-Z0-9_@.-]+[@.][0-9]+):-?[0-9]+:([0-9]+)";
 static regex_t nspace_rank_pid_regex;
   // Regex to match hostnames
 static char *host_pattern = "on host ([0-9a-zA-Z][a-zA-Z0-9.-]+)";
