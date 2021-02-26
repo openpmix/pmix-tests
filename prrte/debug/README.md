@@ -8,7 +8,13 @@ This directory contains the testcases and scripts for PRRTE tool and debugger co
 + test-utils.c: stdio function wrappers for stdio calls in test cases and supporting functions used by wrappers
 + tcfilter.c: Program to rewrite test case output so it can be compared to baseline files
 + Other .c source files: Source code for test cases
-+ *.baseline: Baseline files, compared with current test case output to validate test case execution
++ \*.baseline: Baseline files, compared with current test case output to validate test case execution
+
+## CI Environment Variables
+
+The following environment variable(s) are to be defined when running the `build.sh` phases.
+
+ * `CI_PRRTE_SRC` : Absolute path to the PRRTE source code (e.g., `$CI_PRRTE_SRC/examples`).
 
 ## Usage
 The test cases can be run manually by running the **run.py** script while positioned within a copy of this directory. 
