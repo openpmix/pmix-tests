@@ -76,15 +76,4 @@ cd ../static-build
 make -j 20
 make -j 20 install
 
-#--------------------------------
-# Non-VPATH build
-#--------------------------------
-cd ../../
-../../configure --prefix=${_BUILD_DIR}/install-static \
-                --with-libevent=${LIBEVENT_INSTALL_PATH} \
-                --with-hwloc=${HWLOC_INSTALL_PATH} \
-                --enable-python-bindings
-make -j 20
-make -j 20 install
-
 exit 0
