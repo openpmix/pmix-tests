@@ -2,23 +2,33 @@
 
 #
 # PRRTE requires a minimum of OpenPMIx v4.0.x
+# If we change PMIx v4.0 branch then check to make
+# sure that PRRTE still builds correctly.
 #
 
 #--------------------------------
 # Sanity Checks
 #--------------------------------
-# Ignore $_PMIX_CHECKOUT as we will use the current v4.0.x branch
+# Ignore $_PRRTE_CHECKOUT as we will use the current master branch
 
-if [ -z "${_PRRTE_CHECKOUT}" ]; then
-    echo "Error: No PRRTE checkout"
-    # git clone https://github.com/openpmix/prrte.git
+if [ -z "${_PMIX_CHECKOUT}" ]; then
+    echo "Error: No PMIx checkout"
+    # git clone https://github.com/openpmix/openpmix.git
     exit 1
 fi
 
-if [ ! -d ${_PRRTE_CHECKOUT} ] ; then
-    echo "Error: No PRRTE checkout in ${_PRRTE_CHECKOUT}"
-    echo "Set the _PRRTE_CHECKOUT envar to your prrte checkout"
+if [ ! -d ${_PMIX_CHECKOUT} ] ; then
+    echo "Error: No PMIx checkout in ${_PMIX_CHECKOUT}"
+    echo "Set the _PMIX_CHECKOUT envar to your pmix checkout"
     exit 1
+fi
+
+# Only run if we are modifying the v4.0 branch
+if [ -n "$PR_TARGET_BRANCH" ] ; then
+    if [[ "$PR_TARGET_BRANCH" != "v4.0" ]] ; then
+        echo "Warning: This build does not work for this branch"
+        exit 0
+    fi
 fi
 
 #--------------------------------
@@ -33,8 +43,8 @@ cd $_BUILD_DIR
 #--------------------------------
 # PMIx Build
 #--------------------------------
-git clone -b v4.0 https://github.com/openpmix/openpmix.git
-cd openpmix
+cp -R ${_PMIX_CHECKOUT} .
+cd `basename ${_PMIX_CHECKOUT}`
 
 #--------------------------------
 # Autogen
@@ -65,8 +75,8 @@ make -j 10 install
 # PRRTE Build
 #--------------------------------
 cd $_BUILD_DIR
-cp -R ${_PRRTE_CHECKOUT} .
-cd `basename ${_PRRTE_CHECKOUT}`
+git clone -b master https://github.com/openpmix/prrte.git
+cd prrte
 
 #--------------------------------
 # Autogen
