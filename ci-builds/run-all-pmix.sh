@@ -30,28 +30,29 @@ echo "----------------------------------"
 LEN=${#ALL_BUILDS[@]}
 for (( i=0; i < ${LEN}; i++ )); do
     if [ -x ${ALL_BUILDS[$i]} ] ; then
-        echo "--------- Build "$((i+1))" of $LEN : ${ALL_BUILDS[$i]}"
+        echo `date`" --------- Build "$((i+1))" of $LEN : ${ALL_BUILDS[$i]}"
 
         # Build directory
         export _BUILD_DIR=`mktemp -d $HOME/tmp-build-XXXXX`
-        echo "--------- Build "$((i+1))" of $LEN : Building to: $_BUILD_DIR"
+        echo `date`" --------- Build "$((i+1))" of $LEN : Building to: $_BUILD_DIR"
         _OUTPUT_FILE=${_BUILD_DIR}"/output.txt"
 
         # Run the test
+        SECONDS=0
         CMD="./"${ALL_BUILDS[$i]}
         $CMD 1> $_OUTPUT_FILE 2>&1
 
         if [ $? -eq 0 ] ; then
-            echo "--------- Build "$((i+1))" of $LEN : Success"
-            echo "--------- Build "$((i+1))" of $LEN : Cleanup"
+            echo `date`" --------- Build "$((i+1))" of $LEN : Success in $SECONDS second(s)"
+            echo `date`" --------- Build "$((i+1))" of $LEN : Cleanup"
             rm -rf ${_BUILD_DIR}
         else
-            echo "--------- Build "$((i+1))" of $LEN : FAILED"
+            echo `date`" --------- Build "$((i+1))" of $LEN : FAILED in $SECONDS second(s)"
             cat $_OUTPUT_FILE
             exit 1
         fi
     else
-        echo "--------- Build "$((i+1))" of $LEN : ${ALL_BUILDS[$i]}"
+        echo `date`" --------- Build "$((i+1))" of $LEN : ${ALL_BUILDS[$i]}"
         echo "Skip: ${ALL_BUILDS[$i]}"
     fi
 done
