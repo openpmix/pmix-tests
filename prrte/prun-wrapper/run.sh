@@ -25,7 +25,7 @@ fi
 # ---------------------------------------
 # Run the test - Hostname with --hostfile
 # ---------------------------------------
-prterun --map-by ppr:5:node ${_HOSTFILE_ARG} --prtemca iof_base_verbose 5 --prtemca pmix_server_verbose 5 hostname 2>&1 | tee output-hn.txt
+prterun --map-by ppr:5:node ${_HOSTFILE_ARG} hostname 2>&1 | tee output-hn.txt
 
 # ---------------------------------------
 # Verify the results

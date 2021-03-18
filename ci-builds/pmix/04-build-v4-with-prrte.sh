@@ -88,7 +88,7 @@ export AUTOMAKE_JOBS=20
 # Configure
 #--------------------------------
 ./configure --prefix=${_BUILD_DIR}/install-prrte \
-            --enable-debug \
+            --disable-debug \
             --with-pmix=${_BUILD_DIR}/install-pmix \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
             --with-hwloc=${HWLOC1_INSTALL_PATH}
