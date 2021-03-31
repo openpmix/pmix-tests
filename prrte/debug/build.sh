@@ -23,7 +23,7 @@ if [ $? -ne 0 ] ; then
 fi
 
   # Build tests using PRRTE examples
-for program in direct attach daemon hello
+for program in direct indirect attach daemon hello
 do
     echo "=========================="
     echo "Building PMIx ${program}"

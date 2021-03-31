@@ -1,0 +1,55 @@
+attach    :001: Debugger ns @NS<0> rank 0 pid @PID<0>: Running
+attach    :002: evhandler_reg_callbk called to register callback refid=0
+attach    :003: attach_to_running_job called to attach to application with namespace=@NS<1>
+attach    :004: query_application_namespace called to get application namespace
+attach    :005: Application namespace is '@NS<2>'
+attach    :006: Spawn debugger daemon
+attach    :007: Debugger daemon namespace '@NS<3>'
+attach    :008: iof_reg_callbk called to register IOF handler refid=1
+attach    :009: evhandler_reg_callbk called to register callback refid=1
+attach    :010: Waiting for debugger daemon namespace @NS<3> to complete
+attach    :011: release_fn called as callback for event=JOB ENDED
+attach    :012: DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED - AFFECTED @NS<3>
+attach    :013: Debugger daemon namespace @NS<3> terminated
+attach    :014: PMIx_IOF_deregister completed with status SUCCESS
+attach    :015: iof_dereg_callbk called as reult of de-registering I/O forwarding, status SUCCESS
+attach    :016: Forwarded stdio data:
+attach    :017: End forwarded stdio
+daemon-0  :001: Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Running
+daemon-0  :001: Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Running
+daemon-0  :002: evhandler_reg_callbk called by daemon as registration callback
+daemon-0  :002: evhandler_reg_callbk called by daemon as registration callback
+daemon-0  :003: [@NS<3>:-2:@PID<1>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-0  :003: [@NS<3>:-2:@PID<1>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-0  :004: [@NS<3>:0:@PID<1>] Debugging '@NS<2>'
+daemon-0  :004: [@NS<3>:0:@PID<1>] Debugging '@NS<2>'
+daemon-0  :005: [@NS<3>:0:@PID<1>] my local rank 0
+daemon-0  :005: [@NS<3>:0:@PID<1>] my local rank 0
+daemon-0  :006: [@NS<3>:0:@PID<1>] registering for termination of '@NS<2>'
+daemon-0  :006: [@NS<3>:0:@PID<1>] registering for termination of '@NS<2>'
+daemon-0  :007: evhandler_reg_callbk called by daemon as registration callback
+daemon-0  :007: evhandler_reg_callbk called by daemon as registration callback
+daemon-0  :008: cbfunc called as daemon callback for PMIx_Query
+daemon-0  :008: cbfunc called as daemon callback for PMIx_Query
+daemon-0  :009: Transferring pmix.qry.lptable
+daemon-0  :009: Transferring pmix.qry.lptable
+daemon-0  :010: [@NS<3>:0:@PID<1>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-0  :010: [@NS<3>:0:@PID<1>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-0  :011: Proctable[0], namespace @NS<2> rank 0 exec hello
+daemon-0  :011: Proctable[0], namespace @NS<2> rank 0 exec hello
+daemon-0  :012: Proctable[1], namespace @NS<2> rank 1 exec hello
+daemon-0  :012: Proctable[1], namespace @NS<2> rank 1 exec hello
+daemon-0  :013: [@NS<3>:0:@PID<1>] Sending release
+daemon-0  :013: [@NS<3>:0:@PID<1>] Sending release
+daemon-0  :014: Waiting for application namespace @NS<2> to terminate
+daemon-0  :014: Waiting for application namespace @NS<2> to terminate
+daemon-0  :015: release_fn called as daemon callback for event=JOB ENDED
+daemon-0  :015: release_fn called as daemon callback for event=JOB ENDED
+daemon-0  :016: DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
+daemon-0  :016: DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
+daemon-0  :017: Application namespace @NS<2> terminated
+daemon-0  :017: Application namespace @NS<2> terminated
+daemon-0  :018: Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
+daemon-0  :018: Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
+daemon-0  :019: Debugger daemon ns @NS<3> rank 0 pid @PID<1>:PMIx_Finalize successfully completed
+daemon-0  :019: Debugger daemon ns @NS<3> rank 0 pid @PID<1>:PMIx_Finalize successfully completed

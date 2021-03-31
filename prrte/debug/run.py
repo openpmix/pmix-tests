@@ -32,10 +32,12 @@ ATTACH_WAITTIME = 10.0
 #
 # A multinode testcase includes MULTINODE_TEST in it's testcase flags settings
 tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
-          ["direct-cospawn", SYS_DAEMON_NEEDED, "./direct", "-c"]
+          ["direct-cospawn", SYS_DAEMON_NEEDED, "./direct", "-c"],
+          ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
+          ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
+                  "./hello", "10"]
 # These testcases are not working at this point, so comment them out for now
-#          ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
-#          ["indirect", SYS_DAEMON_NEEDED, "indirect", "./prun", "-q", "-n", "2",
+#          ["indirect", SYS_DAEMON_NEEDED, "./indirect", "prun", "-n", "2",
 #                  "hello", "10"],
 #          ["direct-1host", SYS_DAEMON_NEEDED | MULTINODE_TEST,
 #                  "direct", "-H", "./direct-1host-hostfile", "--map-by",
@@ -246,9 +248,25 @@ def run(selected, testCases):
             timerThread.daemon = True
             timerThread.start()
 
-              # Note that testProcess.communicate blocks until the process exits
-            stdoutText, stderrText = testProcess.communicate()
-
+              # Trap UnicodeDecodeError since stdio output from target process may
+              # contain invalid characters in text strings
+            stdoutText = ""
+            stderrText = ""
+            try:
+                  # Note that testProcess.communicate blocks until the process exits
+                stdoutText, stderrText = testProcess.communicate()
+            except UnicodeDecodeError as e:
+                # If this exception occurs, stdoutText and stderrText are not updated
+                log("ERROR: Testcase ", testCase[0],
+                    " has invalid stdio data 0x", bytearray([e.object[e.start]]).hex(),
+                    " at offsets ", e.start, " to ", e.end)
+                failures = failures + 1
+                failedTests.append(testCase[0])
+                if (prteProcess != None):
+                    shutdownPrte(prteProcess, waitTimeout)
+                rc = 1
+                continue
+    
               # Get test case exit code first to avoid leaving a zombie process
             runRC = testProcess.wait(waitTimeout)
 
