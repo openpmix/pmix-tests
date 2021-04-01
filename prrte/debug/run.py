@@ -33,9 +33,9 @@ ATTACH_WAITTIME = 10.0
 # A multinode testcase includes MULTINODE_TEST in it's testcase flags settings
 tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
           ["direct-cospawn", SYS_DAEMON_NEEDED, "./direct", "-c"],
-          ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
-          ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
-                  "./hello", "10"]
+#         ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
+#         ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
+#                 "./hello", "10"]
 # These testcases are not working at this point, so comment them out for now
 #          ["indirect", SYS_DAEMON_NEEDED, "./indirect", "prun", "-n", "2",
 #                  "hello", "10"],
