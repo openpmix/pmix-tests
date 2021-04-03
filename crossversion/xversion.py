@@ -516,12 +516,15 @@ if __name__ == "__main__":
                 if is_valid:
                     print("="*70)
                     print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
+                    if bld_client.branch is "v2.2":
+                        os.environ['PMIX_MCA_gds'] = "hash"
                     ret = run_test(bld_server, bld_client, test_client=True)
                     if 0 == ret:
                         final_summary_client.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
                     else:
                         final_summary_client.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
                         count_failed += 1
+                    del os.enviorn['PMIX_MCA_gds']
 
     # Run the cross-version test - Tool
     if args.no_run is False and args.skip_tool is False:
