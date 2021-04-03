@@ -15,7 +15,7 @@ import subprocess
 import shutil
 
 # put this in one place
-supported_versions = ["master", "v4.0", "v3.1", "v3.2", "v2.2"]
+supported_versions = ["master", "v4.0", "v3.1", "v3.2"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
@@ -516,15 +516,12 @@ if __name__ == "__main__":
                 if is_valid:
                     print("="*70)
                     print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
-                    if bld_client.branch is "v2.2":
-                        os.environ['PMIX_MCA_gds'] = "hash"
                     ret = run_test(bld_server, bld_client, test_client=True)
                     if 0 == ret:
                         final_summary_client.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch)
                     else:
                         final_summary_client.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
                         count_failed += 1
-                    os.unsetenv('PMIX_MCA_gds')
 
     # Run the cross-version test - Tool
     if args.no_run is False and args.skip_tool is False:
@@ -542,15 +539,12 @@ if __name__ == "__main__":
                 if is_valid:
                     print("="*70)
                     print("Server : %6s -> Tool: %6s" % (bld_server.branch, bld_client.branch))
-                    if bld_client.branch is "v2.2":
-                        os.environ['PMIX_MCA_gds'] = "hash"
                     ret = run_test(bld_server, bld_client, test_tool=True)
                     if 0 == ret:
                         final_summary_tool.append("Run PASS: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
                     else:
                         final_summary_tool.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
                         count_failed_tool += 1
-                    os.unsetenv('PMIX_MCA_gds')
 
     # Run the cross-version test - make check
     if args.no_run is False and args.make_check is True:
@@ -568,8 +562,6 @@ if __name__ == "__main__":
                 if is_valid:
                     print("="*70)
                     print("Server : %6s -> Client: %6s" % (bld_server.branch, bld_client.branch))
-                    if bld_client.branch is "v2.2":
-                        os.environ['PMIX_MCA_gds'] = "hash"
                     for test in make_check_tests:
                         valid_test = True
                         for tstpair in invalid_make_check_tests:
@@ -580,7 +572,6 @@ if __name__ == "__main__":
                             if 0 != ret:
                                 final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch + "  [" + test + "]")
                                 count_failed_check += 1
-                    os.unsetenv('PMIX_MCA_gds')
 
     final_len = len(final_summary_build) + len(final_summary_client) + len(final_summary_tool) + len(final_summary_check)
     if 0 < final_len:
