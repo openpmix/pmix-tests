@@ -524,7 +524,7 @@ if __name__ == "__main__":
                     else:
                         final_summary_client.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch)
                         count_failed += 1
-                    del os.environ['PMIX_MCA_gds']
+                    os.unsetenv('PMIX_MCA_gds')
 
     # Run the cross-version test - Tool
     if args.no_run is False and args.skip_tool is False:
@@ -550,7 +550,7 @@ if __name__ == "__main__":
                     else:
                         final_summary_tool.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch+" (Tool)")
                         count_failed_tool += 1
-                    del os.environ['PMIX_MCA_gds']
+                    os.unsetenv('PMIX_MCA_gds')
 
     # Run the cross-version test - make check
     if args.no_run is False and args.make_check is True:
@@ -580,7 +580,7 @@ if __name__ == "__main__":
                             if 0 != ret:
                                 final_summary_check.append("Run ***FAILED***: "+bld_server.branch+" -> "+bld_client.branch + "  [" + test + "]")
                                 count_failed_check += 1
-                    del os.environ['PMIX_MCA_gds']
+                    os.unsetenv('PMIX_MCA_gds')
 
     final_len = len(final_summary_build) + len(final_summary_client) + len(final_summary_tool) + len(final_summary_check)
     if 0 < final_len:
