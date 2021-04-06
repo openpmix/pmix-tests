@@ -16,7 +16,7 @@ echo "Compiler: $PCC"
 echo ${PCC} --showme
 set -e
 
-gcc -o tcfilter tcfilter.c
+gcc -g -o tcfilter tcfilter.c
 if [ $? -ne 0 ] ; then
     echo "Compilation of tcfilter failed"
     exit 1

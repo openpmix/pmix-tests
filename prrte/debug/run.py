@@ -32,13 +32,13 @@ ATTACH_WAITTIME = 10.0
 #
 # A multinode testcase includes MULTINODE_TEST in it's testcase flags settings
 tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
-          ["direct-cospawn", SYS_DAEMON_NEEDED, "./direct", "-c"],
-#         ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
-#         ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
-#                 "./hello", "10"]
+          ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
+          ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
+                  "./hello", "10"]
 # These testcases are not working at this point, so comment them out for now
 #          ["indirect", SYS_DAEMON_NEEDED, "./indirect", "prun", "-n", "2",
 #                  "hello", "10"],
+#          ["direct-cospawn", SYS_DAEMON_NEEDED, "./direct", "-c"],
 #          ["direct-1host", SYS_DAEMON_NEEDED | MULTINODE_TEST,
 #                  "direct", "-H", "./direct-1host-hostfile", "--map-by",
 #                  "ppr:4:node"],
@@ -226,14 +226,18 @@ def run(selected, testCases):
 
         stdoutPath = str.format("{}.stdout", testCase[0])
         stderrPath = str.format("{}.stderr", testCase[0])
+        origStdoutPath = stdoutPath + ".orig"
+        origStderrPath = stderrPath + ".orig"
           # Delete old testcase output files. Missing files is not an error
-        for path in [stdoutPath, stderrPath]:
+        for path in [stdoutPath, stderrPath, origStdoutPath, origStderrPath]:
             try:
                 remove(path)
             except FileNotFoundError as e:
                 continue
         stdoutFile = open(stdoutPath, "w+")
         stderrFile = open(stderrPath, "w+")
+        origStdoutFile = open(origStdoutPath, "w+")
+        origStderrFile = open(origStderrPath, "w+")
         try:
               # Create the test case process
             testProcess = Popen(testCase[2:], stdout=PIPE, stderr=PIPE,
@@ -315,6 +319,25 @@ def run(selected, testCases):
                 failedTests.append(testCase[0])
                 rc = 1
                 continue
+
+               # Save original stdout and stderr in case they are needed for
+
+            origStdout = Popen("/bin/cat", stdin=PIPE, stdout=origStdoutFile)
+
+              # Write stdout to backup file
+            pipe = origStdout.stdin
+            for text in stdoutText:
+                pipe.write(text.encode(encoding="UTF-8"))
+            pipe.close()
+            origStdout.wait(waitTimeout)
+            origStderr = Popen("/bin/cat", stdin=PIPE, stdout=origStderrFile)
+
+              # Write stderr to backup file
+            pipe = origStderr.stdin
+            for text in stderrText:
+                pipe.write(text.encode(encoding="UTF-8"))
+            pipe.close()
+            origStderr.wait(waitTimeout)
 
             log("Verify stdout/stderr for testcase ", testCase[0])
               # Get the testcase stdout and stderr output, split that output

@@ -206,6 +206,11 @@ int main(int argc, char *argv[]) {
       // Read testcase output from stdin and write converted text to stdout
     char *p = fgets(input, sizeof input - 1, stdin);
     while (NULL != p) {
+        // Remove sequence numbers from stdout/stderr file since they cause all
+        // following lines to fail comparison to baseline when a line is added or
+        // deleted in output for current execution. That masks the real
+        // difference in output.
+        memmove(&input[10], &input[14], strlen(&input[14]));
         int rescan;
           // Get rid of newline since puts() will add a newline to output string
         p = strchr(input, '\n');

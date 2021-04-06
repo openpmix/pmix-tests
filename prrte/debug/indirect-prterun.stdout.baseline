@@ -1,44 +1,43 @@
-indirect  :001: Debugger ns @NS<0> rank 0 pid @PID<0>: Running
-indirect  :002: DEBUGGER URI: @NS<1>;tcp4://@HOST<0>
-indirect  :003: evhandler_reg_callbk called with status SUCCESS
-indirect  :004: evhandler_reg_callbk called with status SUCCESS
-indirect  :005: SPAWNING LAUNCHER
-indirect  :006: RECONNECT TO IL AT @NS<2>
-indirect  :007: REGISTERING READY-FOR-DEBUG HANDLER
-indirect  :008: evhandler_reg_callbk called with status SUCCESS
-indirect  :009: RELEASING prterun [@NS<3>]
-indirect  :010: WAITING FOR APPLICATION LAUNCH
-indirect  :011: dbactive=1 ilactive=1 (icount 0)
-indirect  :012: GOT NSPACE @HOST<1>:@PID<0>:@NS<4>
-indirect  :013: Debugger daemon job: @HOST<1>:@PID<0>:@NS<4>
-indirect  :014: APPLICATION HAS LAUNCHED: @HOST<1>:@PID<0>:@NS<4>
-indirect  :015: Debugger: spawning ./daemon
-indirect  :016: WAITING FOR IL TO TERMINATE
-daemon-0  :001: Debugger daemon ns @HOST<1>:@PID<0>:@NS<5> rank 0 pid @PID<1>: Running
-daemon-0  :002: evhandler_reg_callbk called by daemon as registration callback
-daemon-0  :003: [@HOST<1>:@PID<0>:@NS<6>@2:-2:@PID<1>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<0>:@NS<4>'
-daemon-0  :004: [@HOST<1>:@PID<0>:@NS<6>@2:0:@PID<1>] Debugging '@HOST<1>:@PID<0>:@NS<4>'
-daemon-0  :005: [@HOST<1>:@PID<0>:@NS<6>@2:0:@PID<1>] my local rank 0
-daemon-0  :006: [@HOST<1>:@PID<0>:@NS<6>@2:0:@PID<1>] registering for termination of '@HOST<1>:@PID<0>:@NS<4>'
-daemon-0  :007: evhandler_reg_callbk called by daemon as registration callback
-daemon-0  :008: cbfunc called as daemon callback for PMIx_Query
-daemon-0  :009: Transferring pmix.qry.lptable
-daemon-0  :010: [@HOST<1>:@PID<0>:@NS<6>@2:0:@PID<1>] Local proctable received for nspace '@HOST<1>:@PID<0>:@NS<4>' has 2 entries
-daemon-0  :011: Proctable[0], namespace @HOST<1>:@PID<0>:@NS<4> rank 0 exec hello
-daemon-0  :012: Proctable[1], namespace @HOST<1>:@PID<0>:@NS<4> rank 1 exec hello
-daemon-0  :013: [@HOST<1>:@PID<0>:@NS<6>@2:0:@PID<1>] Sending release
-daemon-0  :014: Waiting for application namespace @HOST<1>:@PID<0>:@NS<4> to terminate
-hello-0   :001: Client ns @HOST<1>:@PID<0>:@NS<4> rank 0 pid @PID<2>: Running on host @HOST<2> localrank 0
-hello-1   :001: Client ns @HOST<1>:@PID<0>:@NS<4> rank 1 pid @PID<3>: Running on host @HOST<2> localrank 1
-hello-1   :002: Client ns @HOST<1>:@PID<0>:@NS<4> rank 1: Finalizing
-hello-1   :003: Client ns @HOST<1>:@PID<0>:@NS<4> rank 1:PMIx_Finalize successfully completed
-hello-0   :002: Client ns @HOST<1>:@PID<0>:@NS<4> rank 0: Finalizing
-hello-0   :003: Client ns @HOST<1>:@PID<0>:@NS<4> rank 0:PMIx_Finalize successfully completed
-daemon-0  :015: release_fn called as daemon callback for event=JOB ENDED
-daemon-0  :016: DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<0>:@NS<5> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<0>:@NS<4>
-daemon-0  :017: Application namespace @HOST<1>:@PID<0>:@NS<4> terminated
-daemon-0  :018: Debugger daemon ns @HOST<1>:@PID<0>:@NS<5> rank 0 pid @PID<1>: Finalizing
-daemon-0  :019: Debugger daemon ns @HOST<1>:@PID<0>:@NS<5> rank 0 pid @PID<1>:PMIx_Finalize successfully completed
-indirect  :017: terminate_fn called with status LOST_CONNECTION
-indirect  :018: DEFAULT EVENT HANDLER CALLED WITH STATUS LOST_CONNECTION
-indirect  :019: 	COMPLETE
+daemon-0  : Debugger daemon ns @HOST<0>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Running
+daemon-0  : evhandler_reg_callbk called by daemon as registration callback
+daemon-0  : [@HOST<0>:@PID<1>:@NS<1>@2:-2:@PID<0>] PMIX_DEBUG_JOB is '@HOST<0>:@PID<1>:@NS<2>'
+daemon-0  : [@HOST<0>:@PID<1>:@NS<1>@2:0:@PID<0>] Debugging '@HOST<0>:@PID<1>:@NS<2>'
+daemon-0  : [@HOST<0>:@PID<1>:@NS<1>@2:0:@PID<0>] my local rank 0
+daemon-0  : [@HOST<0>:@PID<1>:@NS<1>@2:0:@PID<0>] registering for termination of '@HOST<0>:@PID<1>:@NS<2>'
+daemon-0  : evhandler_reg_callbk called by daemon as registration callback
+daemon-0  : cbfunc called as daemon callback for PMIx_Query
+daemon-0  : Transferring pmix.qry.lptable
+daemon-0  : [@HOST<0>:@PID<1>:@NS<1>@2:0:@PID<0>] Local proctable received for nspace '@HOST<0>:@PID<1>:@NS<2>' has 2 entries
+daemon-0  : Proctable[0], namespace @HOST<0>:@PID<1>:@NS<2> rank 0 exec hello
+daemon-0  : Proctable[1], namespace @HOST<0>:@PID<1>:@NS<2> rank 1 exec hello
+daemon-0  : [@HOST<0>:@PID<1>:@NS<1>@2:0:@PID<0>] Sending release
+daemon-0  : Waiting for application namespace @HOST<0>:@PID<1>:@NS<2> to terminate
+daemon-0  : release_fn called as daemon callback for event=JOB ENDED
+daemon-0  : DEBUGGER DAEMON NAMESPACE @HOST<0>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<0>:@PID<1>:@NS<2>
+daemon-0  : Application namespace @HOST<0>:@PID<1>:@NS<2> terminated
+daemon-0  : Debugger daemon ns @HOST<0>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Finalizing
+daemon-0  : Debugger daemon ns @HOST<0>:@PID<1>:@NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
+hello-0   : Client ns @HOST<0>:@PID<1>:@NS<2> rank 0 pid @PID<2>: Running on host @HOST<0> localrank 0
+hello-0   : Client ns @HOST<0>:@PID<1>:@NS<2> rank 0: Finalizing
+hello-0   : Client ns @HOST<0>:@PID<1>:@NS<2> rank 0:PMIx_Finalize successfully completed
+hello-1   : Client ns @HOST<0>:@PID<1>:@NS<2> rank 1 pid @PID<3>: Running on host @HOST<0> localrank 1
+hello-1   : Client ns @HOST<0>:@PID<1>:@NS<2> rank 1: Finalizing
+hello-1   : Client ns @HOST<0>:@PID<1>:@NS<2> rank 1:PMIx_Finalize successfully completed
+indirect  : Debugger ns @NS<3> rank 0 pid @PID<1>: Running
+indirect  : DEBUGGER URI: @NS<4>;tcp4://@HOST<1>
+indirect  : evhandler_reg_callbk called with status SUCCESS
+indirect  : evhandler_reg_callbk called with status SUCCESS
+indirect  : SPAWNING LAUNCHER
+indirect  : RECONNECT TO IL AT @NS<5>
+indirect  : REGISTERING READY-FOR-DEBUG HANDLER
+indirect  : evhandler_reg_callbk called with status SUCCESS
+indirect  : RELEASING prterun [@NS<6>]
+indirect  : WAITING FOR APPLICATION LAUNCH
+indirect  : GOT NSPACE @HOST<0>:@PID<1>:@NS<2>
+indirect  : Debugger daemon job: @HOST<0>:@PID<1>:@NS<2>
+indirect  : APPLICATION HAS LAUNCHED: @HOST<0>:@PID<1>:@NS<2>
+indirect  : Debugger: spawning ./daemon
+indirect  : WAITING FOR IL TO TERMINATE
+indirect  : terminate_fn called with status LOST_CONNECTION
+indirect  : DEFAULT EVENT HANDLER CALLED WITH STATUS LOST_CONNECTION
+indirect  : 	COMPLETE
