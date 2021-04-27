@@ -1,13 +1,13 @@
 #!/bin/bash -ex
 
 #
-# PRRTE requires a minimum of OpenPMIx v4.0.x
+# PRRTE requires a minimum of OpenPMIx v4.1.x
 #
 
 #--------------------------------
 # Sanity Checks
 #--------------------------------
-# Ignore $_PMIX_CHECKOUT as we will use the current v4.0.x branch
+# Ignore $_PMIX_CHECKOUT as we will use the current v4.1.x branch
 
 if [ -z "${_PRRTE_CHECKOUT}" ]; then
     echo "Error: No PRRTE checkout"
@@ -33,7 +33,7 @@ cd $_BUILD_DIR
 #--------------------------------
 # PMIx Build
 #--------------------------------
-git clone -b v4.0 https://github.com/openpmix/openpmix.git
+git clone -b v4.1 https://github.com/openpmix/openpmix.git
 cd openpmix
 
 #--------------------------------
