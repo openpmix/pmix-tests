@@ -15,7 +15,7 @@ import subprocess
 import shutil
 
 # put this in one place
-supported_versions = ["master", "v4.1", "v4.0", "v3.1", "v3.2"]
+supported_versions = ["master", "v4.1", "v3.1", "v3.2"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
