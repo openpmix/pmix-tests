@@ -23,7 +23,7 @@ if [ $? -ne 0 ] ; then
 fi
 
   # Build tests using PRRTE examples
-for program in direct indirect attach daemon hello
+for program in direct indirect attach daemon hello direct-multi indirect-multi
 do
     echo "=========================="
     echo "Building PMIx ${program}"
@@ -35,7 +35,7 @@ do
         echo "Compilation of test-utils failed"
         exit 1
     fi
-    ${PCC} -g -o ${program} -I${CI_PRRTE_SRC}/examples/debugger ${CI_PRRTE_SRC}/examples/debugger/${program}.c test-utils.o -ldl
+    ${PCC} -Wall -g -o ${program} -I${CI_PRRTE_SRC}/examples/debugger ${CI_PRRTE_SRC}/examples/debugger/${program}.c test-utils.o -ldl
     if [ $? -ne 0 ] ; then
         echo "Compilation of $program failed"
         exit 1

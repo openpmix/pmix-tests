@@ -26,5 +26,7 @@ if [[ $_python == "" ]] ; then
 fi
 
 # Wrapper script used by CI framework to invoke test cases in this directory
-#${_python} ./run.py
+
+# Temporarily disable debugger CI tests
+#${_python} ./cirun.py
 exit 0

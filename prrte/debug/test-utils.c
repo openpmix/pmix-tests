@@ -178,7 +178,7 @@ int fprintf(FILE *stream, const char *format, ...) {
     else {
         sprintf(prefix, "%s-%s", TPRINT_PFX, my_rank);
     }
-    n = real_fprintf(stream, "%-10s:%03d: ", prefix, ++line_number);
+    n = real_fprintf(stream, "%-20s:%03d: ", prefix, ++line_number);
     n = n + real_vfprintf(stream, format, args);
     fflush(stream);
     va_end(args);
@@ -200,7 +200,7 @@ int printf(const char *format, ...) {
     else {
         sprintf(prefix, "%s-%s", TPRINT_PFX, my_rank);
     }
-    n = real_printf("%-10s:%03d: ", prefix, ++line_number);
+    n = real_printf("%-20s:%03d: ", prefix, ++line_number);
     n = n + real_vprintf(format, args);
     fflush(stdout);
     va_end(args);
@@ -220,7 +220,7 @@ int fputs(const char *s, FILE *stream) {
     else {
         sprintf(prefix, "%s-%s", TPRINT_PFX, my_rank);
     }
-    real_fprintf(stream, "%-10s:%03d: ", prefix, ++line_number);
+    real_fprintf(stream, "%-20s:%03d: ", prefix, ++line_number);
     n = real_fputs(s, stream);
     fflush(stream);
     unlock_stream();
@@ -239,7 +239,7 @@ int puts(const char *s) {
     else {
         sprintf(prefix, "%s-%s", TPRINT_PFX, my_rank);
     }
-    real_fprintf(stdout, "%-10s:%03d: ", prefix, ++line_number);
+    real_fprintf(stdout, "%-20s:%03d: ", prefix, ++line_number);
     n = real_puts(s);
     fflush(stdout);
     unlock_stream();
@@ -259,7 +259,7 @@ size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) {
         sprintf(prefix, "%s-%s", TPRINT_PFX, my_rank);
     }
     // Setting 'n' assumes the original fwrite is writing 'nmemb' characters
-    n = real_fprintf(stream, "%-10s:%03d: ", prefix, ++line_number);
+    n = real_fprintf(stream, "%-20s:%03d: ", prefix, ++line_number);
     n = n + real_fwrite(ptr, size, nmemb, stream);
     fflush(stream);
     unlock_stream();
