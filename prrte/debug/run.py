@@ -3,6 +3,7 @@
 from os import environ
 from os import error
 from os import remove
+from subprocess import call
 from subprocess import CalledProcessError
 from subprocess import check_call
 from subprocess import DEVNULL
@@ -32,29 +33,51 @@ ATTACH_WAITTIME = 10.0
 #
 # A multinode testcase includes MULTINODE_TEST in it's testcase flags settings
 tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
-          ["direct-cospawn", SYS_DAEMON_NEEDED, "./direct", "-c"],
+            # This test requires a hostfile with 3 slots per node
+          ["direct-multi", SYS_DAEMON_NEEDED | MULTINODE_TEST, "./direct-multi",
+                  "--app-pernode", "2", "--app-np", "6"],
+            # This test requires a hostfile with 2 slots per node
+          ["direct-colaunch1", SYS_DAEMON_NEEDED | MULTINODE_TEST, "./direct-multi",
+                  "--app-pernode", "2", "--app-np", "6",
+                  "--daemon-colocate-per-node", "1"],
+            # This test requires a hostfile with 2 slots per node
+          ["direct-colaunch2", SYS_DAEMON_NEEDED | MULTINODE_TEST, "./direct-multi",
+                  "--app-pernode", "2", "--app-np", "6",
+                  "--daemon-colocate-per-proc", "1"],
+            # This test requires a hostfile with 5 slots per node
+          ["indirect-multi", MULTINODE_TEST, "./indirect-multi",
+                  "--num-nodes", "$numNodes", "--hostfile", "$hostfile",
+                  "prterun", "--hostfile", "$hostfile", "--np", "12", "./hello"],
+            # This test requires a hostfile with 4 slots per node
+          ["indirect-colaunch1", MULTINODE_TEST, "./indirect-multi",
+                  "--daemon-colocate-per-node", "1", "prterun", "--hostfile", "$hostfile",
+                  "--np", "12", "./hello"],
+            # This test requires a hostfile with 4 slots per node
+          ["indirect-colaunch2", MULTINODE_TEST, "./indirect-multi",
+                  "--daemon-colocate-per-proc", "1", "prterun", "--hostfile", "$hostfile",
+                  "--np", "12", "./hello"],
+            # This test requires a hostfile with 2 slots per node
+          ["attach-colaunch1", ATTACH_TARGET_NEEDED | MULTINODE_TEST, "./attach",
+                  "--daemon-colocate-per-node", "1", "$attach-namespace"],
+            # This test requires a hostfile with 2 slots per node
+          ["attach-colaunch2", ATTACH_TARGET_NEEDED | MULTINODE_TEST, "./attach",
+                  "--daemon-colocate-per-proc", "1", "$attach-namespace"]
+# These testcases are not working at this point, so comment them out for now
 #         ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
 #         ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
-#                 "./hello", "10"]
-# These testcases are not working at this point, so comment them out for now
-#          ["indirect", SYS_DAEMON_NEEDED, "./indirect", "prun", "-n", "2",
-#                  "hello", "10"],
-#          ["direct-1host", SYS_DAEMON_NEEDED | MULTINODE_TEST,
-#                  "direct", "-H", "./direct-1host-hostfile", "--map-by",
-#                  "ppr:4:node"],
-#          ["direct-2host", SYS_DAEMON_NEEDED | MULTINODE_TEST,
-#                  "direct", "-H", "./direct-2host-hostfile", "--map-by",
-#                  "ppr:4:node"]
+#                 "./hello", "10"],
         ]
-
 # Commands to start prte system daemons for multi-node tests. The testcase
 # name (array element 0) must match the name of the testcase in the tests array
 # and the name of the hostfile should be the same as the hostfile in the 
-# testcase run command in the tests array.
-hostfileDaemons = [ ["direct-2host", "prte", "--system-server", "--hostfile",
-                          "./direct-2host-hostfile", "--report-uri", "+"],
-                    ["direct-1host", "prte", "--system-server", "--hostfile",
-                          "./direct-1host-hostfile", "--report-uri", "+"] ]
+# testcase run command, if any in the tests array.
+hostfileDaemons = [ ["direct-multi", "prte", "--system-server", "--hostfile",
+                            "$hostfile", "--report-uri", "+"],
+                    ["direct-colaunch1", "prte", "--system-server", "--hostfile",
+                            "$hostfile", "--report-uri", "+"],
+                    ["direct-colaunch2", "prte", "--system-server", "--hostfile",
+                            "$hostfile", "--report-uri", "+"]
+                  ]
 
 def log(*text):
     """Write a timestamped log message to stdout"""
@@ -111,26 +134,46 @@ def run(selected, testCases):
       # Run the individual testcases. If a test case fails, that results
       # in an exception which logs that test case failure and then the
       # next test case is run.
-    failedTests = []
+    global testcases, failures, failedTests
     prteProcess = None
     rc = 0
-    failures = 0
-    testcases = 0
     testcaseTimeout = 60.0
     daemonDelay = 5.0
     waitTimeout = 5.0
+    hostFile = "./hostfile"
+    try:
+        hostFile = environ["CI_HOSTFILE"]
+    except KeyError:
+        pass
+    numNodes = 1
+    try:
+        numNodes = int(environ["CI_NUM_NODES"])
+    except KeyError:
+        pass
+    except ValueError:
+        log("ERROR: CI_NUM_NODES environment variable value is not numeric.")
+        exit(1)
     try:
         testcaseTimeout = float(environ["TC_TIMEOUT"])
     except KeyError:
         pass
+    except ValueError:
+        log("ERROR: TC_TIMEOUT environment variable value is not numeric.")
+        exit(1)
     try:
         waitTimeout = float(environ["TC_WAIT_TIMEOUT"])
     except KeyError:
         pass
+    except ValueError:
+        log("ERROR: TC_WAIT_TIMEOUT environment variable value is not numeric.")
+        exit(1)
     try:
         daemonDelay = float(environ["TC_DAEMON_DELAY"])
     except KeyError:
         pass
+    except ValueError:
+        log("ERROR: TC_DAEMON_DELAY environment variable value is not numeric.")
+        exit(1)
 
     log("Testcase timeout limit is ", testcaseTimeout, " seconds.")
     log("Process wait timeout limit is ", waitTimeout, " seconds.")
@@ -139,6 +182,10 @@ def run(selected, testCases):
         if ((selected != "**all**") and (selected != testCase[0])):
             continue
         log("Initialize testcase ", testCase[0])
+          # Testcases can fail if there are leftover /tmp/prte* directories from
+          # previous runs that did not properly clean up. Solve this by
+          # deleting any such directories owned by this user
+        call("rm -rf /tmp/prte*", shell=True)
         testcases = testcases + 1
         prteProcess = None
         attachProcess = None
@@ -167,6 +214,9 @@ def run(selected, testCases):
                     failedTests.append(testCase[0])
                     rc = 1
                     continue
+                for idx, testArg in enumerate(prteCommand):
+                    if (testArg == "$hostfile"):
+                        prteCommand[idx] = hostFile
                 log("Starting multi-node prte ", prteCommand)
                 prteProcess = Popen(prteCommand, stdout=PIPE, stderr=STDOUT)
 
@@ -186,10 +236,17 @@ def run(selected, testCases):
 
           # If the test requires an application to attach to, start the app here
         if ((testCase[1] & ATTACH_TARGET_NEEDED) != 0):
-            attachProcess = Popen(["prterun", "--report-uri", "+",
-                                  "-n", "2", "hello",
-                                  str(int(ATTACH_WAITTIME))], 
-                                  stdout=PIPE, stderr=STDOUT)
+            if ((testCase[1] & MULTINODE_TEST) != 0):
+                attachProcess = Popen(["prterun", "--report-uri", "+",
+                                      "--hostfile", hostFile,
+                                      "-n", str(numNodes * 2), "hello",
+                                      str(int(ATTACH_WAITTIME))], 
+                                      stdout=PIPE, stderr=STDOUT)
+            else:
+                attachProcess = Popen(["prterun", "--report-uri", "+",
+                                      "-n", "2", "hello",
+                                      str(int(ATTACH_WAITTIME))], 
+                                      stdout=PIPE, stderr=STDOUT)
               # The namespace is the first ';' delimited token in the first line
               # of prterun output. This read also serves as a barrier to
               # ensure prterun is started before running the test
@@ -223,17 +280,25 @@ def run(selected, testCases):
                 testCase[idx] = prteNamespace
             if (testArg == "$attach-namespace"):
                 testCase[idx] = attachNamespace
+            if (testArg == "$hostfile"):
+                testCase[idx] = hostFile
+            if (testArg == "$numNodes"):
+                testCase[idx] = str(numNodes)
 
         stdoutPath = str.format("{}.stdout", testCase[0])
         stderrPath = str.format("{}.stderr", testCase[0])
+        origStdoutPath = stdoutPath + ".orig"
+        origStderrPath = stderrPath + ".orig"
           # Delete old testcase output files. Missing files is not an error
-        for path in [stdoutPath, stderrPath]:
+        for path in [stdoutPath, stderrPath, origStdoutPath, origStderrPath]:
             try:
                 remove(path)
             except FileNotFoundError as e:
                 continue
         stdoutFile = open(stdoutPath, "w+")
         stderrFile = open(stderrPath, "w+")
+        origStdoutFile = open(origStdoutPath, "w+")
+        origStderrFile = open(origStderrPath, "w+")
         try:
               # Create the test case process
             testProcess = Popen(testCase[2:], stdout=PIPE, stderr=PIPE,
@@ -316,6 +381,25 @@ def run(selected, testCases):
                 rc = 1
                 continue
 
+               # Save original stdout and stderr in case they are needed for
+
+            origStdout = Popen("/bin/cat", stdin=PIPE, stdout=origStdoutFile)
+
+              # Write stdout to backup file
+            pipe = origStdout.stdin
+            for text in stdoutText:
+                pipe.write(text.encode(encoding="UTF-8"))
+            pipe.close()
+            origStdout.wait(waitTimeout)
+            origStderr = Popen("/bin/cat", stdin=PIPE, stdout=origStderrFile)
+
+              # Write stderr to backup file
+            pipe = origStderr.stdin
+            for text in stderrText:
+                pipe.write(text.encode(encoding="UTF-8"))
+            pipe.close()
+            origStderr.wait(waitTimeout)
+
             log("Verify stdout/stderr for testcase ", testCase[0])
               # Get the testcase stdout and stderr output, split that output
               # into '\n'-delimited newlines, and sort the resulting text
@@ -349,7 +433,13 @@ def run(selected, testCases):
               # Send stderr text to filter
             pipe = stderrFilter.stdin
             for text in stderrText:
-                pipe.write(text.encode(encoding="UTF-8"))
+                  #####################################################################
+                  # This check for the Epoll string is a hack to bypass an error      #
+                  # reported in PMIx issue 2140 so testcases will not fail because of #
+                  # this error. This test should be removed once issue 2140 is fixed  #
+                  #####################################################################
+                if (text.find("[warn] Epoll ADD(") == -1):
+                    pipe.write(text.encode(encoding="UTF-8"))
             pipe.close()
             stderrFilter.wait(waitTimeout)
 
@@ -394,16 +484,24 @@ def run(selected, testCases):
 
         log("Completed testcase ", testCase[0])
 
-    log("Ran " + str(testcases) + " tests, " + str(failures) + " failed")
-    if (failures > 0):
-        log("Failed tests:")
-        for failedTest in failedTests:
-            log("    ", failedTest)
     return rc
 
+failedTests = []
+failures = 0
+testcases = 0
 rc = -1
 if (len(argv) > 1):
-    rc = run(argv[1], tests)
+    for idx, testCase in enumerate(argv):
+        if (idx > 0):
+            rc = max(rc, run(testCase, tests))
 else:
-    rc = run("**all**", tests)
+    # Since testcases have different setups, the complete set can no longer be
+    # run in a single invocation of run.py
+    log("ERROR: run.py must be invoked with at least one test case name specified.")
+    exit(1)
+log("Ran " + str(testcases) + " tests, " + str(failures) + " failed")
+if (failures > 0):
+    log("Failed tests:")
+    for failedTest in failedTests:
+        log("    ", failedTest)
 exit(rc)

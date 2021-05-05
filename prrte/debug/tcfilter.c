@@ -52,7 +52,7 @@ static char * host_pid_ns_pattern =
 static regex_t host_pid_ns_regex;
   // Regex to match strings like f8n07:53120:1@2:0:58103
 static char * host_pid_ns_rank_pid_pattern =
-            "([a-zA-Z0-9_.\\-]+):([0-9]+):([0-9]+)@[0-9]+:-?[0-9]:([0-9]+)";
+            "([a-zA-Z0-9_.\\-]+):([0-9]+):([0-9]+)@[0-9]+:-?[0-9]+:([0-9]+)";
 static regex_t host_pid_ns_rank_pid_regex;
   // Regex to match strings like "ns f8n07:64028"
   // 'ns ' is included in match so this regex does not incorrectly match to
@@ -206,6 +206,11 @@ int main(int argc, char *argv[]) {
       // Read testcase output from stdin and write converted text to stdout
     char *p = fgets(input, sizeof input - 1, stdin);
     while (NULL != p) {
+        // Remove sequence numbers from stdout/stderr file since they cause all
+        // following lines to fail comparison to baseline when a line is added or
+        // deleted in output for current execution. That masks the real
+        // difference in output.
+        memmove(&input[20], &input[24], strlen(&input[24]));
         int rescan;
           // Get rid of newline since puts() will add a newline to output string
         p = strchr(input, '\n');
