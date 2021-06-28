@@ -35,7 +35,7 @@ do
         echo "Compilation of test-utils failed"
         exit 1
     fi
-    ${PCC} -Wall -g -o ${program} -I${CI_PRRTE_SRC}/examples/debugger ${CI_PRRTE_SRC}/examples/debugger/${program}.c test-utils.o -ldl
+    ${PCC} -Wall -g -o ${program} -I${CI_PRRTE_SRC}/examples/debugger ${CI_PRRTE_SRC}/examples/debugger/${program}.c test-utils.o -ldl 
     if [ $? -ne 0 ] ; then
         echo "Compilation of $program failed"
         exit 1

@@ -33,6 +33,11 @@ ATTACH_WAITTIME = 10.0
 #
 # A multinode testcase includes MULTINODE_TEST in it's testcase flags settings
 tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
+          ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
+          ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
+                  "./hello", "10"],
+          ["indirect-prun", SYS_DAEMON_NEEDED, "./indirect", "prun", "-n", "2",
+                  "./hello", "10"],
             # This test requires a hostfile with 3 slots per node
           ["direct-multi", SYS_DAEMON_NEEDED | MULTINODE_TEST, "./direct-multi",
                   "--app-pernode", "2", "--app-np", "6"],
@@ -51,7 +56,7 @@ tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
             # This test requires a hostfile with 4 slots per node
           ["indirect-colaunch1", MULTINODE_TEST, "./indirect-multi",
                   "--daemon-colocate-per-node", "1", "prterun", "--hostfile", "$hostfile",
-                  "--np", "12", "./hello"],
+                  "--np", "12", "./hello", "10"],
             # This test requires a hostfile with 4 slots per node
           ["indirect-colaunch2", MULTINODE_TEST, "./indirect-multi",
                   "--daemon-colocate-per-proc", "1", "prterun", "--hostfile", "$hostfile",
@@ -63,9 +68,6 @@ tests = [ ["direct", SYS_DAEMON_NEEDED, "./direct"],
           ["attach-colaunch2", ATTACH_TARGET_NEEDED | MULTINODE_TEST, "./attach",
                   "--daemon-colocate-per-proc", "1", "$attach-namespace"]
 # These testcases are not working at this point, so comment them out for now
-#         ["attach", ATTACH_TARGET_NEEDED, "./attach", "$attach-namespace"],
-#         ["indirect-prterun", 0, "./indirect", "prterun", "-n", "2",
-#                 "./hello", "10"],
         ]
 # Commands to start prte system daemons for multi-node tests. The testcase
 # name (array element 0) must match the name of the testcase in the tests array

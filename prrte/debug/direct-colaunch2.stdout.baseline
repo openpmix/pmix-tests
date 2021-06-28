@@ -16,7 +16,6 @@ daemon-0            : release_fn called as daemon callback for event=JOB ENDED
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-0            : Application namespace @NS<1> terminated
 daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
 daemon-1            : Debugger daemon ns @NS<0> on host @HOST<0> rank 1 pid @PID<1>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : [@NS<0>:-2:@PID<1>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -34,7 +33,6 @@ daemon-1            : release_fn called as daemon callback for event=JOB ENDED
 daemon-1            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-1            : Application namespace @NS<1> terminated
 daemon-1            : Debugger daemon ns @NS<0> rank 1 pid @PID<1>: Finalizing
-daemon-1            : Debugger daemon ns @NS<0> rank 1 pid @PID<1>:PMIx_Finalize successfully completed
 daemon-2            : Debugger daemon ns @NS<0> on host @HOST<1> rank 2 pid @PID<2>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : [@NS<0>:-2:@PID<2>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -52,7 +50,6 @@ daemon-2            : release_fn called as daemon callback for event=JOB ENDED
 daemon-2            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-2            : Application namespace @NS<1> terminated
 daemon-2            : Debugger daemon ns @NS<0> rank 2 pid @PID<2>: Finalizing
-daemon-2            : Debugger daemon ns @NS<0> rank 2 pid @PID<2>:PMIx_Finalize successfully completed
 daemon-3            : Debugger daemon ns @NS<0> on host @HOST<1> rank 3 pid @PID<3>: Running
 daemon-3            : evhandler_reg_callbk called by daemon as registration callback
 daemon-3            : [@NS<0>:-2:@PID<3>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -70,7 +67,6 @@ daemon-3            : release_fn called as daemon callback for event=JOB ENDED
 daemon-3            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-3            : Application namespace @NS<1> terminated
 daemon-3            : Debugger daemon ns @NS<0> rank 3 pid @PID<3>: Finalizing
-daemon-3            : Debugger daemon ns @NS<0> rank 3 pid @PID<3>:PMIx_Finalize successfully completed
 daemon-4            : Debugger daemon ns @NS<0> on host @HOST<2> rank 4 pid @PID<4>: Running
 daemon-4            : evhandler_reg_callbk called by daemon as registration callback
 daemon-4            : [@NS<0>:-2:@PID<4>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -88,7 +84,6 @@ daemon-4            : release_fn called as daemon callback for event=JOB ENDED
 daemon-4            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-4            : Application namespace @NS<1> terminated
 daemon-4            : Debugger daemon ns @NS<0> rank 4 pid @PID<4>: Finalizing
-daemon-4            : Debugger daemon ns @NS<0> rank 4 pid @PID<4>:PMIx_Finalize successfully completed
 daemon-5            : Debugger daemon ns @NS<0> on host @HOST<2> rank 5 pid @PID<5>: Running
 daemon-5            : evhandler_reg_callbk called by daemon as registration callback
 daemon-5            : [@NS<0>:-2:@PID<5>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -106,7 +101,6 @@ daemon-5            : release_fn called as daemon callback for event=JOB ENDED
 daemon-5            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-5            : Application namespace @NS<1> terminated
 daemon-5            : Debugger daemon ns @NS<0> rank 5 pid @PID<5>: Finalizing
-daemon-5            : Debugger daemon ns @NS<0> rank 5 pid @PID<5>:PMIx_Finalize successfully completed
 direct-multi        : Debugger ns @NS<2> rank 0 pid @PID<6>: Running
 direct-multi        : evhandler_reg_callbk called to register callback
 direct-multi        : Called cbfunc as callback for PMIx_Query
