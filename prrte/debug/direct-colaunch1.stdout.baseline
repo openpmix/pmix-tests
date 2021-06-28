@@ -16,7 +16,6 @@ daemon-0            : release_fn called as daemon callback for event=JOB ENDED
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-0            : Application namespace @NS<1> terminated
 daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
 daemon-1            : Debugger daemon ns @NS<0> on host @HOST<1> rank 1 pid @PID<1>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : [@NS<0>:-2:@PID<1>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -34,7 +33,6 @@ daemon-1            : release_fn called as daemon callback for event=JOB ENDED
 daemon-1            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-1            : Application namespace @NS<1> terminated
 daemon-1            : Debugger daemon ns @NS<0> rank 1 pid @PID<1>: Finalizing
-daemon-1            : Debugger daemon ns @NS<0> rank 1 pid @PID<1>:PMIx_Finalize successfully completed
 daemon-2            : Debugger daemon ns @NS<0> on host @HOST<2> rank 2 pid @PID<2>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : [@NS<0>:-2:@PID<2>] PMIX_DEBUG_JOB is '@NS<1>'
@@ -52,7 +50,6 @@ daemon-2            : release_fn called as daemon callback for event=JOB ENDED
 daemon-2            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-2            : Application namespace @NS<1> terminated
 daemon-2            : Debugger daemon ns @NS<0> rank 2 pid @PID<2>: Finalizing
-daemon-2            : Debugger daemon ns @NS<0> rank 2 pid @PID<2>:PMIx_Finalize successfully completed
 direct-multi        : Debugger ns @NS<2> rank 0 pid @PID<3>: Running
 direct-multi        : evhandler_reg_callbk called to register callback
 direct-multi        : Called cbfunc as callback for PMIx_Query

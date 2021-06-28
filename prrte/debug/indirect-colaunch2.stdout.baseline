@@ -18,7 +18,6 @@ daemon-0            : release_fn called as daemon callback for event=JOB ENDED
 daemon-0            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-0            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-0            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-0            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
 daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<0> rank 1 pid @PID<2>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<2>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -38,7 +37,6 @@ daemon-1            : release_fn called as daemon callback for event=JOB ENDED
 daemon-1            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-1            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 1 pid @PID<2>: Finalizing
-daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 1 pid @PID<2>:PMIx_Finalize successfully completed
 daemon-10           : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<2> rank 10 pid @PID<3>: Running
 daemon-10           : evhandler_reg_callbk called by daemon as registration callback
 daemon-10           : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<3>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -58,7 +56,6 @@ daemon-10           : release_fn called as daemon callback for event=JOB ENDED
 daemon-10           : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-10           : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-10           : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 10 pid @PID<3>: Finalizing
-daemon-10           : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 10 pid @PID<3>:PMIx_Finalize successfully completed
 daemon-11           : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<2> rank 11 pid @PID<4>: Running
 daemon-11           : evhandler_reg_callbk called by daemon as registration callback
 daemon-11           : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<4>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -78,7 +75,6 @@ daemon-11           : release_fn called as daemon callback for event=JOB ENDED
 daemon-11           : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-11           : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-11           : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 11 pid @PID<4>: Finalizing
-daemon-11           : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 11 pid @PID<4>:PMIx_Finalize successfully completed
 daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<0> rank 2 pid @PID<5>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<5>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -98,7 +94,6 @@ daemon-2            : release_fn called as daemon callback for event=JOB ENDED
 daemon-2            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-2            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 2 pid @PID<5>: Finalizing
-daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 2 pid @PID<5>:PMIx_Finalize successfully completed
 daemon-3            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<0> rank 3 pid @PID<6>: Running
 daemon-3            : evhandler_reg_callbk called by daemon as registration callback
 daemon-3            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<6>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -118,7 +113,6 @@ daemon-3            : release_fn called as daemon callback for event=JOB ENDED
 daemon-3            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-3            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-3            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 3 pid @PID<6>: Finalizing
-daemon-3            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 3 pid @PID<6>:PMIx_Finalize successfully completed
 daemon-4            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<3> rank 4 pid @PID<7>: Running
 daemon-4            : evhandler_reg_callbk called by daemon as registration callback
 daemon-4            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<7>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -138,7 +132,6 @@ daemon-4            : release_fn called as daemon callback for event=JOB ENDED
 daemon-4            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-4            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-4            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 4 pid @PID<7>: Finalizing
-daemon-4            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 4 pid @PID<7>:PMIx_Finalize successfully completed
 daemon-5            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<3> rank 5 pid @PID<8>: Running
 daemon-5            : evhandler_reg_callbk called by daemon as registration callback
 daemon-5            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<8>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -158,7 +151,6 @@ daemon-5            : release_fn called as daemon callback for event=JOB ENDED
 daemon-5            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-5            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-5            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 5 pid @PID<8>: Finalizing
-daemon-5            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 5 pid @PID<8>:PMIx_Finalize successfully completed
 daemon-6            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<3> rank 6 pid @PID<9>: Running
 daemon-6            : evhandler_reg_callbk called by daemon as registration callback
 daemon-6            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<9>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -178,7 +170,6 @@ daemon-6            : release_fn called as daemon callback for event=JOB ENDED
 daemon-6            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-6            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-6            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 6 pid @PID<9>: Finalizing
-daemon-6            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 6 pid @PID<9>:PMIx_Finalize successfully completed
 daemon-7            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<3> rank 7 pid @PID<10>: Running
 daemon-7            : evhandler_reg_callbk called by daemon as registration callback
 daemon-7            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<10>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -198,7 +189,6 @@ daemon-7            : release_fn called as daemon callback for event=JOB ENDED
 daemon-7            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-7            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-7            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 7 pid @PID<10>: Finalizing
-daemon-7            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 7 pid @PID<10>:PMIx_Finalize successfully completed
 daemon-8            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<2> rank 8 pid @PID<11>: Running
 daemon-8            : evhandler_reg_callbk called by daemon as registration callback
 daemon-8            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<11>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -218,7 +208,6 @@ daemon-8            : release_fn called as daemon callback for event=JOB ENDED
 daemon-8            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-8            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-8            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 8 pid @PID<11>: Finalizing
-daemon-8            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 8 pid @PID<11>:PMIx_Finalize successfully completed
 daemon-9            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<2> rank 9 pid @PID<12>: Running
 daemon-9            : evhandler_reg_callbk called by daemon as registration callback
 daemon-9            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<12>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -238,7 +227,6 @@ daemon-9            : release_fn called as daemon callback for event=JOB ENDED
 daemon-9            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-9            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-9            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 9 pid @PID<12>: Finalizing
-daemon-9            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 9 pid @PID<12>:PMIx_Finalize successfully completed
 hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0 pid @PID<13>: Running on host @HOST<0> localrank 0
 hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0: Finalizing
 hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0:PMIx_Finalize successfully completed

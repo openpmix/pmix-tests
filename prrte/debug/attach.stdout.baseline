@@ -8,11 +8,10 @@ attach              : Debugger daemon namespace '@NS<3>'
 attach              : iof_reg_callbk called to register IOF handler refid=1
 attach              : evhandler_reg_callbk called to register callback refid=1
 attach              : Waiting for debugger daemon namespace @NS<3> to complete
-attach              : release_fn called as callback for event=JOB ENDED
-attach              : DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED - AFFECTED @NS<3>
+attach              : launcher_done called as callback for event=LOST_CONNECTION
+attach              : DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED
+attach              : notification_fn called as callback for event=LOST_CONNECTION
 attach              : Debugger daemon namespace @NS<3> terminated
-attach              : PMIx_IOF_deregister completed with status SUCCESS
-attach              : iof_dereg_callbk called as result of de-registering I/O forwarding
 attach              : Forwarded stdio data:
 attach              : End forwarded stdio
 daemon-0            : Debugger daemon ns @NS<3> on host @HOST<0> rank 0 pid @PID<1>: Running
@@ -51,5 +50,3 @@ daemon-0            : Application namespace @NS<2> terminated
 daemon-0            : Application namespace @NS<2> terminated
 daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
 daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
-daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>:PMIx_Finalize successfully completed
-daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>:PMIx_Finalize successfully completed
