@@ -13,7 +13,7 @@ _shutdown()
     # ---------------------------------------
     # Cleanup DVM
     # ---------------------------------------
-    pterm
+    pterm --dvm-uri file:dvm.uri
 
     exit $FINAL_RTN
 }
@@ -22,19 +22,18 @@ _shutdown()
 # Start the DVM
 # ---------------------------------------
 if [ "x" = "x$CI_HOSTFILE" ] ; then
-    prte --daemonize
+    hostarg=
 else
-    prte --daemonize --hostfile $CI_HOSTFILE
+    hostarg="--hostfile $CI_HOSTFILE"
 fi
 
-# Wait for DVM to start
-sleep 5
+prte --no-ready-msg --report-uri dvm.uri $hostarg &
 
 
 # ---------------------------------------
 # Run the test - hostname
 # ---------------------------------------
-_CMD="prun -n 1 hostname"
+_CMD="prun --dvm-uri file:dvm.uri --num-connect-retries 1000 -n 1 hostname"
 echo "======================="
 echo "Running hostname: $_CMD"
 echo "======================="
@@ -76,7 +75,7 @@ fi
 # ---------------------------------------
 # Run the test - init_finalize
 # ---------------------------------------
-_CMD="prun ./init_finalize_pmix"
+_CMD="prun --dvm-uri file:dvm.uri --num-connect-retries 1000 ./init_finalize_pmix"
 echo ""
 echo "======================="
 echo "Running init_finalize_pmix: $_CMD"
