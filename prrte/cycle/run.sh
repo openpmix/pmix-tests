@@ -26,9 +26,11 @@ if [ "x" = "x$CI_HOSTFILE" ] ; then
 else
     hostarg="--hostfile $CI_HOSTFILE"
 fi
-
+rm -f dvm.uri
+echo "======================="
+echo "Starting DVM: prte --no-ready-msg --report-uri dvm.uri $hostarg &"
+echo "======================="
 prte --no-ready-msg --report-uri dvm.uri $hostarg &
-
 
 # ---------------------------------------
 # Run the test - hostname
@@ -38,7 +40,7 @@ echo "======================="
 echo "Running hostname: $_CMD"
 echo "======================="
 
-rm output.txt ; touch output.txt
+rm -f output.txt ; touch output.txt
 for n in $(seq 1 $NUM_ITERS) ; do
     echo -e "--------------------- Execution (hostname): $n"
     $_CMD 2>&1 | tee -a output.txt
@@ -81,7 +83,7 @@ echo "======================="
 echo "Running init_finalize_pmix: $_CMD"
 echo "======================="
 
-rm output.txt ; touch output.txt
+rm -f output.txt ; touch output.txt
 for n in $(seq 1 $NUM_ITERS) ; do
     echo -e "--------------------- Execution (init/finalize): $n"
     $_CMD 2>&1 | tee -a output.txt
