@@ -56,7 +56,7 @@ _shutdown()
     # ---------------------------------------
     # Cleanup DVM
     # ---------------------------------------
-    pterm
+    pterm --dvm-uri file:dvm.uri --num-connect-retries 1000
 
     exit $FINAL_RTN
 }
@@ -134,7 +134,7 @@ _run_stress_test()
         #
 
         #_CMD="prun -n 1 --pmixmca pmix_client_spawn_verbose 100 -- ./sleeper -n ${nseconds} -i ${mycount}"
-        _CMD="prun -n 1 -- ./sleeper -n ${nseconds} -i ${mycount}"
+        _CMD="prun --dvm-uri file:dvm.uri --num-connect-retries 1000 -n 1 -- ./sleeper -n ${nseconds} -i ${mycount}"
 
         # Launch prun without waiting (**background**)
         #$_CMD 2>&1 | tee -a output.txt &
@@ -306,36 +306,34 @@ fi
 # ---------------------------------------
 # Start the DVM
 # ---------------------------------------
-if [ "x" = "x$CI_HOSTFILE" ] ; then
-    echo " # CMD: prte --daemonize"
-    prte --daemonize
-else
-    if [ $DEBUG -gt 0 ] ; then
-        # Enable some DVM logging and show log on exit
-        # Must launch DVM in background to get output and not use daemonize.
-        #trap "{ echo '== DVM LOG =='; cat DVM.log; echo '======'; }" INT TERM EXIT
-        trap "{ echo '== DVM LOG =='; cat DVM.log; echo '======'; echo '== per-run-logfiles =='; more output.*.txt |cat ; echo '=======' ;}" INT TERM EXIT
-
-        echo " # CMD: prte --prtemca plm_base_verbose 5 --hostfile $CI_HOSTFILE >& DVM.log &"
-        prte --prtemca plm_base_verbose 5 --hostfile $CI_HOSTFILE >& DVM.log &
-
-        # --pmixmca pmix_client_spawn_verbose 100 --pmixmca pmix_server_spawn_verbose 10
-
-    else
-        echo " # CMD: prte --daemonize --hostfile $CI_HOSTFILE"
-        prte --daemonize --hostfile $CI_HOSTFILE
-    fi
+ if [ "x" = "x$CI_HOSTFILE" ] ; then
+    hostarg=
+ else
+    hostarg="--hostfile $CI_HOSTFILE"
 fi
 
-# Wait for DVM to start
-sleep 5
+if [ $DEBUG -gt 0 ] ; then
+    # Enable some DVM logging and show log on exit
+    # Must launch DVM in background to get output and not use daemonize.
+    #trap "{ echo '== DVM LOG =='; cat DVM.log; echo '======'; }" INT TERM EXIT
+    trap "{ echo '== DVM LOG =='; cat DVM.log; echo '======'; echo '== per-run-logfiles =='; more output.*.txt |cat ; echo '=======' ;}" INT TERM EXIT
+
+    debugarg="--prtemca plm_base_verbose 5 --pmixmca pmix_client_spawn_verbose 100 --pmixmca pmix_server_spawn_verbose 10"
+else
+    debugarg=
+ fi
+
+echo " # CMD: prte --no-ready-msg --report-uri dvm.uri $hostarg $debugarg &"
+prte --no-ready-msg --report-uri dvm.uri $hostarg $debugarg &
+
+
 
 ########
 
 # ---------------------------------------
 # (Sanity test) Run the test - hostname
 # ---------------------------------------
-_CMD="prun -n 1 hostname"
+_CMD="prun --dvm-uri file:dvm.uri --num-connect-retries 1000 -n 1 hostname"
 echo "======================="
 echo "Running hostname: $_CMD"
 echo "======================="
