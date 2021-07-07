@@ -40,7 +40,7 @@ echo "======================="
 echo "Running hostname: $_CMD"
 echo "======================="
 
-rm output.txt ; touch output.txt
+rm -f output.txt ; touch output.txt
 for n in $(seq 1 $NUM_ITERS) ; do
     echo -e "--------------------- Execution (hostname): $n"
     $_CMD 2>&1 | tee -a output.txt
@@ -83,7 +83,7 @@ echo "======================="
 echo "Running init_finalize_pmix: $_CMD"
 echo "======================="
 
-rm output.txt ; touch output.txt
+rm -f output.txt ; touch output.txt
 for n in $(seq 1 $NUM_ITERS) ; do
     echo -e "--------------------- Execution (init/finalize): $n"
     $_CMD 2>&1 | tee -a output.txt
