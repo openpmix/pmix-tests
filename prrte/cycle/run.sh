@@ -26,9 +26,11 @@ if [ "x" = "x$CI_HOSTFILE" ] ; then
 else
     hostarg="--hostfile $CI_HOSTFILE"
 fi
-
+rm -f dvm.uri
+echo "======================="
+echo "Starting DVM: prte --no-ready-msg --report-uri dvm.uri $hostarg &"
+echo "======================="
 prte --no-ready-msg --report-uri dvm.uri $hostarg &
-
 
 # ---------------------------------------
 # Run the test - hostname
