@@ -73,6 +73,14 @@ fi
 if [ $FINAL_RTN == 0 ] ; then
     echo "Success - hostname"
 fi
+_shutdown
+
+
+rm -f dvm.uri
+echo "======================="
+echo "Starting DVM: prte --no-ready-msg --report-uri dvm.uri $hostarg &"
+echo "======================="
+prte --no-ready-msg --report-uri dvm.uri $hostarg &
 
 # ---------------------------------------
 # Run the test - init_finalize
