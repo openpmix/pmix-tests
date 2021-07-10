@@ -73,7 +73,7 @@ fi
 if [ $FINAL_RTN == 0 ] ; then
     echo "Success - hostname"
 fi
-_shutdown
+pterm --dvm-uri file:dvm.uri
 
 
 rm -f dvm.uri
