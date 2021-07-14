@@ -1,0 +1,42 @@
+daemon-0            : Debugger daemon ns @NS<0> on host @HOST<0> rank 0 pid @PID<0>: Running
+daemon-0            : evhandler_reg_callbk called by daemon as registration callback
+daemon-0            : [@NS<0>:-2:@PID<0>] PMIX_DEBUG_JOB is '@NS<1>'
+daemon-0            : [@NS<0>:0:@PID<0>] Debugging '@NS<1>'
+daemon-0            : [@NS<0>:0:@PID<0>] my local rank 0
+daemon-0            : [@NS<0>:0:@PID<0>] registering for termination of '@NS<1>'
+daemon-0            : evhandler_reg_callbk called by daemon as registration callback
+daemon-0            : cbfunc called as daemon callback for PMIx_Query
+daemon-0            : Transferring pmix.qry.lptable
+daemon-0            : [@NS<0>:0:@PID<0>] Local proctable received for nspace '@NS<1>' has 2 entries
+daemon-0            : Proctable[0], namespace @NS<1> rank 0 exec hello
+daemon-0            : Proctable[1], namespace @NS<1> rank 1 exec hello
+daemon-0            : [@NS<0>:0:@PID<0>] Sending release
+daemon-0            : Waiting for application namespace @NS<1> to terminate
+daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
+daemon-0            : Application namespace @NS<1> terminated
+daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>: Finalizing
+hello-0             : Client ns @NS<1> rank 0 pid @PID<1>: Running on host @HOST<0> localrank 0
+hello-0             : Client ns @NS<1> rank 0: Finalizing
+hello-0             : Client ns @NS<1> rank 0:PMIx_Finalize successfully completed
+hello-1             : Client ns @NS<1> rank 1 pid @PID<2>: Running on host @HOST<0> localrank 1
+hello-1             : Client ns @NS<1> rank 1: Finalizing
+hello-1             : Client ns @NS<1> rank 1:PMIx_Finalize successfully completed
+indirect            : Debugger ns @NS<2> rank 0 pid @PID<3>: Running
+indirect            : DEBUGGER URI: @NS<3>;tcp4://@HOST<1>
+indirect            : evhandler_reg_callbk called with status SUCCESS
+indirect            : evhandler_reg_callbk called with status SUCCESS
+indirect            : SPAWNING LAUNCHER
+indirect            : RECONNECT TO IL AT @NS<4>
+indirect            : REGISTERING READY-FOR-DEBUG HANDLER for @HOST<0>:@PID<3>:@NS<5>
+indirect            : evhandler_reg_callbk called with status SUCCESS
+indirect            : RELEASING prun [@NS<6>]
+indirect            : WAITING FOR APPLICATION LAUNCH
+indirect            : GOT NSPACE @NS<1>
+indirect            : Debugger daemon job: @NS<1>
+indirect            : APPLICATION HAS LAUNCHED: @NS<1>
+indirect            : Debugger: spawning ./daemon
+indirect            : WAITING FOR IL TO TERMINATE
+indirect            : terminate_fn called with status LOST_CONNECTION from @NS<4>:0
+indirect            : DEFAULT EVENT HANDLER CALLED WITH STATUS LOST_CONNECTION
+indirect            : 	COMPLETE
