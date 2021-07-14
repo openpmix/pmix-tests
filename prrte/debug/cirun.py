@@ -9,7 +9,7 @@ from time import strftime
 # This array specifies the number of slots neeed to run a run.py testcase
 # and the set of run.py testcases that need that number of slots.
 # The first element in each row is the number of slots, and the remaining 
-# elements are the names of the run.py testcases needing that number of slots
+# elements are the names of the run.py testcases needing that number of slots.
 tests = [ ["1", "direct", "attach", "indirect-prterun"],
           ["2", "direct-colaunch1", "direct-colaunch2",
                 "attach-colaunch1", "attach-colaunch2"],
