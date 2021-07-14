@@ -28,9 +28,9 @@ indirect            : evhandler_reg_callbk called with status SUCCESS
 indirect            : evhandler_reg_callbk called with status SUCCESS
 indirect            : SPAWNING LAUNCHER
 indirect            : RECONNECT TO IL AT @NS<5>
-indirect            : REGISTERING READY-FOR-DEBUG HANDLER for @HOST<0>:@PID<1>:@NS<6>
+indirect            : REGISTERING READY-FOR-DEBUG HANDLER
 indirect            : evhandler_reg_callbk called with status SUCCESS
-indirect            : RELEASING prterun [@NS<7>]
+indirect            : RELEASING prterun [@NS<5>,0]
 indirect            : WAITING FOR APPLICATION LAUNCH
 indirect            : GOT NSPACE @HOST<0>:@PID<1>:@NS<2>
 indirect            : Debugger daemon job: @HOST<0>:@PID<1>:@NS<2>
@@ -38,5 +38,3 @@ indirect            : APPLICATION HAS LAUNCHED: @HOST<0>:@PID<1>:@NS<2>
 indirect            : Debugger: spawning ./daemon
 indirect            : WAITING FOR IL TO TERMINATE
 indirect            : terminate_fn called with status LOST_CONNECTION
-indirect            : DEFAULT EVENT HANDLER CALLED WITH STATUS LOST_CONNECTION
-indirect            : 	COMPLETE

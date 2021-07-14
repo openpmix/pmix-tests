@@ -11,7 +11,7 @@ from time import strftime
 # The first element in each row is the number of slots, and the remaining 
 # elements are the names of the run.py testcases needing that number of slots
 tests = [ ["1", "direct", "attach", "indirect-prterun"],
-          ["2", "direct-colaunch1", "direct-colaunch1", "direct-colaunch2",
+          ["2", "direct-colaunch1", "direct-colaunch2",
                 "attach-colaunch1", "attach-colaunch2"],
           ["3", "direct-multi"],
           ["4", "indirect-colaunch1", "indirect-colaunch2"],

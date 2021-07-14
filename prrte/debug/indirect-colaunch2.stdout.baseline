@@ -270,15 +270,16 @@ indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Spawning launcher
 indirect-multi      : Launcher namespace is @NS<5>
 indirect-multi      : Reconnect to IL at @NS<5>
-indirect-multi      : Registering READY-FOR-DEBUG handler for @HOST<1>:@PID<1>:@NS<6>
+indirect-multi      : Registering READY-FOR-DEBUG handler
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
-indirect-multi      : Releasing prterun [@NS<7>]
+indirect-multi      : Releasing prterun [@NS<5>,0]
 indirect-multi      : Waiting for application launch
 indirect-multi      : Got READY-FOR-DEBUG event from nspace @HOST<1>:@PID<1>:@NS<6>
 indirect-multi      : Debugger daemon job: @HOST<1>:@PID<1>:@NS<2>
 indirect-multi      : Application has launched: @HOST<1>:@PID<1>:@NS<2>
 indirect-multi      : Debugger: spawning ./daemon
+indirect-multi      : Debugger nspace: @HOST<1>:@PID<1>:@NS<0>
+indirect-multi      : Registering handler for debugger termination
+indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Waiting for IL to terminate
 indirect-multi      : terminate_fn called with status LOST_CONNECTION
-indirect-multi      : Default event handler called with status LOST_CONNECTION
-indirect-multi      : 	Complete
