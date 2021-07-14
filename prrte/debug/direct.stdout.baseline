@@ -16,7 +16,6 @@ daemon-0            : release_fn called as daemon callback for event=JOB ENDED
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-0            : Application namespace @NS<1> terminated
 daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-0            : Debugger daemon ns @NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
 direct              : Debugger ns @NS<2> rank 0 pid @PID<1>: Running
 direct              : Connected system server is @NS<3>:0
 direct              : evhandler_reg_callbk called to register callback
