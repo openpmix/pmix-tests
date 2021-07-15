@@ -56,6 +56,12 @@ if [ $? != 0 ]; then
     exit -1
 fi
 export PMIX_INSTALLDIR=${PWD}/install_dir
+#
+# don't run tests if test folder doesn't exist
+#
+if [ ! -e ${PWD}/test/test_v2 ]; then
+    exit 0
+fi
 pushd ${PWD}/test/test_v2
 echo "---------------------------------------------------------------------"
 echo "-------------------------- MAKING V2 TESTS --------------------------"
