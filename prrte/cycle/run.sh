@@ -6,7 +6,7 @@ FINAL_RTN=0
 # Number of nodes - for accounting/verification purposes
 NUM_NODES=${CI_NUM_NODES:-1}
 
-NUM_ITERS=500
+NUM_ITERS=200
 
 _shutdown()
 {
