@@ -8,11 +8,9 @@ attach              : Debugger daemon namespace '@NS<3>'
 attach              : iof_reg_callbk called to register IOF handler refid=1
 attach              : evhandler_reg_callbk called to register callback refid=1
 attach              : Waiting for debugger daemon namespace @NS<3> to complete
-attach              : release_fn called as callback for event=JOB ENDED
-attach              : DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED - AFFECTED @NS<3>
+attach              : release_fn called as callback for event=LOST_CONNECTION
+attach              : DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED - AFFECTED NULL
 attach              : Debugger daemon namespace @NS<3> terminated
-attach              : PMIx_IOF_deregister completed with status SUCCESS
-attach              : iof_dereg_callbk called as result of de-registering I/O forwarding
 attach              : Forwarded stdio data:
 attach              : End forwarded stdio
 daemon-0            : Debugger daemon ns @NS<3> on host @HOST<0> rank 0 pid @PID<1>: Running
@@ -51,8 +49,6 @@ daemon-0            : Application namespace @NS<2> terminated
 daemon-0            : Application namespace @NS<2> terminated
 daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
 daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
-daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>:PMIx_Finalize successfully completed
-daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>:PMIx_Finalize successfully completed
 daemon-1            : Debugger daemon ns @NS<3> on host @HOST<0> rank 1 pid @PID<2>: Running
 daemon-1            : Debugger daemon ns @NS<3> on host @HOST<0> rank 1 pid @PID<2>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
@@ -87,8 +83,6 @@ daemon-1            : Application namespace @NS<2> terminated
 daemon-1            : Application namespace @NS<2> terminated
 daemon-1            : Debugger daemon ns @NS<3> rank 1 pid @PID<2>: Finalizing
 daemon-1            : Debugger daemon ns @NS<3> rank 1 pid @PID<2>: Finalizing
-daemon-1            : Debugger daemon ns @NS<3> rank 1 pid @PID<2>:PMIx_Finalize successfully completed
-daemon-1            : Debugger daemon ns @NS<3> rank 1 pid @PID<2>:PMIx_Finalize successfully completed
 daemon-2            : Debugger daemon ns @NS<3> on host @HOST<1> rank 2 pid @PID<3>: Running
 daemon-2            : Debugger daemon ns @NS<3> on host @HOST<1> rank 2 pid @PID<3>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
@@ -123,8 +117,6 @@ daemon-2            : Application namespace @NS<2> terminated
 daemon-2            : Application namespace @NS<2> terminated
 daemon-2            : Debugger daemon ns @NS<3> rank 2 pid @PID<3>: Finalizing
 daemon-2            : Debugger daemon ns @NS<3> rank 2 pid @PID<3>: Finalizing
-daemon-2            : Debugger daemon ns @NS<3> rank 2 pid @PID<3>:PMIx_Finalize successfully completed
-daemon-2            : Debugger daemon ns @NS<3> rank 2 pid @PID<3>:PMIx_Finalize successfully completed
 daemon-3            : Debugger daemon ns @NS<3> on host @HOST<1> rank 3 pid @PID<4>: Running
 daemon-3            : Debugger daemon ns @NS<3> on host @HOST<1> rank 3 pid @PID<4>: Running
 daemon-3            : evhandler_reg_callbk called by daemon as registration callback
@@ -159,8 +151,6 @@ daemon-3            : Application namespace @NS<2> terminated
 daemon-3            : Application namespace @NS<2> terminated
 daemon-3            : Debugger daemon ns @NS<3> rank 3 pid @PID<4>: Finalizing
 daemon-3            : Debugger daemon ns @NS<3> rank 3 pid @PID<4>: Finalizing
-daemon-3            : Debugger daemon ns @NS<3> rank 3 pid @PID<4>:PMIx_Finalize successfully completed
-daemon-3            : Debugger daemon ns @NS<3> rank 3 pid @PID<4>:PMIx_Finalize successfully completed
 daemon-4            : Debugger daemon ns @NS<3> on host @HOST<2> rank 4 pid @PID<5>: Running
 daemon-4            : Debugger daemon ns @NS<3> on host @HOST<2> rank 4 pid @PID<5>: Running
 daemon-4            : evhandler_reg_callbk called by daemon as registration callback
@@ -195,8 +185,6 @@ daemon-4            : Application namespace @NS<2> terminated
 daemon-4            : Application namespace @NS<2> terminated
 daemon-4            : Debugger daemon ns @NS<3> rank 4 pid @PID<5>: Finalizing
 daemon-4            : Debugger daemon ns @NS<3> rank 4 pid @PID<5>: Finalizing
-daemon-4            : Debugger daemon ns @NS<3> rank 4 pid @PID<5>:PMIx_Finalize successfully completed
-daemon-4            : Debugger daemon ns @NS<3> rank 4 pid @PID<5>:PMIx_Finalize successfully completed
 daemon-5            : Debugger daemon ns @NS<3> on host @HOST<2> rank 5 pid @PID<6>: Running
 daemon-5            : Debugger daemon ns @NS<3> on host @HOST<2> rank 5 pid @PID<6>: Running
 daemon-5            : evhandler_reg_callbk called by daemon as registration callback
@@ -231,5 +219,3 @@ daemon-5            : Application namespace @NS<2> terminated
 daemon-5            : Application namespace @NS<2> terminated
 daemon-5            : Debugger daemon ns @NS<3> rank 5 pid @PID<6>: Finalizing
 daemon-5            : Debugger daemon ns @NS<3> rank 5 pid @PID<6>: Finalizing
-daemon-5            : Debugger daemon ns @NS<3> rank 5 pid @PID<6>:PMIx_Finalize successfully completed
-daemon-5            : Debugger daemon ns @NS<3> rank 5 pid @PID<6>:PMIx_Finalize successfully completed

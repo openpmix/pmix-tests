@@ -16,7 +16,6 @@ daemon-0            : release_fn called as daemon callback for event=JOB ENDED
 daemon-0            : DEBUGGER DAEMON NAMESPACE @HOST<0>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<0>:@PID<1>:@NS<2>
 daemon-0            : Application namespace @HOST<0>:@PID<1>:@NS<2> terminated
 daemon-0            : Debugger daemon ns @HOST<0>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-0            : Debugger daemon ns @HOST<0>:@PID<1>:@NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
 hello-0             : Client ns @HOST<0>:@PID<1>:@NS<2> rank 0 pid @PID<2>: Running on host @HOST<0> localrank 0
 hello-0             : Client ns @HOST<0>:@PID<1>:@NS<2> rank 0: Finalizing
 hello-0             : Client ns @HOST<0>:@PID<1>:@NS<2> rank 0:PMIx_Finalize successfully completed
@@ -29,9 +28,9 @@ indirect            : evhandler_reg_callbk called with status SUCCESS
 indirect            : evhandler_reg_callbk called with status SUCCESS
 indirect            : SPAWNING LAUNCHER
 indirect            : RECONNECT TO IL AT @NS<5>
-indirect            : REGISTERING READY-FOR-DEBUG HANDLER for @HOST<0>:@PID<1>:@NS<6>
+indirect            : REGISTERING READY-FOR-DEBUG HANDLER
 indirect            : evhandler_reg_callbk called with status SUCCESS
-indirect            : RELEASING prterun [@NS<7>]
+indirect            : RELEASING prterun [@NS<5>,0]
 indirect            : WAITING FOR APPLICATION LAUNCH
 indirect            : GOT NSPACE @HOST<0>:@PID<1>:@NS<2>
 indirect            : Debugger daemon job: @HOST<0>:@PID<1>:@NS<2>
@@ -39,5 +38,3 @@ indirect            : APPLICATION HAS LAUNCHED: @HOST<0>:@PID<1>:@NS<2>
 indirect            : Debugger: spawning ./daemon
 indirect            : WAITING FOR IL TO TERMINATE
 indirect            : terminate_fn called with status LOST_CONNECTION
-indirect            : DEFAULT EVENT HANDLER CALLED WITH STATUS LOST_CONNECTION
-indirect            : 	COMPLETE

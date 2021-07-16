@@ -18,7 +18,6 @@ daemon-0            : release_fn called as daemon callback for event=JOB ENDED
 daemon-0            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-0            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-0            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-0            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 0 pid @PID<0>:PMIx_Finalize successfully completed
 daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<2> rank 1 pid @PID<2>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<2>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -38,7 +37,6 @@ daemon-1            : release_fn called as daemon callback for event=JOB ENDED
 daemon-1            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-1            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 1 pid @PID<2>: Finalizing
-daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 1 pid @PID<2>:PMIx_Finalize successfully completed
 daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<3> rank 2 pid @PID<3>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<3>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
@@ -58,7 +56,6 @@ daemon-2            : release_fn called as daemon callback for event=JOB ENDED
 daemon-2            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
 daemon-2            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
 daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 2 pid @PID<3>: Finalizing
-daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 2 pid @PID<3>:PMIx_Finalize successfully completed
 hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0 pid @PID<4>: Running on host @HOST<0> localrank 0
 hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0: Finalizing
 hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0:PMIx_Finalize successfully completed
@@ -102,15 +99,16 @@ indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Spawning launcher
 indirect-multi      : Launcher namespace is @NS<5>
 indirect-multi      : Reconnect to IL at @NS<5>
-indirect-multi      : Registering READY-FOR-DEBUG handler for @HOST<1>:@PID<1>:@NS<6>
+indirect-multi      : Registering READY-FOR-DEBUG handler
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
-indirect-multi      : Releasing prterun [@NS<7>]
+indirect-multi      : Releasing prterun [@NS<5>,0]
 indirect-multi      : Waiting for application launch
 indirect-multi      : Got READY-FOR-DEBUG event from nspace @HOST<1>:@PID<1>:@NS<6>
 indirect-multi      : Debugger daemon job: @HOST<1>:@PID<1>:@NS<2>
 indirect-multi      : Application has launched: @HOST<1>:@PID<1>:@NS<2>
 indirect-multi      : Debugger: spawning ./daemon
+indirect-multi      : Debugger nspace: @HOST<1>:@PID<1>:@NS<0>
+indirect-multi      : Registering handler for debugger termination
+indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Waiting for IL to terminate
 indirect-multi      : terminate_fn called with status LOST_CONNECTION
-indirect-multi      : Default event handler called with status LOST_CONNECTION
-indirect-multi      : 	Complete
