@@ -27,6 +27,5 @@ fi
 
 # Wrapper script used by CI framework to invoke test cases in this directory
 
-# Temporarily disable debugger CI tests
-#${_python} ./cirun.py
-exit 0
+${_python} ./cirun.py
+exit $?
