@@ -78,10 +78,10 @@ fi
 echo "---------------------------------------------------------------------"
 echo "------------------------- STARTING V2 TESTS -------------------------"
 echo "---------------------------------------------------------------------"
-for test in test_init_fin test_helloworld test_get_basic test_get_peers
+for test in test_init_fin test_helloworld test_get_basic test_get_peers test_fence_basic test_fence_wildcard
 do
-    timeout -s SIGSEGV 10m ./pmix_test -s 1 -n 2 -e ./$test
     echo "RUNNING: ./pmix_test -s 1 -n 2 -e ./$test"
+    timeout -s SIGSEGV 10m ./pmix_test -s 1 -n 2 -e ./$test
     if [ $? != 0 ]; then
         echo "---------------------------------------------------------------------"
         echo "--------------------------- $test FAILED ----------------------------"
@@ -89,8 +89,8 @@ do
         exit -1
     fi
 
-    timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -e ./$test
     echo "RUNNING: ./pmix_test -s 4 -n 16 -e ./$test"
+    timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -e ./$test
     if [ $? != 0 ]; then
         echo "---------------------------------------------------------------------"
         echo "--------------------------- $test FAILED ----------------------------"
@@ -98,8 +98,8 @@ do
         exit -1
     fi
 
-    timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -e ./$test -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15'
     echo "RUNNING: ./pmix_test -s 4 -n 16 -e ./$test -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15'"
+    timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -e ./$test -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15'
     if [ $? != 0 ]; then
         echo "---------------------------------------------------------------------"
         echo "--------------------------- $test FAILED ----------------------------"
@@ -108,7 +108,83 @@ do
     fi
 
 done
-echo "---------------------------------------------------------------------"
-echo "---------------- ALL V2 TESTS COMPLETED SUCCESSFULLY ----------------"
-echo "---------------------------------------------------------------------"
-exit 0
+
+# Timed wildcard fence tests (the different runs are for testing different parameters)
+test=test_fence_wildcard
+PMIX_ERR_TIMEOUT=232
+num_timeouts=0
+echo "RUNNING: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test --time-fence"
+timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test --time-fence
+retcode=$?
+if [ $retcode != 0 ]; then
+    # If test failed due to an intra-test timeout, retry with different parameters
+    if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+        ((num_timeouts++))
+        echo "TIMED OUT; RETRYING with: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400"
+        sleep 60
+        timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400
+        retcode=$?
+        if [ $retcode != 0 ]; then
+            if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+                ((num_timeouts++))
+                echo "---------------------------------------------------------------------"
+                echo "----- $test INTERNALLY TIMED OUT; CONTINUING ----------"
+                echo "---------------------------------------------------------------------"
+            else
+                echo "---------------------------------------------------------------------"
+                echo "-------------------- $test FAILED ---------------------"
+                echo "---------------------------------------------------------------------"
+                exit -1
+            fi
+        fi
+    else
+        echo "---------------------------------------------------------------------"
+        echo "-------------------- $test FAILED ---------------------"
+        echo "---------------------------------------------------------------------"
+        exit -1
+    fi
+fi
+
+echo "RUNNING: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 200 -r 150"
+timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 200 -r 150
+retcode=$?
+if [ $retcode != 0 ]; then
+    # If test failed due to an intra-test timeout, retry with different parameters
+    if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+        ((num_timeouts++))
+        echo "TIMED OUT; RETRYING with: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400"
+        sleep 60
+        timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400
+        retcode=$?
+        if [ $retcode != 0 ]; then
+            if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+                ((num_timeouts++))
+                echo "---------------------------------------------------------------------"
+                echo "----- $test INTERNALLY TIMED OUT; CONTINUING ----------"
+                echo "---------------------------------------------------------------------"
+            else
+                echo "---------------------------------------------------------------------"
+                echo "-------------------- $test FAILED ---------------------"
+                echo "---------------------------------------------------------------------"
+                exit -1
+            fi
+        fi
+    else
+        echo "---------------------------------------------------------------------"
+        echo "-------------------- $test FAILED ---------------------"
+        echo "---------------------------------------------------------------------"
+        exit -1
+    fi
+fi
+
+if [ $num_timeouts -eq 0 ]; then
+    echo "---------------------------------------------------------------------"
+    echo "---------------- ALL V2 TESTS COMPLETED SUCCESSFULLY ----------------"
+    echo "---------------------------------------------------------------------"
+    exit 0
+else
+    echo "---------------------------------------------------------------------"
+    echo "--------------- ALL V2 TESTS COMPLETED; $num_timeouts TIMED OUT. ----------------"
+    echo "---------------------------------------------------------------------"
+    exit 0
+fi
