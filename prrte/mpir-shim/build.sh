@@ -10,6 +10,9 @@ fi
 echo "=========================="
 echo "Checkout the current MPIR Shim"
 echo "=========================="
+if [ -f "mpir-to-pmix-guide" ] ; then
+    rm -rf mpir-to-pmix-guide
+fi
 git clone https://github.com/openpmix/mpir-to-pmix-guide.git
 
 echo "=========================="
