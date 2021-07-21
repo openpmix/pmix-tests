@@ -1,4 +1,4 @@
-attach              : Debugger ns @NS<0> rank 0 pid @PID<0>: Running
+attach              : Debugger ns @NS<0> rank 0 pid PID<?>: Running
 attach              : evhandler_reg_callbk called to register callback refid=0
 attach              : attach_to_running_job called to attach to application with namespace=@NS<1>
 attach              : query_application_namespace called to get application namespace
@@ -13,32 +13,32 @@ attach              : DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED - AFFECTED NU
 attach              : Debugger daemon namespace @NS<3> terminated
 attach              : Forwarded stdio data:
 attach              : End forwarded stdio
-daemon-0            : Debugger daemon ns @NS<3> on host @HOST<0> rank 0 pid @PID<1>: Running
-daemon-0            : Debugger daemon ns @NS<3> on host @HOST<0> rank 0 pid @PID<1>: Running
+daemon-0            : Debugger daemon ns @NS<3> on host <host> rank 0 pid PID<?>: Running
+daemon-0            : Debugger daemon ns @NS<3> on host <host> rank 0 pid PID<?>: Running
 daemon-0            : evhandler_reg_callbk called by daemon as registration callback
 daemon-0            : evhandler_reg_callbk called by daemon as registration callback
-daemon-0            : [@NS<3>:-2:@PID<1>] PMIX_DEBUG_JOB is '@NS<2>'
-daemon-0            : [@NS<3>:-2:@PID<1>] PMIX_DEBUG_JOB is '@NS<2>'
-daemon-0            : [@NS<3>:0:@PID<1>] Debugging '@NS<2>'
-daemon-0            : [@NS<3>:0:@PID<1>] Debugging '@NS<2>'
-daemon-0            : [@NS<3>:0:@PID<1>] my local rank 0
-daemon-0            : [@NS<3>:0:@PID<1>] my local rank 0
-daemon-0            : [@NS<3>:0:@PID<1>] registering for termination of '@NS<2>'
-daemon-0            : [@NS<3>:0:@PID<1>] registering for termination of '@NS<2>'
+daemon-0            : [@NS<3>:-2:PID<?>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-0            : [@NS<3>:-2:PID<?>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-0            : [@NS<3>:0:PID<?>] Debugging '@NS<2>'
+daemon-0            : [@NS<3>:0:PID<?>] Debugging '@NS<2>'
+daemon-0            : [@NS<3>:0:PID<?>] my local rank 0
+daemon-0            : [@NS<3>:0:PID<?>] my local rank 0
+daemon-0            : [@NS<3>:0:PID<?>] registering for termination of '@NS<2>'
+daemon-0            : [@NS<3>:0:PID<?>] registering for termination of '@NS<2>'
 daemon-0            : evhandler_reg_callbk called by daemon as registration callback
 daemon-0            : evhandler_reg_callbk called by daemon as registration callback
 daemon-0            : cbfunc called as daemon callback for PMIx_Query
 daemon-0            : cbfunc called as daemon callback for PMIx_Query
 daemon-0            : Transferring pmix.qry.lptable
 daemon-0            : Transferring pmix.qry.lptable
-daemon-0            : [@NS<3>:0:@PID<1>] Local proctable received for nspace '@NS<2>' has 2 entries
-daemon-0            : [@NS<3>:0:@PID<1>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-0            : [@NS<3>:0:PID<?>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-0            : [@NS<3>:0:PID<?>] Local proctable received for nspace '@NS<2>' has 2 entries
 daemon-0            : Proctable[0], namespace @NS<2> rank 0 exec hello
 daemon-0            : Proctable[0], namespace @NS<2> rank 0 exec hello
 daemon-0            : Proctable[1], namespace @NS<2> rank 1 exec hello
 daemon-0            : Proctable[1], namespace @NS<2> rank 1 exec hello
-daemon-0            : [@NS<3>:0:@PID<1>] Sending release
-daemon-0            : [@NS<3>:0:@PID<1>] Sending release
+daemon-0            : [@NS<3>:0:PID<?>] Sending release
+daemon-0            : [@NS<3>:0:PID<?>] Sending release
 daemon-0            : Waiting for application namespace @NS<2> to terminate
 daemon-0            : Waiting for application namespace @NS<2> to terminate
 daemon-0            : release_fn called as daemon callback for event=JOB ENDED
@@ -47,28 +47,28 @@ daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINA
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-0            : Application namespace @NS<2> terminated
 daemon-0            : Application namespace @NS<2> terminated
-daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
-daemon-0            : Debugger daemon ns @NS<3> rank 0 pid @PID<1>: Finalizing
-daemon-1            : Debugger daemon ns @NS<3> on host @HOST<1> rank 1 pid @PID<2>: Running
-daemon-1            : Debugger daemon ns @NS<3> on host @HOST<1> rank 1 pid @PID<2>: Running
+daemon-0            : Debugger daemon ns @NS<3> rank 0 pid PID<?>: Finalizing
+daemon-0            : Debugger daemon ns @NS<3> rank 0 pid PID<?>: Finalizing
+daemon-1            : Debugger daemon ns @NS<3> on host <host> rank 1 pid PID<?>: Running
+daemon-1            : Debugger daemon ns @NS<3> on host <host> rank 1 pid PID<?>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
-daemon-1            : [@NS<3>:-2:@PID<2>] PMIX_DEBUG_JOB is '@NS<2>'
-daemon-1            : [@NS<3>:-2:@PID<2>] PMIX_DEBUG_JOB is '@NS<2>'
-daemon-1            : [@NS<3>:1:@PID<2>] Debugging '@NS<2>'
-daemon-1            : [@NS<3>:1:@PID<2>] Debugging '@NS<2>'
-daemon-1            : [@NS<3>:1:@PID<2>] my local rank 0
-daemon-1            : [@NS<3>:1:@PID<2>] my local rank 0
-daemon-1            : [@NS<3>:1:@PID<2>] registering for termination of '@NS<2>'
-daemon-1            : [@NS<3>:1:@PID<2>] registering for termination of '@NS<2>'
+daemon-1            : [@NS<3>:-2:PID<?>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-1            : [@NS<3>:-2:PID<?>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-1            : [@NS<3>:1:PID<?>] Debugging '@NS<2>'
+daemon-1            : [@NS<3>:1:PID<?>] Debugging '@NS<2>'
+daemon-1            : [@NS<3>:1:PID<?>] my local rank 0
+daemon-1            : [@NS<3>:1:PID<?>] my local rank 0
+daemon-1            : [@NS<3>:1:PID<?>] registering for termination of '@NS<2>'
+daemon-1            : [@NS<3>:1:PID<?>] registering for termination of '@NS<2>'
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : cbfunc called as daemon callback for PMIx_Query
 daemon-1            : cbfunc called as daemon callback for PMIx_Query
 daemon-1            : Transferring pmix.qry.lptable
 daemon-1            : Transferring pmix.qry.lptable
-daemon-1            : [@NS<3>:1:@PID<2>] Local proctable received for nspace '@NS<2>' has 2 entries
-daemon-1            : [@NS<3>:1:@PID<2>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-1            : [@NS<3>:1:PID<?>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-1            : [@NS<3>:1:PID<?>] Local proctable received for nspace '@NS<2>' has 2 entries
 daemon-1            : Proctable[0], namespace @NS<2> rank 2 exec hello
 daemon-1            : Proctable[0], namespace @NS<2> rank 2 exec hello
 daemon-1            : Proctable[1], namespace @NS<2> rank 3 exec hello
@@ -81,28 +81,28 @@ daemon-1            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINA
 daemon-1            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-1            : Application namespace @NS<2> terminated
 daemon-1            : Application namespace @NS<2> terminated
-daemon-1            : Debugger daemon ns @NS<3> rank 1 pid @PID<2>: Finalizing
-daemon-1            : Debugger daemon ns @NS<3> rank 1 pid @PID<2>: Finalizing
-daemon-2            : Debugger daemon ns @NS<3> on host @HOST<2> rank 2 pid @PID<3>: Running
-daemon-2            : Debugger daemon ns @NS<3> on host @HOST<2> rank 2 pid @PID<3>: Running
+daemon-1            : Debugger daemon ns @NS<3> rank 1 pid PID<?>: Finalizing
+daemon-1            : Debugger daemon ns @NS<3> rank 1 pid PID<?>: Finalizing
+daemon-2            : Debugger daemon ns @NS<3> on host <host> rank 2 pid PID<?>: Running
+daemon-2            : Debugger daemon ns @NS<3> on host <host> rank 2 pid PID<?>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
-daemon-2            : [@NS<3>:-2:@PID<3>] PMIX_DEBUG_JOB is '@NS<2>'
-daemon-2            : [@NS<3>:-2:@PID<3>] PMIX_DEBUG_JOB is '@NS<2>'
-daemon-2            : [@NS<3>:2:@PID<3>] Debugging '@NS<2>'
-daemon-2            : [@NS<3>:2:@PID<3>] Debugging '@NS<2>'
-daemon-2            : [@NS<3>:2:@PID<3>] my local rank 0
-daemon-2            : [@NS<3>:2:@PID<3>] my local rank 0
-daemon-2            : [@NS<3>:2:@PID<3>] registering for termination of '@NS<2>'
-daemon-2            : [@NS<3>:2:@PID<3>] registering for termination of '@NS<2>'
+daemon-2            : [@NS<3>:-2:PID<?>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-2            : [@NS<3>:-2:PID<?>] PMIX_DEBUG_JOB is '@NS<2>'
+daemon-2            : [@NS<3>:2:PID<?>] Debugging '@NS<2>'
+daemon-2            : [@NS<3>:2:PID<?>] Debugging '@NS<2>'
+daemon-2            : [@NS<3>:2:PID<?>] my local rank 0
+daemon-2            : [@NS<3>:2:PID<?>] my local rank 0
+daemon-2            : [@NS<3>:2:PID<?>] registering for termination of '@NS<2>'
+daemon-2            : [@NS<3>:2:PID<?>] registering for termination of '@NS<2>'
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : cbfunc called as daemon callback for PMIx_Query
 daemon-2            : cbfunc called as daemon callback for PMIx_Query
 daemon-2            : Transferring pmix.qry.lptable
 daemon-2            : Transferring pmix.qry.lptable
-daemon-2            : [@NS<3>:2:@PID<3>] Local proctable received for nspace '@NS<2>' has 2 entries
-daemon-2            : [@NS<3>:2:@PID<3>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-2            : [@NS<3>:2:PID<?>] Local proctable received for nspace '@NS<2>' has 2 entries
+daemon-2            : [@NS<3>:2:PID<?>] Local proctable received for nspace '@NS<2>' has 2 entries
 daemon-2            : Proctable[0], namespace @NS<2> rank 4 exec hello
 daemon-2            : Proctable[0], namespace @NS<2> rank 4 exec hello
 daemon-2            : Proctable[1], namespace @NS<2> rank 5 exec hello
@@ -115,5 +115,5 @@ daemon-2            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINA
 daemon-2            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-2            : Application namespace @NS<2> terminated
 daemon-2            : Application namespace @NS<2> terminated
-daemon-2            : Debugger daemon ns @NS<3> rank 2 pid @PID<3>: Finalizing
-daemon-2            : Debugger daemon ns @NS<3> rank 2 pid @PID<3>: Finalizing
+daemon-2            : Debugger daemon ns @NS<3> rank 2 pid PID<?>: Finalizing
+daemon-2            : Debugger daemon ns @NS<3> rank 2 pid PID<?>: Finalizing

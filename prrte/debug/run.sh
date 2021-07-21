@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Baselines assume exactly 3 nodes
+_required_num_nodes=3
+
 _python=""
 
 # Find all python* binaries
@@ -25,8 +28,29 @@ if [[ $_python == "" ]] ; then
     exit 1
 fi
 
+# Sanity checking on number of nodes
+if [ "x" = "x$CI_NUM_NODES" ] ; then
+    echo "Error: CI_NUM_NODES must be provided"
+    exit 2
+fi
+if [ "x" = "x$CI_HOSTFILE" ] ; then
+    echo "Error: A CI_HOSTFILE must be provided with 3 nodes"
+    exit 3
+fi
+if [[ "$CI_NUM_NODES" -lt "$_required_num_nodes" ]] ; then
+    echo "Error: CI_NUM_NODES must be greater than or equal to $_required_num_nodes"
+    exit 2
+fi
+
+export CI_NUM_NODES=$_required_num_nodes
+
+CI_HOSTFILE_DEBUG=${CI_HOSTFILE}.debug
+head -n $CI_NUM_NODES $CI_HOSTFILE > $CI_HOSTFILE_DEBUG
+export CI_HOSTFILE=$CI_HOSTFILE_DEBUG
+
 # Wrapper script used by CI framework to invoke test cases in this directory
 
-# Temporarily disable debugger CI tests
-#${_python} ./cirun.py
-exit 0
+${_python} ./cirun.py
+_rtn=$?
+rm $CI_HOSTFILE_DEBUG
+exit $_rtn
