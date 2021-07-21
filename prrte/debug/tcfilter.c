@@ -137,6 +137,31 @@ void replace_text(regmatch_t *match, char *prefix, char **unique_strings,
     strcpy(input, output);
 }
 
+void replace_with_fixed_id(regmatch_t *match, char *replacement_text) {
+    char match_text[512];
+    char replace_text[512];
+    int i;
+    int text_length = match->rm_eo - match->rm_so;
+
+      // Get the matching string
+    strncpy(match_text, &input[match->rm_so], text_length);
+    match_text[text_length] = '\0';
+      // Copy input up to the matching text
+    if (0 != match->rm_so) {
+        strncpy(output, input, match->rm_so);
+        output[match->rm_so] = '\0';
+    }
+    else {
+        output[0] = '\0';
+    }
+      // Copy the replacement string to output string
+    strcat(output, replacement_text);
+      // Copy remaining input text after pid
+    strcat(output, &input[match->rm_eo]);
+      // Copy output back to input for rescan
+    strcpy(input, output);
+}
+
 void regex_parse_error(int rc, regex_t *expr, char *label) {
         regerror(rc, &pid_regex, regex_error, sizeof regex_error - 1);
         fprintf(stderr, "Error compiling %s: %s\n", label, regex_error);
@@ -224,7 +249,7 @@ int main(int argc, char *argv[]) {
         while (1 == rescan) {
             rc = regexec(&pid_regex, input, 2, matches, 0);
             if (0 == rc) {
-                replace_text(&matches[1], "PID", pid_array, &num_pids);
+                replace_with_fixed_id(&matches[1], "PID<?>");
                 continue;
             }
               // Look for namespace and pid pairs first since a stand-alone
@@ -235,7 +260,7 @@ int main(int argc, char *argv[]) {
             if (0 == rc) {
                   // Pid follows namespace. By processing pid first, we don't
                   // have to recompute offsets for the namespace string.
-                replace_text(&matches[2], "PID", pid_array, &num_pids);
+                replace_with_fixed_id(&matches[2], "PID<?>");
                 replace_text(&matches[1], "NS", namespace_array,
                              &num_namespaces);
                 continue;
@@ -244,7 +269,7 @@ int main(int argc, char *argv[]) {
             if (0 == rc) {
                   // Pid follows namespace. By processing pid first, we don't
                   // have to recompute offsets for the namespace string.
-                replace_text(&matches[2], "PID", pid_array, &num_pids);
+                replace_with_fixed_id(&matches[2], "PID<?>");
                 replace_text(&matches[1], "NS", namespace_array,
                              &num_namespaces);
                 continue;
@@ -270,7 +295,7 @@ int main(int argc, char *argv[]) {
             }
             rc = regexec(&host_regex, input, 2, matches, 0);
             if (0 == rc) {
-                replace_text(&matches[1], "HOST", host_array, &num_hosts);
+                replace_with_fixed_id(&matches[1], "<host>");
                 continue;
             }
               // Try match for host,pid,ns,rank,pid strings before trying to match
@@ -281,10 +306,10 @@ int main(int argc, char *argv[]) {
                   // Text to replace is host, pid and namespace tag. Perform
                   // replacements in reverse order so match offsets in original
                   // text don't need to be recomputed for 2nd, 3rd & 4th replace.
-                replace_text(&matches[4], "PID", pid_array, &num_pids);
+                replace_with_fixed_id(&matches[4], "PID<?>");
                 replace_text(&matches[3], "NS", namespace_array, &num_namespaces);
-                replace_text(&matches[2], "PID", pid_array, &num_pids);
-                replace_text(&matches[1], "HOST", host_array, &num_hosts);
+                replace_with_fixed_id(&matches[2], "PID<?>");
+                replace_with_fixed_id(&matches[1], "<host>");
                 continue;
             }
             rc = regexec(&host_pid_ns_regex, input, 4, matches, 0);
@@ -294,8 +319,8 @@ int main(int argc, char *argv[]) {
                   // text don't need to be recomputed for 2nd and 3rd replace.
                 replace_text(&matches[3], "NS", namespace_array,
                              &num_namespaces);
-                replace_text(&matches[2], "PID", pid_array, &num_pids);
-                replace_text(&matches[1], "HOST", host_array, &num_hosts);
+                replace_with_fixed_id(&matches[2], "PID<?>");
+                replace_with_fixed_id(&matches[1], "<host>");
                 continue;
             }
             rc = regexec(&unconnected_tool_ns_regex, input, 2, matches, 0);
@@ -326,7 +351,7 @@ int main(int argc, char *argv[]) {
                   // Text to replace is TCP connection. Store it in host
                   // table instead of creating a special table for one 
                   // connection
-                replace_text(&matches[1], "HOST", host_array, &num_hosts);
+                replace_with_fixed_id(&matches[1], "<host>");
                 continue;
             }
             rc = regexec(&indirect_ns_regex, input, 2, matches, 0);

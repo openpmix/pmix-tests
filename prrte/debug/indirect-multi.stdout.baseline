@@ -1,99 +1,91 @@
-daemon-0            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<0> rank 0 pid @PID<0>: Running
+daemon-0            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 0 pid PID<?>: Running
 daemon-0            : evhandler_reg_callbk called by daemon as registration callback
-daemon-0            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<0>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
-daemon-0            : [@HOST<1>:@PID<1>:@NS<1>@2:0:@PID<0>] Debugging '@HOST<1>:@PID<1>:@NS<2>'
-daemon-0            : [@HOST<1>:@PID<1>:@NS<1>@2:0:@PID<0>] my local rank 0
-daemon-0            : [@HOST<1>:@PID<1>:@NS<1>@2:0:@PID<0>] registering for termination of '@HOST<1>:@PID<1>:@NS<2>'
+daemon-0            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
+daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] Debugging '<host>:PID<?>:@NS<2>'
+daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] my local rank 0
+daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] registering for termination of '<host>:PID<?>:@NS<2>'
 daemon-0            : evhandler_reg_callbk called by daemon as registration callback
 daemon-0            : cbfunc called as daemon callback for PMIx_Query
 daemon-0            : Transferring pmix.qry.lptable
-daemon-0            : [@HOST<1>:@PID<1>:@NS<1>@2:0:@PID<0>] Local proctable received for nspace '@HOST<1>:@PID<1>:@NS<2>' has 5 entries
-daemon-0            : Proctable[0], namespace @HOST<1>:@PID<1>:@NS<2> rank 0 exec hello
-daemon-0            : Proctable[1], namespace @HOST<1>:@PID<1>:@NS<2> rank 1 exec hello
-daemon-0            : Proctable[2], namespace @HOST<1>:@PID<1>:@NS<2> rank 2 exec hello
-daemon-0            : Proctable[3], namespace @HOST<1>:@PID<1>:@NS<2> rank 3 exec hello
-daemon-0            : Proctable[4], namespace @HOST<1>:@PID<1>:@NS<2> rank 4 exec hello
-daemon-0            : [@HOST<1>:@PID<1>:@NS<1>@2:0:@PID<0>] Sending release
-daemon-0            : Waiting for application namespace @HOST<1>:@PID<1>:@NS<2> to terminate
+daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] Local proctable received for nspace '<host>:PID<?>:@NS<2>' has 5 entries
+daemon-0            : Proctable[0], namespace <host>:PID<?>:@NS<2> rank 0 exec hello
+daemon-0            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 1 exec hello
+daemon-0            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 2 exec hello
+daemon-0            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 3 exec hello
+daemon-0            : Proctable[4], namespace <host>:PID<?>:@NS<2> rank 4 exec hello
+daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] Sending release
+daemon-0            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
 daemon-0            : release_fn called as daemon callback for event=JOB ENDED
-daemon-0            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
-daemon-0            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
-daemon-0            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Finalizing
-daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<2> rank 1 pid @PID<2>: Running
+daemon-0            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-0            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-0            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 0 pid PID<?>: Finalizing
+daemon-1            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 1 pid PID<?>: Running
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
-daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<2>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
-daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:1:@PID<2>] Debugging '@HOST<1>:@PID<1>:@NS<2>'
-daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:1:@PID<2>] my local rank 0
-daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:1:@PID<2>] registering for termination of '@HOST<1>:@PID<1>:@NS<2>'
+daemon-1            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
+daemon-1            : [<host>:PID<?>:@NS<1>@2:1:PID<?>] Debugging '<host>:PID<?>:@NS<2>'
+daemon-1            : [<host>:PID<?>:@NS<1>@2:1:PID<?>] my local rank 0
+daemon-1            : [<host>:PID<?>:@NS<1>@2:1:PID<?>] registering for termination of '<host>:PID<?>:@NS<2>'
 daemon-1            : evhandler_reg_callbk called by daemon as registration callback
 daemon-1            : cbfunc called as daemon callback for PMIx_Query
 daemon-1            : Transferring pmix.qry.lptable
-daemon-1            : [@HOST<1>:@PID<1>:@NS<1>@2:1:@PID<2>] Local proctable received for nspace '@HOST<1>:@PID<1>:@NS<2>' has 5 entries
-daemon-1            : Proctable[0], namespace @HOST<1>:@PID<1>:@NS<2> rank 5 exec hello
-daemon-1            : Proctable[1], namespace @HOST<1>:@PID<1>:@NS<2> rank 6 exec hello
-daemon-1            : Proctable[2], namespace @HOST<1>:@PID<1>:@NS<2> rank 7 exec hello
-daemon-1            : Proctable[3], namespace @HOST<1>:@PID<1>:@NS<2> rank 8 exec hello
-daemon-1            : Proctable[4], namespace @HOST<1>:@PID<1>:@NS<2> rank 9 exec hello
-daemon-1            : Waiting for application namespace @HOST<1>:@PID<1>:@NS<2> to terminate
-daemon-1            : release_fn called as daemon callback for event=JOB ENDED
-daemon-1            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
-daemon-1            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
-daemon-1            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 1 pid @PID<2>: Finalizing
-daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> on host @HOST<3> rank 2 pid @PID<3>: Running
+daemon-1            : [<host>:PID<?>:@NS<1>@2:1:PID<?>] Local proctable received for nspace '<host>:PID<?>:@NS<2>' has 5 entries
+daemon-1            : Proctable[0], namespace <host>:PID<?>:@NS<2> rank 5 exec hello
+daemon-1            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
+daemon-1            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
+daemon-1            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 8 exec hello
+daemon-1            : Proctable[4], namespace <host>:PID<?>:@NS<2> rank 9 exec hello
+daemon-1            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-2            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 2 pid PID<?>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
-daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:-2:@PID<3>] PMIX_DEBUG_JOB is '@HOST<1>:@PID<1>:@NS<2>'
-daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:2:@PID<3>] Debugging '@HOST<1>:@PID<1>:@NS<2>'
-daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:2:@PID<3>] my local rank 0
-daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:2:@PID<3>] registering for termination of '@HOST<1>:@PID<1>:@NS<2>'
+daemon-2            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
+daemon-2            : [<host>:PID<?>:@NS<1>@2:2:PID<?>] Debugging '<host>:PID<?>:@NS<2>'
+daemon-2            : [<host>:PID<?>:@NS<1>@2:2:PID<?>] my local rank 0
+daemon-2            : [<host>:PID<?>:@NS<1>@2:2:PID<?>] registering for termination of '<host>:PID<?>:@NS<2>'
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : cbfunc called as daemon callback for PMIx_Query
 daemon-2            : Transferring pmix.qry.lptable
-daemon-2            : [@HOST<1>:@PID<1>:@NS<1>@2:2:@PID<3>] Local proctable received for nspace '@HOST<1>:@PID<1>:@NS<2>' has 2 entries
-daemon-2            : Proctable[0], namespace @HOST<1>:@PID<1>:@NS<2> rank 10 exec hello
-daemon-2            : Proctable[1], namespace @HOST<1>:@PID<1>:@NS<2> rank 11 exec hello
-daemon-2            : Waiting for application namespace @HOST<1>:@PID<1>:@NS<2> to terminate
-daemon-2            : release_fn called as daemon callback for event=JOB ENDED
-daemon-2            : DEBUGGER DAEMON NAMESPACE @HOST<1>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<1>:@PID<1>:@NS<2>
-daemon-2            : Application namespace @HOST<1>:@PID<1>:@NS<2> terminated
-daemon-2            : Debugger daemon ns @HOST<1>:@PID<1>:@NS<0> rank 2 pid @PID<3>: Finalizing
-hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0 pid @PID<4>: Running on host @HOST<0> localrank 0
-hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0: Finalizing
-hello-0             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 0:PMIx_Finalize successfully completed
-hello-1             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 1 pid @PID<5>: Running on host @HOST<0> localrank 1
-hello-1             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 1: Finalizing
-hello-1             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 1:PMIx_Finalize successfully completed
-hello-10            : Client ns @HOST<1>:@PID<1>:@NS<2> rank 10 pid @PID<6>: Running on host @HOST<3> localrank 0
-hello-10            : Client ns @HOST<1>:@PID<1>:@NS<2> rank 10: Finalizing
-hello-10            : Client ns @HOST<1>:@PID<1>:@NS<2> rank 10:PMIx_Finalize successfully completed
-hello-11            : Client ns @HOST<1>:@PID<1>:@NS<2> rank 11 pid @PID<7>: Running on host @HOST<3> localrank 1
-hello-11            : Client ns @HOST<1>:@PID<1>:@NS<2> rank 11: Finalizing
-hello-11            : Client ns @HOST<1>:@PID<1>:@NS<2> rank 11:PMIx_Finalize successfully completed
-hello-2             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 2 pid @PID<8>: Running on host @HOST<0> localrank 2
-hello-2             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 2: Finalizing
-hello-2             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 2:PMIx_Finalize successfully completed
-hello-3             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 3 pid @PID<9>: Running on host @HOST<0> localrank 3
-hello-3             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 3: Finalizing
-hello-3             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 3:PMIx_Finalize successfully completed
-hello-4             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 4 pid @PID<10>: Running on host @HOST<0> localrank 4
-hello-4             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 4: Finalizing
-hello-4             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 4:PMIx_Finalize successfully completed
-hello-5             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 5 pid @PID<11>: Running on host @HOST<2> localrank 0
-hello-5             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 5: Finalizing
-hello-5             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 5:PMIx_Finalize successfully completed
-hello-6             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 6 pid @PID<12>: Running on host @HOST<2> localrank 1
-hello-6             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 6: Finalizing
-hello-6             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 6:PMIx_Finalize successfully completed
-hello-7             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 7 pid @PID<13>: Running on host @HOST<2> localrank 2
-hello-7             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 7: Finalizing
-hello-7             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 7:PMIx_Finalize successfully completed
-hello-8             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 8 pid @PID<14>: Running on host @HOST<2> localrank 3
-hello-8             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 8: Finalizing
-hello-8             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 8:PMIx_Finalize successfully completed
-hello-9             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 9 pid @PID<15>: Running on host @HOST<2> localrank 4
-hello-9             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 9: Finalizing
-hello-9             : Client ns @HOST<1>:@PID<1>:@NS<2> rank 9:PMIx_Finalize successfully completed
-indirect-multi      : Debugger ns @NS<3> rank 0 pid @PID<1>: Running
-indirect-multi      : Debugger URI: @NS<4>;tcp4://@HOST<4>
+daemon-2            : [<host>:PID<?>:@NS<1>@2:2:PID<?>] Local proctable received for nspace '<host>:PID<?>:@NS<2>' has 2 entries
+daemon-2            : Proctable[0], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
+daemon-2            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
+daemon-2            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0 pid PID<?>: Running on host <host> localrank 0
+hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0: Finalizing
+hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0:PMIx_Finalize successfully completed
+hello-1             : Client ns <host>:PID<?>:@NS<2> rank 1 pid PID<?>: Running on host <host> localrank 1
+hello-1             : Client ns <host>:PID<?>:@NS<2> rank 1: Finalizing
+hello-1             : Client ns <host>:PID<?>:@NS<2> rank 1:PMIx_Finalize successfully completed
+hello-10            : Client ns <host>:PID<?>:@NS<2> rank 10 pid PID<?>: Running on host <host> localrank 0
+hello-10            : Client ns <host>:PID<?>:@NS<2> rank 10: Finalizing
+hello-10            : Client ns <host>:PID<?>:@NS<2> rank 10:PMIx_Finalize successfully completed
+hello-11            : Client ns <host>:PID<?>:@NS<2> rank 11 pid PID<?>: Running on host <host> localrank 1
+hello-11            : Client ns <host>:PID<?>:@NS<2> rank 11: Finalizing
+hello-11            : Client ns <host>:PID<?>:@NS<2> rank 11:PMIx_Finalize successfully completed
+hello-2             : Client ns <host>:PID<?>:@NS<2> rank 2 pid PID<?>: Running on host <host> localrank 2
+hello-2             : Client ns <host>:PID<?>:@NS<2> rank 2: Finalizing
+hello-2             : Client ns <host>:PID<?>:@NS<2> rank 2:PMIx_Finalize successfully completed
+hello-3             : Client ns <host>:PID<?>:@NS<2> rank 3 pid PID<?>: Running on host <host> localrank 3
+hello-3             : Client ns <host>:PID<?>:@NS<2> rank 3: Finalizing
+hello-3             : Client ns <host>:PID<?>:@NS<2> rank 3:PMIx_Finalize successfully completed
+hello-4             : Client ns <host>:PID<?>:@NS<2> rank 4 pid PID<?>: Running on host <host> localrank 4
+hello-4             : Client ns <host>:PID<?>:@NS<2> rank 4: Finalizing
+hello-4             : Client ns <host>:PID<?>:@NS<2> rank 4:PMIx_Finalize successfully completed
+hello-5             : Client ns <host>:PID<?>:@NS<2> rank 5 pid PID<?>: Running on host <host> localrank 0
+hello-5             : Client ns <host>:PID<?>:@NS<2> rank 5: Finalizing
+hello-5             : Client ns <host>:PID<?>:@NS<2> rank 5:PMIx_Finalize successfully completed
+hello-6             : Client ns <host>:PID<?>:@NS<2> rank 6 pid PID<?>: Running on host <host> localrank 1
+hello-6             : Client ns <host>:PID<?>:@NS<2> rank 6: Finalizing
+hello-6             : Client ns <host>:PID<?>:@NS<2> rank 6:PMIx_Finalize successfully completed
+hello-7             : Client ns <host>:PID<?>:@NS<2> rank 7 pid PID<?>: Running on host <host> localrank 2
+hello-7             : Client ns <host>:PID<?>:@NS<2> rank 7: Finalizing
+hello-7             : Client ns <host>:PID<?>:@NS<2> rank 7:PMIx_Finalize successfully completed
+hello-8             : Client ns <host>:PID<?>:@NS<2> rank 8 pid PID<?>: Running on host <host> localrank 3
+hello-8             : Client ns <host>:PID<?>:@NS<2> rank 8: Finalizing
+hello-8             : Client ns <host>:PID<?>:@NS<2> rank 8:PMIx_Finalize successfully completed
+hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9 pid PID<?>: Running on host <host> localrank 4
+hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9: Finalizing
+hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9:PMIx_Finalize successfully completed
+indirect-multi      : Debugger ns @NS<3> rank 0 pid PID<?>: Running
+indirect-multi      : Debugger URI: @NS<4>;tcp4://<host>
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Spawning launcher
@@ -103,11 +95,11 @@ indirect-multi      : Registering READY-FOR-DEBUG handler
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Releasing prterun [@NS<5>,0]
 indirect-multi      : Waiting for application launch
-indirect-multi      : Got READY-FOR-DEBUG event from nspace @HOST<1>:@PID<1>:@NS<6>
-indirect-multi      : Debugger daemon job: @HOST<1>:@PID<1>:@NS<2>
-indirect-multi      : Application has launched: @HOST<1>:@PID<1>:@NS<2>
+indirect-multi      : Got READY-FOR-DEBUG event from nspace <host>:PID<?>:@NS<6>
+indirect-multi      : Debugger daemon job: <host>:PID<?>:@NS<2>
+indirect-multi      : Application has launched: <host>:PID<?>:@NS<2>
 indirect-multi      : Debugger: spawning ./daemon
-indirect-multi      : Debugger nspace: @HOST<1>:@PID<1>:@NS<0>
+indirect-multi      : Debugger nspace: <host>:PID<?>:@NS<0>
 indirect-multi      : Registering handler for debugger termination
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Waiting for IL to terminate
