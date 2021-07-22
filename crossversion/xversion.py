@@ -174,7 +174,7 @@ def build_tree(bld, logfile=None):
         return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Configure")
-    if "v1" in bld.branch:
+    if bld.branch.startswith("v1"):
         ret = subprocess.call(["./configure",
                                "--disable-debug",
                                "--enable-static",
@@ -184,7 +184,7 @@ def build_tree(bld, logfile=None):
                                "--with-hwloc=" + args.hwloc1,
                                "--prefix=" + local_install_dir],
                                stdout=logfile, stderr=logfile, shell=False)
-    elif "v2" in bld.branch:
+    elif bld.branch.startswith("v2"):
         ret = subprocess.call(["./configure",
                                "--disable-debug",
                                "--enable-static",
