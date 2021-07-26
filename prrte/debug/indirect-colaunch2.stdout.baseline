@@ -52,6 +52,10 @@ daemon-10           : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-10           : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-10           : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-10           : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-10           : release_fn called as daemon callback for event=JOB ENDED
+daemon-10           : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-10           : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-10           : Debugger daemon ns <host>:PID<?>:@NS<0> rank 10 pid PID<?>: Finalizing
 daemon-11           : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 11 pid PID<?>: Running
 daemon-11           : evhandler_reg_callbk called by daemon as registration callback
 daemon-11           : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -67,6 +71,10 @@ daemon-11           : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-11           : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-11           : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-11           : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-11           : release_fn called as daemon callback for event=JOB ENDED
+daemon-11           : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-11           : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-11           : Debugger daemon ns <host>:PID<?>:@NS<0> rank 11 pid PID<?>: Finalizing
 daemon-2            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 2 pid PID<?>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -120,6 +128,10 @@ daemon-4            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-4            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-4            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-4            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-4            : release_fn called as daemon callback for event=JOB ENDED
+daemon-4            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-4            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-4            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 4 pid PID<?>: Finalizing
 daemon-5            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 5 pid PID<?>: Running
 daemon-5            : evhandler_reg_callbk called by daemon as registration callback
 daemon-5            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -135,6 +147,10 @@ daemon-5            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-5            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-5            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-5            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-5            : release_fn called as daemon callback for event=JOB ENDED
+daemon-5            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-5            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-5            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 5 pid PID<?>: Finalizing
 daemon-6            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 6 pid PID<?>: Running
 daemon-6            : evhandler_reg_callbk called by daemon as registration callback
 daemon-6            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -150,6 +166,10 @@ daemon-6            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-6            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-6            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-6            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-6            : release_fn called as daemon callback for event=JOB ENDED
+daemon-6            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-6            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-6            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 6 pid PID<?>: Finalizing
 daemon-7            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 7 pid PID<?>: Running
 daemon-7            : evhandler_reg_callbk called by daemon as registration callback
 daemon-7            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -165,6 +185,10 @@ daemon-7            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-7            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-7            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-7            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-7            : release_fn called as daemon callback for event=JOB ENDED
+daemon-7            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-7            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-7            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 7 pid PID<?>: Finalizing
 daemon-8            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 8 pid PID<?>: Running
 daemon-8            : evhandler_reg_callbk called by daemon as registration callback
 daemon-8            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -180,6 +204,10 @@ daemon-8            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-8            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-8            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-8            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-8            : release_fn called as daemon callback for event=JOB ENDED
+daemon-8            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-8            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-8            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 8 pid PID<?>: Finalizing
 daemon-9            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 9 pid PID<?>: Running
 daemon-9            : evhandler_reg_callbk called by daemon as registration callback
 daemon-9            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -195,6 +223,10 @@ daemon-9            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-9            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-9            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-9            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-9            : release_fn called as daemon callback for event=JOB ENDED
+daemon-9            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-9            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-9            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 9 pid PID<?>: Finalizing
 hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0 pid PID<?>: Running on host <host> localrank 0
 hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0: Finalizing
 hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0:PMIx_Finalize successfully completed
@@ -250,4 +282,4 @@ indirect-multi      : Debugger nspace: <host>:PID<?>:@NS<0>
 indirect-multi      : Registering handler for debugger termination
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Waiting for IL to terminate
-indirect-multi      : terminate_fn called with status LOST_CONNECTION
+indirect-multi      : dbgr_complete_fn called with status JOB ENDED

@@ -35,6 +35,10 @@ daemon-1            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 7 exec h
 daemon-1            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 8 exec hello
 daemon-1            : Proctable[4], namespace <host>:PID<?>:@NS<2> rank 9 exec hello
 daemon-1            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-1            : release_fn called as daemon callback for event=JOB ENDED
+daemon-1            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-1            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-1            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 1 pid PID<?>: Finalizing
 daemon-2            : Debugger daemon ns <host>:PID<?>:@NS<0> on host <host> rank 2 pid PID<?>: Running
 daemon-2            : evhandler_reg_callbk called by daemon as registration callback
 daemon-2            : [<host>:PID<?>:@NS<1>@2:-2:PID<?>] PMIX_DEBUG_JOB is '<host>:PID<?>:@NS<2>'
@@ -48,6 +52,10 @@ daemon-2            : [<host>:PID<?>:@NS<1>@2:2:PID<?>] Local proctable received
 daemon-2            : Proctable[0], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-2            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-2            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
+daemon-2            : release_fn called as daemon callback for event=JOB ENDED
+daemon-2            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
+daemon-2            : Application namespace <host>:PID<?>:@NS<2> terminated
+daemon-2            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 2 pid PID<?>: Finalizing
 hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0 pid PID<?>: Running on host <host> localrank 0
 hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0: Finalizing
 hello-0             : Client ns <host>:PID<?>:@NS<2> rank 0:PMIx_Finalize successfully completed
@@ -103,4 +111,4 @@ indirect-multi      : Debugger nspace: <host>:PID<?>:@NS<0>
 indirect-multi      : Registering handler for debugger termination
 indirect-multi      : evhandler_reg_callbk called with status SUCCESS
 indirect-multi      : Waiting for IL to terminate
-indirect-multi      : terminate_fn called with status LOST_CONNECTION
+indirect-multi      : dbgr_complete_fn called with status JOB ENDED
