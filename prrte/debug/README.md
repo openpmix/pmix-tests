@@ -4,6 +4,7 @@ This directory contains the testcases and scripts for PRRTE tool and debugger co
 ## Contents
 + build.sh: Script to build all test cases and support code for these tests
 + run.sh: Script to run tests, required by existing CI test framework, which just invokes run.py
++ cirun.py: Script to run groups of tool/debug CI tests with differing requirements for number of task slots per node.
 + run.py: Script to run and validate all test cases, requires Python 3 (currently Python 3.6)
 + test-utils.c: stdio function wrappers for stdio calls in test cases and supporting functions used by wrappers
 + tcfilter.c: Program to rewrite test case output so it can be compared to baseline files
@@ -15,6 +16,18 @@ This directory contains the testcases and scripts for PRRTE tool and debugger co
 The following environment variable(s) are to be defined when running the `build.sh` phases.
 
  * `CI_PRRTE_SRC` : Absolute path to the PRRTE source code (e.g., `$CI_PRRTE_SRC/examples`).
+
+The run.py script requires the following environment variables to be set for multi-node tests
+
+* `CI_NUM_NODES` : Number of nodes to use for multi-node tests.
+* `CH_HOSTFILE` : Hostfile specifying number of nodes to use, with slots=&LT;n&GT; parameter specifying necessary slots per node.
+
+The cirun.py script requires the following environment variables to be set
+
+* `CI_NUM_NODES` : Number of nodes to use for multi-node tests
+* `CH_HOSTFILE` : Hostfile specifying number of nodes to use, without the slots= parameter.
+
+Note that the CI multi-node test baselines are generated with CI_NUM_NODES=3, so CI_NUM_NODES=3 must be specified when running those tests.
 
 ## Usage
 The test cases can be run manually by running the **run.py** script while positioned within a copy of this directory. 
@@ -30,6 +43,8 @@ shell$ ./run.py
 ```
 shell$ ./run.py direct
 ```
+
+Since CI tests have differing requirements for slots per node, the cirun.py script can be run when running all CI testcases. The cirun.py script sets up a correct hostfile then runs the run.py script to run the subset of tests that require that hostfile.
 
 ## Background Info
 The intent for these test cases is to implement a set of small tests that can verify the basic correctness of a specific part 
@@ -79,9 +94,18 @@ The run.py script invokes the tcfilter utility to deal with variable information
 The tcfilter program uses regular expressions to match the variable data, extract it from the output text and rewrite
 it as a consistent string.
 
-The tcfilter utility maintains simple sequential arrays of strings to match, one per variable data class; namespace, 
-pid, and hostname. As new unique strings of each class are found, they are added to the appropriate array. The re-written
-text is a tag, such as **@NS&lt;n&gt;** where n is the array index of the original string.
+The tcfilter utility maintains a simple sequential array of strings to match for namespaces. As new unique strings of each class are found, they are added to the array.  The re-written text is a tag, such as **@NS&lt;n&gt;** where n is the array index of the original string.  Pids and hostnames, which also vary with each run are found and converted to @PID&LT;?&GT; and @HOST&LT;?&GT;
   
 Test case output may not be structured to be easily machine parsable. Therefore, consideration should be given to
-structuring that output so it can be more reliably parsed.
+structuring that output so it can be more reliably parsed. Also, namespaces, hostnmes and pids should be formatted to match existing patterns whenever possible.
+
+## Generating New Baselines
+New baselines may be required if the CI test output changes as a result of bug fixes or functional changes.
+
+There is a baseline file for stdout and stderr for each testcase. For instance the attach testcase has files named **attach.stdout.baseline** and **attach.stderr.baseline**
+
+When a testcase is run, it generates output files for stdout and stderr, for instance **attach.stdout** and **attach.stderr**.
+
+To update a bseline file, examine the corresponding new testcase output file to verify results are expected, and if the results are correct, then rename the testcase output file to the name of the corresponsing baseline file and commit the new baseline files to the git repository.
+
+Note that if a tool/debugger testcase has its output changed, then the baseline files must be committed and merged to the test case repository master branch before CI test execution will be successful.
