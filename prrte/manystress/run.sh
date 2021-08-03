@@ -425,6 +425,18 @@ for _file in `ls -1 output.*.txt` ; do
         cat $_file
         echo "================================="
     fi
+
+    # Expect no failed in output.N.txt logfiles
+    ERRORS=`grep failed $_file | wc -l`
+    if [[ $ERRORS -ne 0 ]] ; then
+        echo "ERROR: Failed string detected in the output ($_file)"
+        _outlog_err=1
+        FINAL_RTN=5
+        echo "=== $_file ==="
+        cat $_file
+        echo "================================="
+    fi
+
 done
 # Check for problems w/ individual output.N.txt files
 if [ ${_outlog_err} -ne 0 ] ; then
