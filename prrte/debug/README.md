@@ -20,12 +20,12 @@ The following environment variable(s) are to be defined when running the `build.
 The run.py script requires the following environment variables to be set for multi-node tests
 
 * `CI_NUM_NODES` : Number of nodes to use for multi-node tests.
-* `CH_HOSTFILE` : Hostfile specifying number of nodes to use, with slots=&LT;n&GT; parameter specifying necessary slots per node.
+* `CI_HOSTFILE` : Hostfile specifying number of nodes to use, with slots=&LT;n&GT; parameter specifying necessary slots per node.
 
 The cirun.py script requires the following environment variables to be set
 
 * `CI_NUM_NODES` : Number of nodes to use for multi-node tests
-* `CH_HOSTFILE` : Hostfile specifying number of nodes to use, without the slots= parameter.
+* `CI_HOSTFILE` : Hostfile specifying number of nodes to use, without the slots= parameter.
 
 Note that the CI multi-node test baselines are generated with CI_NUM_NODES=3, so CI_NUM_NODES=3 must be specified when running those tests.
 
