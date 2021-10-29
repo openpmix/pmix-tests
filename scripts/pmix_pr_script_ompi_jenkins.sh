@@ -1,5 +1,5 @@
 #!/bin/bash
-# 
+#
 # Script used by the Open MPI https://jenkins.open-mpi.org/jenkins/ jenkins instance
 # for running the PMIX tests driven by non-prrte launcher test suite
 #
@@ -109,73 +109,75 @@ do
 
 done
 
-# Timed wildcard fence tests (the different runs are for testing different parameters)
-test=test_fence_wildcard
+# Timed wildcard and partial fence tests (the different runs are for testing different parameters)
 PMIX_ERR_TIMEOUT=232
 num_timeouts=0
-echo "RUNNING: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test --time-fence"
-timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test --time-fence
-retcode=$?
-if [ $retcode != 0 ]; then
-    # If test failed due to an intra-test timeout, retry with different parameters
-    if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
-        ((num_timeouts++))
-        echo "TIMED OUT; RETRYING with: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400"
-        sleep 60
-        timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400
-        retcode=$?
-        if [ $retcode != 0 ]; then
-            if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
-                ((num_timeouts++))
-                echo "---------------------------------------------------------------------"
-                echo "----- $test INTERNALLY TIMED OUT; CONTINUING ----------"
-                echo "---------------------------------------------------------------------"
-            else
-                echo "---------------------------------------------------------------------"
-                echo "-------------------- $test FAILED ---------------------"
-                echo "---------------------------------------------------------------------"
-                exit -1
+for test in test_fence_wildcard test_fence_partial
+do
+    echo "RUNNING: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test --time-fence"
+    timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test --time-fence
+    retcode=$?
+    if [ $retcode != 0 ]; then
+        # If test failed due to an intra-test timeout, retry with different parameters
+        if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+            ((num_timeouts++))
+            echo "TIMED OUT; RETRYING with: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400"
+            sleep 60
+            timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400
+            retcode=$?
+            if [ $retcode != 0 ]; then
+                if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+                    ((num_timeouts++))
+                    echo "---------------------------------------------------------------------"
+                    echo "----- $test INTERNALLY TIMED OUT; CONTINUING ----------"
+                    echo "---------------------------------------------------------------------"
+                else
+                    echo "---------------------------------------------------------------------"
+                    echo "-------------------- $test FAILED ---------------------"
+                    echo "---------------------------------------------------------------------"
+                    exit -1
+                fi
             fi
+        else
+            echo "---------------------------------------------------------------------"
+            echo "-------------------- $test FAILED ---------------------"
+            echo "---------------------------------------------------------------------"
+            exit -1
         fi
-    else
-        echo "---------------------------------------------------------------------"
-        echo "-------------------- $test FAILED ---------------------"
-        echo "---------------------------------------------------------------------"
-        exit -1
     fi
-fi
 
-echo "RUNNING: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 200 -r 150"
-timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 200 -r 150
-retcode=$?
-if [ $retcode != 0 ]; then
-    # If test failed due to an intra-test timeout, retry with different parameters
-    if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
-        ((num_timeouts++))
-        echo "TIMED OUT; RETRYING with: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400"
-        sleep 60
-        timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400
-        retcode=$?
-        if [ $retcode != 0 ]; then
-            if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
-                ((num_timeouts++))
-                echo "---------------------------------------------------------------------"
-                echo "----- $test INTERNALLY TIMED OUT; CONTINUING ----------"
-                echo "---------------------------------------------------------------------"
-            else
-                echo "---------------------------------------------------------------------"
-                echo "-------------------- $test FAILED ---------------------"
-                echo "---------------------------------------------------------------------"
-                exit -1
+    echo "RUNNING: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 200 -r 150"
+    timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 200 -r 150
+    retcode=$?
+    if [ $retcode != 0 ]; then
+        # If test failed due to an intra-test timeout, retry with different parameters
+        if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+            ((num_timeouts++))
+            echo "TIMED OUT; RETRYING with: ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400"
+            sleep 60
+            timeout -s SIGSEGV 10m ./pmix_test -s 4 -n 16 -d '0:0,1,3,5,7,9;1:2,4,6,8;2:10,12;3:11,13,14,15' -- ./$test -m 400
+            retcode=$?
+            if [ $retcode != 0 ]; then
+                if [ $retcode -eq $PMIX_ERR_TIMEOUT ]; then
+                    ((num_timeouts++))
+                    echo "---------------------------------------------------------------------"
+                    echo "----- $test INTERNALLY TIMED OUT; CONTINUING ----------"
+                    echo "---------------------------------------------------------------------"
+                else
+                    echo "---------------------------------------------------------------------"
+                    echo "-------------------- $test FAILED ---------------------"
+                    echo "---------------------------------------------------------------------"
+                    exit -1
+                fi
             fi
+        else
+            echo "---------------------------------------------------------------------"
+            echo "-------------------- $test FAILED ---------------------"
+            echo "---------------------------------------------------------------------"
+            exit -1
         fi
-    else
-        echo "---------------------------------------------------------------------"
-        echo "-------------------- $test FAILED ---------------------"
-        echo "---------------------------------------------------------------------"
-        exit -1
     fi
-fi
+done
 
 if [ $num_timeouts -eq 0 ]; then
     echo "---------------------------------------------------------------------"
