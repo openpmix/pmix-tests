@@ -21,17 +21,15 @@ _shutdown()
 # Start the DVM
 # ---------------------------------------
 if [ "x" = "x$CI_HOSTFILE" ] ; then
-    prte --no-ready-msg --prtemca state_base_verbose 5 --prtemca plm_base_verbose 5 --prtemca hwloc_base_verbose 5 &
+    prte --no-ready-msg &
 else
-    prte --no-ready-msg --hostfile $CI_HOSTFILE --prtemca state_base_verbose 5 --prtemca plm_base_verbose 5 --prtemca hwloc_base_verbose 5 &
+    prte --no-ready-msg --hostfile $CI_HOSTFILE &
 fi
 
 date
 # Wait for DVM to start
 sleep 5
 date
-
-_shutdown
 
 
 # ---------------------------------------
