@@ -239,6 +239,7 @@ def run(selected, testCases):
             if ((testCase[1] & MULTINODE_TEST) != 0):
                 attachProcess = Popen(["prterun", "--report-uri", "+",
                                       "--hostfile", hostFile,
+                                      "--map-by", "node", "--rank-by", "slot",
                                       "-n", str(numNodes * 2), "hello",
                                       str(int(ATTACH_WAITTIME))], 
                                       stdout=PIPE, stderr=STDOUT)
