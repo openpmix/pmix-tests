@@ -6,7 +6,7 @@ FINAL_RTN=0
 # Number of nodes - for accounting/verification purposes
 NUM_NODES=${CI_NUM_NODES:-1}
 
-NUM_ITERS=200
+NUM_ITERS=1
 
 _shutdown()
 {
@@ -30,7 +30,7 @@ rm -f dvm.uri
 echo "======================="
 echo "Starting DVM: prte --no-ready-msg --report-uri dvm.uri $hostarg &"
 echo "======================="
-prte --no-ready-msg --report-uri dvm.uri $hostarg &
+prte --no-ready-msg --prtemca pmix_server_verbose 5 --prtemca state_base_verbose 5 --prtemca rmaps_base_verbose 10 --report-uri dvm.uri $hostarg &
 
 # ---------------------------------------
 # Run the test - hostname
@@ -51,6 +51,7 @@ for n in $(seq 1 $NUM_ITERS) ; do
         _shutdown
     fi
 done
+_shutdown
 
 echo "---- Done"
 # ---------------------------------------
