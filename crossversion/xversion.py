@@ -122,7 +122,7 @@ def build_tree(bld, logfile=None):
             os.chdir(orig_dir)
 
             sio = p.stdout.read()
-            if "Already up-to-date" in sio:
+            if "Already up-to-date" in sio or "Already up to date" in sio:
                 print("Skip: Local install already exists ("+local_install_dir+") and branch ("+bld.branch+") has no updates")
                 return 1
             else:
@@ -212,13 +212,13 @@ def build_tree(bld, logfile=None):
         return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Make")
-    ret = subprocess.call(["make"], stdout=logfile, stderr=logfile, shell=False)
+    ret = subprocess.call(["make", "-j", "4"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
         return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Make Install")
-    ret = subprocess.call(["make", "install"], stdout=logfile, stderr=logfile, shell=False)
+    ret = subprocess.call(["make", "-j", "4", "install"], stdout=logfile, stderr=logfile, shell=False)
     if 0 != ret:
         os.chdir(orig_dir)
         return ret if ret < 0 or ret > 2 else (ret + 1000)
