@@ -4,9 +4,6 @@ on:
   schedule:
     # Run once a week on Sunday (UTC)
     - cron: '0 1 * * 0'
-#  push:
-#    branches:
-#      - 'master'
 
 env:
   # Use docker.io for Docker Hub if empty
@@ -62,7 +59,8 @@ jobs:
           # See the QEMU link above for supported architectures
           # Note that non-amd64 will take a long time due to QEMU virtualization
           # but they do seem to run in parallel.
-          platforms: linux/amd64,linux/ppc64le
+          #platforms: linux/amd64,linux/ppc64le
+          platforms: linux/amd64
           push: true
           tags: ${{ env.IMAGE_NAME }}:latest
           build-args: BUILD_TIMESTAMP='${{ steps.date.outputs.date }}'
