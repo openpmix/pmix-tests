@@ -3,7 +3,7 @@ hello_world
 # 'prun' all in one wrapper like some downstream projects use
 prun-wrapper
 # MPIR Shim: https://github.com/openpmix/mpir-to-pmix-guide
-mpir-shim
+#mpir-shim
 # Apply some pressure on the handling of fast running jobs
 cycle
 # PMIx Tool (Debugger) Unit Tests
