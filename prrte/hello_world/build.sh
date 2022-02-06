@@ -13,7 +13,7 @@ if [ $? != 0 ] ; then
     fi
 fi
 echo "Compiler: $PCC"
-echo ${PCC} --showme
+${PCC} --showme
 set -e
 
 echo "=========================="
@@ -21,3 +21,7 @@ echo "Building PMIx Hello World"
 echo "=========================="
 
 ${PCC} hello.c -o hello
+
+echo "=========================="
+echo "PMIx Hello World Build"
+echo "=========================="
