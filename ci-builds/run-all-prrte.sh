@@ -1,5 +1,6 @@
 #!/bin/bash
 
+exit 0
 
 #--------------------------------
 # Location of the PMIx checkout
