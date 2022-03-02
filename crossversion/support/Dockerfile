@@ -31,7 +31,7 @@ RUN yum -y update && \
         gcc gcc-gfortran gcc-c++ gdb \
         binutils less wget which sudo make file \
         wget git autoconf automake libtool flex \
-        perl-Data-Dumper bzip2 man \
+        perl-Data-Dumper bzip2 man diffutils \
         python2 python3 \
         python3-devel \
         zlib-devel \
