@@ -49,20 +49,7 @@ export AUTOMAKE_JOBS=20
 #--------------------------------
 # Configure
 #--------------------------------
-mkdir -p debian/shared-build
 mkdir -p debian/static-build
-
-#--------------------------------
-# VPATH shared
-#--------------------------------
-cd debian/shared-build/
-../../configure --prefix=${_BUILD_DIR}/install-shared \
-                --enable-shared --disable-static \
-                --with-libevent=${LIBEVENT_INSTALL_PATH} \
-                --with-hwloc=${HWLOC_INSTALL_PATH} \
-                --enable-python-bindings
-make -j 20
-make -j 20 install
 
 #--------------------------------
 # VPATH static
