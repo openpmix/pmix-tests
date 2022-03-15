@@ -1,7 +1,9 @@
 # Start with the basics
 hello_world
 # Test more than PMIx_Init/finalize with dmodex.
-dmodex
+# Re-enable once this stabilizes.
+# See issue: https://github.com/openpmix/prrte/issues/1243
+#dmodex
 # 'prun' all in one wrapper like some downstream projects use
 prun-wrapper
 # MPIR Shim: https://github.com/openpmix/mpir-to-pmix-guide
