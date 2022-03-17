@@ -61,7 +61,10 @@ int main(int argc, char **argv)
                 rc);
         exit(0);
     }
-    fprintf(stderr, "Client ns %s rank %d: Running\n", myproc.nspace, myproc.rank);
+
+    if(0 == myproc.rank) {
+        fprintf(stderr, "Client ns %s rank %d: Running\n", myproc.nspace, myproc.rank);
+    }
 
     /* get our job size */
     PMIX_LOAD_PROCID(&proc, myproc.nspace, PMIX_RANK_WILDCARD);
@@ -72,7 +75,10 @@ int main(int argc, char **argv)
     }
     nprocs = val->data.uint32;
     PMIX_VALUE_RELEASE(val);
-    fprintf(stderr, "Client %s:%d job size %d\n", myproc.nspace, myproc.rank, nprocs);
+
+    if(0 == myproc.rank) {
+        fprintf(stderr, "Client %s:%d job size %d\n", myproc.nspace, myproc.rank, nprocs);
+    }
 
     /* put a few values */
     (void) snprintf(tmp, 1024, "%s-%d-internal", myproc.nspace, myproc.rank);
@@ -169,19 +175,17 @@ int main(int argc, char **argv)
                 goto done;
             }
             if (PMIX_UINT64 != val->type) {
-                fprintf(stderr, "%s:%d: PMIx_Get Key %s returned wrong type: %s\n", myproc.nspace,
+                fprintf(stderr, "%s:%d: PMIx_Get Key %s failed - returned wrong type: %s\n", myproc.nspace,
                         myproc.rank, tmp, PMIx_Data_type_string(val->type));
                 PMIX_VALUE_RELEASE(val);
                 goto done;
             }
             if (1234 != val->data.uint64) {
-                fprintf(stderr, "%s:%d: PMIx_Get Key %s returned wrong value: %d\n", myproc.nspace,
+                fprintf(stderr, "%s:%d: PMIx_Get Key %s failed - returned wrong value: %d\n", myproc.nspace,
                         myproc.rank, tmp, (int) val->data.uint64);
                 PMIX_VALUE_RELEASE(val);
                 goto done;
             }
-            fprintf(stderr, "%s:%d Local value for %s:%d successfully retrieved\n", myproc.nspace,
-                    myproc.rank, proc.nspace, proc.rank);
             PMIX_VALUE_RELEASE(val);
         } else {
             (void)snprintf(tmp, 1024, "%s-%d-remote", myproc.nspace, n);
@@ -191,19 +195,17 @@ int main(int argc, char **argv)
                 goto done;
             }
             if (PMIX_STRING != val->type) {
-                fprintf(stderr, "%s:%d: PMIx_Get Key %s returned wrong type: %s\n", myproc.nspace,
+                fprintf(stderr, "%s:%d: PMIx_Get Key %s failed - returned wrong type: %s\n", myproc.nspace,
                         myproc.rank, tmp, PMIx_Data_type_string(val->type));
                 PMIX_VALUE_RELEASE(val);
                 goto done;
             }
             if (0 != strcmp(val->data.string, "1234")) {
-                fprintf(stderr, "%s:%d: PMIx_Get Key %s returned wrong value: %s\n", myproc.nspace,
+                fprintf(stderr, "%s:%d: PMIx_Get Key %s failed - returned wrong value: %s\n", myproc.nspace,
                         myproc.rank, tmp, val->data.string);
                 PMIX_VALUE_RELEASE(val);
                 goto done;
             }
-            fprintf(stderr, "%s:%d Remote value for %s:%d successfully retrieved\n", myproc.nspace,
-                    myproc.rank, proc.nspace, proc.rank);
             PMIX_VALUE_RELEASE(val);
         }
         /* if this isn't us, then get the ghex key */
@@ -214,19 +216,17 @@ int main(int argc, char **argv)
                 goto done;
             }
             if (PMIX_BYTE_OBJECT != val->type) {
-                fprintf(stderr, "%s:%d: PMIx_Get ghex returned wrong type: %s\n", myproc.nspace,
+                fprintf(stderr, "%s:%d: PMIx_Get ghex failed - returned wrong type: %s\n", myproc.nspace,
                         myproc.rank, PMIx_Data_type_string(val->type));
                 PMIX_VALUE_RELEASE(val);
                 goto done;
             }
             if (128 != val->data.bo.size) {
-                fprintf(stderr, "%s:%d: PMIx_Get ghex returned wrong size: %d\n", myproc.nspace,
+                fprintf(stderr, "%s:%d: PMIx_Get ghex failed - returned wrong size: %d\n", myproc.nspace,
                         myproc.rank, (int) val->data.bo.size);
                 PMIX_VALUE_RELEASE(val);
                 goto done;
             }
-            fprintf(stderr, "%s:%d Ghex for %s:%d successfully retrieved\n", myproc.nspace,
-                    myproc.rank, proc.nspace, proc.rank);
             PMIX_VALUE_RELEASE(val);
         }
     }
@@ -241,7 +241,6 @@ done:
         goto done;
     }
 
-    fprintf(stderr, "Client ns %s rank %d: Finalizing\n", myproc.nspace, myproc.rank);
     if (PMIX_SUCCESS != (rc = PMIx_Finalize(NULL, 0))) {
         fprintf(stderr, "Client ns %s rank %d:PMIx_Finalize failed: %d\n", myproc.nspace,
                 myproc.rank, rc);
