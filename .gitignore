@@ -108,3 +108,5 @@ prrte/debug/direct.stderr
 prrte/debug/direct.stdout
 prrte/manystress/sleeper
 prrte/manystress/output.txt
+prrte/dmodex/dmodex
+prrte/dmodex/output.txt

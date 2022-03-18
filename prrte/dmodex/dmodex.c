@@ -25,15 +25,13 @@
  *
  */
 
-#include "examples.h"
-#include "src/include/pmix_config.h"
-#include "../include/pmix.h"
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <pmix.h>
+
+#include "examples.h"
 
 static uint32_t nprocs;
 static pmix_proc_t myproc;
@@ -154,7 +152,11 @@ int main(int argc, char **argv)
     PMIX_INFO_LOAD(&timeout, PMIX_TIMEOUT, &tlimit, PMIX_INT);
     /* get the committed data - ask for someone who doesn't exist as well */
     for (n = 0; n < nprocs; n++) {
-        if (all_local) {
+        if (n == myproc.rank) {
+            /* local peers doesn't include us, so check for
+             * ourselves separately */
+            local = true;
+        } else if (all_local) {
             local = true;
         } else {
             local = false;
