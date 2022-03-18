@@ -25,15 +25,13 @@
  *
  */
 
-#include "examples.h"
-#include "src/include/pmix_config.h"
-#include "../include/pmix.h"
-
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
 #include <unistd.h>
+#include <pmix.h>
+
+#include "examples.h"
 
 static uint32_t nprocs;
 static pmix_proc_t myproc;
