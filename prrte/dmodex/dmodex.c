@@ -60,10 +60,6 @@ int main(int argc, char **argv)
         exit(0);
     }
 
-    if(0 == myproc.rank) {
-        fprintf(stderr, "Client ns %s rank %d: Running\n", myproc.nspace, myproc.rank);
-    }
-
     /* get our job size */
     PMIX_LOAD_PROCID(&proc, myproc.nspace, PMIX_RANK_WILDCARD);
     if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, PMIX_JOB_SIZE, NULL, 0, &val))) {
@@ -75,7 +71,7 @@ int main(int argc, char **argv)
     PMIX_VALUE_RELEASE(val);
 
     if(0 == myproc.rank) {
-        fprintf(stderr, "Client %s:%d job size %d\n", myproc.nspace, myproc.rank, nprocs);
+        fprintf(stderr, "Client ns %s rank %d: Running. World size %d\n", myproc.nspace, myproc.rank, nprocs);
     }
 
     /* put a few values */
@@ -172,7 +168,7 @@ int main(int argc, char **argv)
         if (local) {
             (void)snprintf(tmp, 1024, "%s-%d-local", proc.nspace, n);
             if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, tmp, &timeout, 1, &val))) {
-                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, n,
+                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, myproc.rank,
                         tmp, PMIx_Error_string(rc));
                 goto done;
             }
@@ -192,7 +188,7 @@ int main(int argc, char **argv)
         } else {
             (void)snprintf(tmp, 1024, "%s-%d-remote", myproc.nspace, n);
             if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, tmp, &timeout, 1, &val))) {
-                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, n,
+                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, myproc.rank,
                         tmp, PMIx_Error_string(rc));
                 goto done;
             }
@@ -214,7 +210,7 @@ int main(int argc, char **argv)
         if (n != myproc.rank) {
             if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, "ghex", &timeout, 1, &val))) {
                 fprintf(stderr, "Client ns %s rank %d: PMIx_Get ghex failed: %s\n", myproc.nspace,
-                        n, PMIx_Error_string(rc));
+                        myproc.rank, PMIx_Error_string(rc));
                 goto done;
             }
             if (PMIX_BYTE_OBJECT != val->type) {
@@ -240,15 +236,17 @@ done:
     if (PMIX_SUCCESS != (rc = PMIx_Fence(NULL, 0, NULL, 0))) {
         fprintf(stderr, "Client ns %s rank %d: PMIx_Fence failed: %d\n", myproc.nspace, myproc.rank,
                 rc);
-        goto done;
+        exit(1);
     }
 
     if (PMIX_SUCCESS != (rc = PMIx_Finalize(NULL, 0))) {
         fprintf(stderr, "Client ns %s rank %d:PMIx_Finalize failed: %d\n", myproc.nspace,
                 myproc.rank, rc);
     } else {
-        fprintf(stderr, "Client ns %s rank %d:PMIx_Finalize successfully completed\n",
-                myproc.nspace, myproc.rank);
+        if(0 == myproc.rank) {
+            fprintf(stderr, "Client ns %s rank %d:PMIx_Finalize successfully completed\n",
+                    myproc.nspace, myproc.rank);
+        }
     }
     fflush(stderr);
     return (0);

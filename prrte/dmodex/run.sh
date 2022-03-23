@@ -37,7 +37,7 @@ if [[ $ERRORS -ne 0 ]] ; then
 fi
 
 LINES=`grep -i "PMIx_Finalize successfully completed" output.txt | wc -l`
-if [[ $LINES -ne $(( 10 * $NUM_NODES )) ]] ; then
+if [[ $LINES -ne 1 ]] ; then
     echo "ERROR: Incorrect number of lines of output"
     exit 2
 fi
@@ -77,7 +77,7 @@ if [[ $ERRORS -ne 0 ]] ; then
 fi
 
 LINES=`grep -i "PMIx_Finalize successfully completed" output.txt | wc -l`
-if [[ $LINES -ne $(( 10 * $NUM_NODES )) ]] ; then
+if [[ $LINES -ne 1 ]] ; then
     echo "ERROR: Incorrect number of lines of output"
     FINAL_RTN=3
     _shutdown
