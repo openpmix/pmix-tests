@@ -172,7 +172,7 @@ int main(int argc, char **argv)
         if (local) {
             (void)snprintf(tmp, 1024, "%s-%d-local", proc.nspace, n);
             if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, tmp, &timeout, 1, &val))) {
-                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, n,
+                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, myproc.rank,
                         tmp, PMIx_Error_string(rc));
                 goto done;
             }
@@ -192,7 +192,7 @@ int main(int argc, char **argv)
         } else {
             (void)snprintf(tmp, 1024, "%s-%d-remote", myproc.nspace, n);
             if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, tmp, &timeout, 1, &val))) {
-                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, n,
+                fprintf(stderr, "Client ns %s rank %d: PMIx_Get %s failed: %s\n", myproc.nspace, myproc.rank,
                         tmp, PMIx_Error_string(rc));
                 goto done;
             }
@@ -214,7 +214,7 @@ int main(int argc, char **argv)
         if (n != myproc.rank) {
             if (PMIX_SUCCESS != (rc = PMIx_Get(&proc, "ghex", &timeout, 1, &val))) {
                 fprintf(stderr, "Client ns %s rank %d: PMIx_Get ghex failed: %s\n", myproc.nspace,
-                        n, PMIx_Error_string(rc));
+                        myproc.rank, PMIx_Error_string(rc));
                 goto done;
             }
             if (PMIX_BYTE_OBJECT != val->type) {
