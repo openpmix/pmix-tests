@@ -13,10 +13,11 @@ _shutdown()
     # Cleanup DVM
     # ---------------------------------------
     pterm
-
+    cat $CI_HOSTFILE | xargs -L1 -I '{}'  ssh {} rm -rf /tmp/prte.*
     exit $FINAL_RTN
 }
 
+cat $CI_HOSTFILE | xargs -L1 -I '{}'  ssh {} rm -rf /tmp/prte.*
 
 # ---------------------------------------
 # Run the test - Dmodex (PMIx)

@@ -1,7 +1,5 @@
 # Start with the basics
 hello_world
-# Test more than PMIx_Init/finalize with dmodex.
-dmodex
 # 'prun' all in one wrapper like some downstream projects use
 prun-wrapper
 # MPIR Shim: https://github.com/openpmix/mpir-to-pmix-guide
@@ -12,3 +10,5 @@ cycle
 debug
 # Add the Many Stress Test case
 #manystress
+# Test more than PMIx_Init/finalize with dmodex.
+dmodex
