@@ -73,21 +73,21 @@ return namespace_in;
  * and pthread_mutex_lock only enforces locks between threads. Therefore, two
  * locks are required. 
  * The locks can affect the timing of output, but for the intended use of
- * verifying basic functionality, this shuld not matter.
+ * verifying basic functionality, this should not matter.
  */
 
 void lock_stream() {
+    pthread_mutex_lock(&thread_lock);
     if (0 < lock_handle) {
         flock(lock_handle, LOCK_EX);
     }
-    pthread_mutex_lock(&thread_lock);
 }
 
 void unlock_stream() {
-    pthread_mutex_unlock(&thread_lock);
     if (0 < lock_handle) {
         flock(lock_handle, LOCK_UN);
     }
+    pthread_mutex_unlock(&thread_lock);
 }
 
 void printf_common() {
@@ -169,8 +169,8 @@ int fprintf(FILE *stream, const char *format, ...) {
     char prefix[20];
     int n;
 
-    printf_common();
     lock_stream();
+    printf_common();
     va_start(args, format);
     if ('\0' == my_rank[0]) {
         strcpy(prefix, TPRINT_PFX);
@@ -191,8 +191,8 @@ int printf(const char *format, ...) {
     char prefix[20];
     int n;
 
-    printf_common();
     lock_stream();
+    printf_common();
     va_start(args, format);
     if ('\0' == my_rank[0]) {
         strcpy(prefix, TPRINT_PFX);
@@ -212,8 +212,8 @@ int fputs(const char *s, FILE *stream) {
     char prefix[20];
     int n;
 
-    printf_common();
     lock_stream();
+    printf_common();
     if ('\0' == my_rank[0]) {
         strcpy(prefix, TPRINT_PFX);
     }
@@ -231,8 +231,8 @@ int puts(const char *s) {
     char prefix[20];
     int n;
 
-    printf_common();
     lock_stream();
+    printf_common();
     if ('\0' == my_rank[0]) {
         strcpy(prefix, TPRINT_PFX);
     }
@@ -250,8 +250,8 @@ size_t fwrite(const void *ptr, size_t size, size_t nmemb, FILE *stream) {
     char prefix[20];
     int n;
 
-    printf_common();
     lock_stream();
+    printf_common();
     if ('\0' == my_rank[0]) {
         strcpy(prefix, TPRINT_PFX);
     }
