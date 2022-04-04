@@ -13,6 +13,9 @@ env:
 
 jobs:
   build:
+    # Do not run on fork's of this repo
+    # https://docs.github.com/en/actions/using-workflows/workflow-syntax-for-github-actions#jobsjob_idif
+    if: github.repository == 'openpmix/pmix-tests'
     runs-on: ubuntu-latest
     environment: Docker Registry Auth
 
