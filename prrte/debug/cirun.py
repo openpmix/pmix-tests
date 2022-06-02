@@ -10,12 +10,13 @@ from time import strftime
 # and the set of run.py testcases that need that number of slots.
 # The first element in each row is the number of slots, and the remaining 
 # elements are the names of the run.py testcases needing that number of slots
-tests = [ ["1", "direct", "attach", "indirect-prterun"],
-          ["2", "direct-colaunch1", "direct-colaunch2",
-                "attach-colaunch1", "attach-colaunch2"],
-          ["3", "direct-multi"],
-          ["4", "indirect-colaunch1", "indirect-colaunch2"],
-          ["5", "indirect-multi"]
+# ["1", "direct", "attach", "indirect-prterun"],
+#          ["2", "direct-colaunch1", "direct-colaunch2",
+#                "attach-colaunch1", "attach-colaunch2"],
+# ,
+#          ["4", "indirect-colaunch1", "indirect-colaunch2"],
+#          ["5", "indirect-multi"]
+tests = [ ["3", "direct-multi"]
         ]
 numNodes = 0
 hostFile = ""
@@ -91,6 +92,7 @@ for run in tests:
         outFile.write(host[0:len(host) - 1] + " slots=" + run[0] + "\n")
     outFile.close()
     environ["CI_HOSTFILE"] = hostFileName
+    environ["PRTE_MCA_rmaps_base_verbose"] = "100"
     runCommand = []
     runCommand.append("./run.py")
     for commandParm in run[1:]:
