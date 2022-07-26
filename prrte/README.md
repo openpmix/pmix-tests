@@ -18,6 +18,7 @@ The CI infrastructure defines two environment variables to be used in the test p
 
  * `CI_HOSTFILE` : Absolute path to the hostfile for this run.
  * `CI_NUM_NODES` : Number of nodes in this cluster.
+ * `CI_PRRTE_SRC` : Base of the PRRTE checkout. Used to find the `examples` directory for some tests.
 
 
 ### Adding a new test for CI
