@@ -15,7 +15,7 @@ import subprocess
 import shutil
 
 # put this in one place
-supported_versions = ["master", "v4.1", "v3.1", "v3.2"]
+supported_versions = ["master", "v4.2", "v4.1", "v3.1", "v3.2"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
@@ -454,6 +454,21 @@ if __name__ == "__main__":
             invalid_tool_pairs.append([bld.branch,"v3.0"])
             invalid_tool_pairs.append([bld.branch,"v2.2"])
             invalid_tool_pairs.append([bld.branch,"v2.0"])
+        elif target_branch == "master":
+            invalid_pairs.append([bld.branch,"master"])
+            invalid_tool_pairs.append([bld.branch,"master"])
+            invalid_pairs.append(["master", bld.branch])
+            invalid_tool_pairs.append(["master", bld.branch])
+        elif target_branch == "v4.2":
+            invalid_pairs.append([bld.branch,"v4.2"])
+            invalid_tool_pairs.append([bld.branch,"v4.2"])
+            invalid_pairs.append(["v4.2", bld.branch])
+            invalid_tool_pairs.append(["v4.2", bld.branch])
+        elif target_branch == "v4.1:
+            invalid_pairs.append([bld.branch,"v4.1"])
+            invalid_tool_pairs.append([bld.branch,"v4.1"])
+            invalid_pairs.append(["v4.1", bld.branch])
+            invalid_tool_pairs.append(["v4.1", bld.branch])
         else:
             invalid_pairs.append(["v2.0",bld.branch])
             invalid_tool_pairs.append(["v2.0",bld.branch])
