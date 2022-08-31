@@ -127,7 +127,7 @@ def build_tree(bld, logfile=None):
                 return 1
             else:
                 print("\"git pull\" indicated a change on this branch. Rebuilding.")
-                print("Log:\n"+sio)
+                print("Log:\n"+sio.decode('utf-8'))
                 shutil.rmtree(local_build_dir)
 
     # If the build directory does not exist then check it out
