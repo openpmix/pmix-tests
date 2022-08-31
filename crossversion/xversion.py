@@ -1,4 +1,4 @@
-#!/usr/bin/python -u
+#!/usr/bin/env -S python3 -u
 
 #
 # To build only: (-q = quiet mode)
@@ -69,7 +69,7 @@ class BuildInfo:
         global pmix_install_dir
 
         if self.branch is None:
-            print "Error: Branch must be defined"
+            print("Error: Branch must be defined")
             sys.exit(1)
         if self.build_base_dir is None:
             self.build_base_dir = "pmix-" + self.branch
@@ -122,7 +122,7 @@ def build_tree(bld, logfile=None):
             os.chdir(orig_dir)
 
             sio = p.stdout.read()
-            if "Already up-to-date" in sio or "Already up to date" in sio:
+            if b'Already up-to-date' in sio or b'Already up to date' in sio:
                 print("Skip: Local install already exists ("+local_install_dir+") and branch ("+bld.branch+") has no updates")
                 return 1
             else:
@@ -486,7 +486,7 @@ if __name__ == "__main__":
                 if 0 != ret and 1 != ret:
                     # Write the file to stdout so that CI can report it back to the user
                     with open(output_file, 'r') as logfile:
-                        print logfile.read()
+                        print(logfile.read())
             else:
                 ret = build_tree(bld_server)
 
@@ -580,22 +580,22 @@ if __name__ == "__main__":
         if args.no_build is False:
             print("="*30 + " Summary (Build) " + "="*30)
             for line in final_summary_build:
-                print line
+                print(line)
 
         if args.no_run is False and args.skip_client is False:
             print("="*30 + " Summary (Client) " + "="*30)
             for line in final_summary_client:
-                print line
+                print(line)
 
         if args.no_run is False and args.skip_tool is False:
             print("="*30 + " Summary (Tool) " + "="*30)
             for line in final_summary_tool:
-                print line
+                print(line)
 
         if args.no_run is False and args.make_check is True:
             print("="*30 + " Summary (Make Check Failures) " + "="*30)
             for line in final_summary_check:
-                print line
+                print(line)
 
         print("")
         print("="*70)
