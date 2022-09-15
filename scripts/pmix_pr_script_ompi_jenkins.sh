@@ -25,6 +25,8 @@ fi
 echo "--> platform: $PLATFORM_ID"
 echo "--> version: $VERSION_ID"
 
+git submodule update --init
+
 ./autogen.pl
 if [ $? != 0 ]; then
     echo "---------------------------------------------------------------------"
