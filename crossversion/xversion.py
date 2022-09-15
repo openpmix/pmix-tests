@@ -164,6 +164,14 @@ def build_tree(bld, logfile=None):
 
     print("============ PMIx Build: "+bld.branch+" : "+os.getcwd())
 
+    print("============ PMIx Build: "+bld.branch+" : Submodule update")
+    ret = subprocess.call(["git", "submodule", "update", "--init", "--recursive"],
+                          stdout=logfile, stderr=logfile, shell=False)
+    if 0 != ret:
+        print("Error: \"git submodule update --init --recursive\" failed. Possible network issue.");
+        os.chdir(orig_dir)
+        return ret
+
     print("============ PMIx Build: "+bld.branch+" : Autogen")
     if os.path.exists("autogen.pl") is True:
         ret = subprocess.call(["./autogen.pl"], stdout=logfile, stderr=logfile, shell=False)

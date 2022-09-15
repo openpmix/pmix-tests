@@ -29,6 +29,17 @@ if [ ! -d ${_PRRTE_CHECKOUT} ] ; then
 fi
 
 #--------------------------------
+# Double check that the submodule pointers are updated
+#--------------------------------
+cd ${_PMIX_CHECKOUT}
+git submodule update --init --recursive
+cd -
+
+cd ${_PRRTE_CHECKOUT}
+git submodule update --init --recursive
+cd -
+
+#--------------------------------
 # All of the builds sorted
 # Builds must start with at least a 2 digit number (`07`)
 #--------------------------------
