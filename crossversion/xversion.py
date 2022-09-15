@@ -135,7 +135,7 @@ def build_tree(bld, logfile=None):
         if bld.is_git is True:
             print("============ PMIx Build: "+bld.branch+" : Git Clone")
             ret = subprocess.call(["git", "clone",
-                                   "-b", bld.branch,
+                                   "-b", bld.branch, "--recurse-submodules",
                                    bld.url, local_build_dir],
                                    stdout=logfile, stderr=logfile, shell=False)
             if 0 != ret:

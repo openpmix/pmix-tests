@@ -11,7 +11,7 @@ fi
 
 if [ ! -d ${_PMIX_CHECKOUT} ] ; then
     cd $HOME
-    git clone -b master https://github.com/openpmix/openpmix.git
+    git clone -b master --recurse-submodules https://github.com/openpmix/openpmix.git
     cd -
 fi
 

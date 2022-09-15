@@ -75,7 +75,7 @@ make -j 10 install
 # PRRTE Build
 #--------------------------------
 cd $_BUILD_DIR
-git clone -b master https://github.com/openpmix/prrte.git
+git clone -b master --recurse-submodules https://github.com/openpmix/prrte.git
 cd prrte
 
 #--------------------------------

@@ -34,7 +34,7 @@ cd $_BUILD_DIR
 # PMIx Build
 #--------------------------------
 if [ -n "$PR_TARGET_BRANCH" ] &&  [ "$PR_TARGET_BRANCH" == "v2.0" ] ; then
-  git clone -b v4.1 https://github.com/openpmix/openpmix.git
+  git clone -b v4.1 --recurse-submodules https://github.com/openpmix/openpmix.git
 else
   # no need to do another build as we have tested against pmix master elsewhere
   exit 0
