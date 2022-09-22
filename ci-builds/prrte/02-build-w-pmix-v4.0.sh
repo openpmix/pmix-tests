@@ -1,13 +1,13 @@
 #!/bin/bash -ex
 
 #
-# PRRTE requires a minimum of OpenPMIx v4.1.x
+# PRRTE requires a minimum of OpenPMIx v4.2.2
 #
 
 #--------------------------------
 # Sanity Checks
 #--------------------------------
-# Ignore $_PMIX_CHECKOUT as we will use the current v4.1.x branch
+# Ignore $_PMIX_CHECKOUT as we will use the head of the current v4.2 branch
 
 if [ -z "${_PRRTE_CHECKOUT}" ]; then
     echo "Error: No PRRTE checkout"
@@ -33,8 +33,8 @@ cd $_BUILD_DIR
 #--------------------------------
 # PMIx Build
 #--------------------------------
-if [ -n "$PR_TARGET_BRANCH" ] &&  [ "$PR_TARGET_BRANCH" == "v2.0" ] ; then
-  git clone -b v4.1 --recurse-submodules https://github.com/openpmix/openpmix.git
+if [ -n "$PR_TARGET_BRANCH" ] &&  [ "$PR_TARGET_BRANCH" == "v3.0" ] ; then
+  git clone -b v4.2 --recurse-submodules https://github.com/openpmix/openpmix.git
 else
   # no need to do another build as we have tested against pmix master elsewhere
   exit 0
