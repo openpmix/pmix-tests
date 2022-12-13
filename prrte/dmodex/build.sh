@@ -14,8 +14,7 @@ if [ $? != 0 ] ; then
 fi
 echo "Compiler: $PCC"
 ${PCC} --showme
-shme=$(${PCC} --version)
-echo "$shme"
+${PCC} --version
 set -e
 
 echo "=========================="
