@@ -5,6 +5,7 @@ echo "Detect wrapper compiler"
 echo "=========================="
 set +e
 PCC=`which pcc`
+PMIXCC=`which pmixcc`
 if [ $? != 0 ] ; then
     PCC=`which pmixcc`
     if [ $? != 0 ] ; then
@@ -15,6 +16,7 @@ fi
 echo "Compiler: $PCC"
 ${PCC} --showme
 ${PCC} --version
+${PMIXCC} --version
 set -e
 
 echo "=========================="
