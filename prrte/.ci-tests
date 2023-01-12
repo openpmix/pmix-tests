@@ -11,4 +11,4 @@ debug
 # Add the Many Stress Test case
 #manystress
 # Test more than PMIx_Init/finalize with dmodex.
-# dmodex
+dmodex
