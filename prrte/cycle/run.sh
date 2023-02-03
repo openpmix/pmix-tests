@@ -85,7 +85,7 @@ prte --no-ready-msg --report-uri dvm.uri $hostarg &
 # ---------------------------------------
 # Run the test - init_finalize
 # ---------------------------------------
-_CMD="prun --dvm-uri file:dvm.uri --num-connect-retries 1000 ./init_finalize_pmix"
+_CMD="prun --dvm-uri file:dvm.uri --num-connect-retries 1000 -n 4 --map-by :oversubscribe ./init_finalize_pmix"
 echo ""
 echo "======================="
 echo "Running init_finalize_pmix: $_CMD"
