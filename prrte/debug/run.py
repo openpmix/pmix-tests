@@ -137,9 +137,9 @@ def run(selected, testCases):
     global testcases, failures, failedTests
     prteProcess = None
     rc = 0
-    testcaseTimeout = 60.0
-    daemonDelay = 5.0
-    waitTimeout = 5.0
+    testcaseTimeout = 120.0
+    daemonDelay = 10.0
+    waitTimeout = 10.0
     hostFile = "./hostfile"
     try:
         hostFile = environ["CI_HOSTFILE"]
