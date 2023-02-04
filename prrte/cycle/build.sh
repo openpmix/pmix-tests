@@ -17,7 +17,8 @@ echo ${PCC} --showme
 set -e
 
 echo "=========================="
-echo "Building PMIx Hello World"
+echo "Building PMIx cycle tests"
 echo "=========================="
 
 ${PCC} init_finalize_pmix.c -o init_finalize_pmix
+${PCC} multi_init_finalize_pmix.c -o multi_init_finalize_pmix
