@@ -405,15 +405,6 @@ def run(selected, testCases):
               # Get the testcase stdout and stderr output, split that output
               # into '\n'-delimited newlines, and sort the resulting text
               # arrays by the line prefix tag
-              #
-              # Sorting by line prefix tag eliminates false failures due to
-              # difference in ordering of testcase output with differing
-              # timing of execution by individual tasks.
-              #
-              # This eliminates the possibility of detecting problems caused
-              # by differing timing of interactions between processes, but
-              # that kind of testing is probably outside the scope of 
-              # simple CI testing.
             stdoutText = sorted(stdoutText.splitlines(keepends=True))
             stderrText = sorted(stderrText.splitlines(keepends=True))
 
@@ -445,8 +436,8 @@ def run(selected, testCases):
             stderrFilter.wait(waitTimeout)
 
               # Compare stdout and stderr output to corresponding baselines
-            diffProcess = Popen(["/bin/diff", stdoutPath + ".baseline",
-                                 stdoutPath])
+            diffProcess = Popen(["./compare.py", stdoutPath,
+                                 stdoutPath + ".baseline"])
             diffProcess.wait(waitTimeout)
             if (diffProcess.returncode != 0):
                 log("ERROR: testcase ", testCase[0],
@@ -456,8 +447,8 @@ def run(selected, testCases):
                 rc = 1
                 continue
 
-            diffProcess = Popen(["/bin/diff", stderrPath + ".baseline",
-                                 stderrPath])
+            diffProcess = Popen(["./compare.py", stderrPath,
+                                 stderrPath  + ".baseline"])
             diffProcess.wait(waitTimeout)
             if (diffProcess.returncode != 0):
                 log("ERROR: testcase ", testCase[0],
