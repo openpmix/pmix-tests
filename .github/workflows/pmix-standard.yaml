@@ -1,0 +1,39 @@
+name: Compare PMIx Standard and OpenPMIx
+
+on:
+  schedule:
+    # Run once a week on Sunday (UTC)
+    - cron: '0 1 * * 0'
+  push:
+    # Run whenever pmix-tests master branch changes
+    branches:
+      - master
+
+env:
+  # Use docker.io for Docker Hub if empty
+  REGISTRY: docker.io
+  # github.repository as <account>/<repo>
+  IMAGE_NAME: jjhursey/pmix-standard
+
+jobs:
+  check-std-v4:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out the code
+        uses: actions/checkout@v1
+      # Run the container tester
+      - name: Compare with v4
+        run: docker run --rm -v ${GITHUB_WORKSPACE}:/home/pmixer/pmix-tests ${{ env.IMAGE_NAME }}:latest /bin/bash -c "cd /tmp && /home/pmixer/pmix-tests/check-standard/bin/run-v4-check.sh"
+        shell: bash
+
+  check-std-v5:
+    runs-on: ubuntu-latest
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - name: Check out the code
+        uses: actions/checkout@v1
+      # Run the container tester
+      - name: Compare with v5
+        run: docker run --rm -v ${GITHUB_WORKSPACE}:/home/pmixer/pmix-tests ${{ env.IMAGE_NAME }}:latest /bin/bash -c "cd /tmp && /home/pmixer/pmix-tests/check-standard/bin/run-v5-check.sh"
+        shell: bash
