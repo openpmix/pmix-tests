@@ -1,0 +1,383 @@
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: fb4a57ba1
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_WDIR_USER_SPECIFIED
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: e66c29b93
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_SORTED_PROC_ARRAY
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 3a8ef0946
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_MYSERVER_URI
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: d490e100a
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_LOG_AGG
+PMIX_LOG_KEY
+PMIX_LOG_VAL
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 73aff171c
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_IOF_TAG_DETAILED_OUTPUT
+PMIX_IOF_TAG_FULLNAME_OUTPUT
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 70d5a53ae
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_EXTERNAL_AUX_EVENT_BASE
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 518dc6aed
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_EVENT_ONESHOT
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 5dab544ec
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_ERR_EXIT_NONZERO_TERM
+PMIX_ERR_PROC_ABORTED_BY_SIG
+PMIX_ERR_PROC_FAILED_TO_START
+PMIX_ERR_PROC_KILLED_BY_CMD
+PMIX_ERR_PROC_SENSOR_BOUND_EXCEEDED
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 29a92a17b
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_DISPLAY_PROCESSORS
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 1ba4ee6e7
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_DISPLAY_PARSEABLE_OUTPUT
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 195e36f1d
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_DISPLAY_ALLOCATION
+PMIX_DISPLAY_MAP_DETAILED
+PMIX_DISPLAY_TOPOLOGY
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: fcc07f946
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_DATA_BUFFER
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 137cc3d6b
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_COLOCATE_NPERNODE
+PMIX_COLOCATE_NPERPROC
+PMIX_COLOCATE_PROCS
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: d167a63f5
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_BIND_PROGRESS_THREAD
+PMIX_BIND_REQUIRED
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: da240c502
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_RUNTIME_OPTIONS
+PMIX_ABORT_NON_ZERO_TERM
+PMIX_DO_NOT_LAUNCH
+PMIX_SHOW_LAUNCH_PROGRESS
+PMIX_AGGREGATE_HELP
+PMIX_REPORT_CHILD_SEP
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 0a9aa8c8b
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_tool_is_connected
+PMIX_CONNECT_TO_SCHEDULER
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 261702212
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_ALLOC_PREEMPTIBLE
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: dad0fb856
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Info_list_insert
+PMIX_INFO_PERSISTENT
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 7a0fa0455
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Device_distance_construct
+PMIx_Device_distance_create
+PMIx_Device_distance_destruct
+PMIx_Device_distance_free
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: d56cc5fdb
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_App_string
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: ec77b2bfa
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_QUALIFIED_VALUE
+PMIX_GROUP_INFO
+PMIX_GROUP_LOCAL_CID
+PMIX_GROUP_ADD_MEMBERS
+PMIX_INFO_QUALIFIER
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: a4e83b627
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Value_true
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 7931d879c
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Info_string
+PMIx_Value_string
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: ea977cd55
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Value_get_size
+PMIx_Info_get_size
+PMIx_Info_list_prepend
+PMIx_Info_list_get_info
+PMIX_SIZE_ESTIMATE
+
+#---------------------------------------------------------
+# Needs Review: Likely more macro to function conversions
+#  OpenPMIx: a37ef140f
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Xfer_procid
+PMIx_Argv_append_nosize
+PMIx_Argv_append_unique_nosize
+PMIx_Argv_prepend_nosize
+PMIx_Argv_split_inter
+PMIx_Argv_split_with_empty
+PMIx_Info_set_end
+PMIx_Info_qualifier
+PMIx_Info_is_qualifier
+PMIx_Info_persistent
+PMIx_Info_is_persistent
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: fec3c6f6f
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Value_compare
+PMIx_Value_comparison_string
+pmix_value_cmp_t
+PMIX_EQUAL
+PMIX_VALUE1_GREATER
+PMIX_VALUE2_GREATER
+PMIX_VALUE_COMPARISON_NOT_AVAIL
+PMIX_VALUE_INCOMPATIBLE_OBJECTS
+PMIX_VALUE_TYPE_DIFFERENT
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 6927bc40c
+#  OpenPMIx PR: https://github.com/openpmix/openpmix/pull/2738
+#
+# Return value for:
+#  - PMIx_Value_true which replaced macros PMIX_CHECK_TRUE / PMIX_CHECK_BOOL
+#  - PMIx_Info_true which replaced macro PMIX_INFO_TRUE
+#---------------------------------------------------------
+PMIX_BOOL_FALSE
+PMIX_BOOL_TRUE
+PMIX_NON_BOOL
+pmix_boolean_t
+# PMIX_CHECK_TRUE
+# pmix_check_true
+
+#---------------------------------------------------------
+# Pending PMIx Standard PR:
+#   https://github.com/pmix/pmix-standard/pull/335
+#  OpenPMIx PR: https://github.com/openpmix/openpmix/pull/2039
+#    Comment about missing parts: https://github.com/openpmix/openpmix/pull/2039
+#---------------------------------------------------------
+pmix_proc_stats_t
+PMIx_Proc_stats_construct
+PMIx_Proc_stats_create
+PMIx_Proc_stats_destruct
+PMIx_Proc_stats_free
+PMIX_PROC_STATS
+PMIX_PROC_STATS_STATIC_INIT
+pmix_node_stats_t
+PMIX_NODE_STATS
+PMIX_NODE_STATS_STATIC_INIT
+
+# Below are missing from PR 335 as of now
+pmix_disk_stats_t
+PMIX_DISK_STATS
+PMIX_DISK_STATS_STATIC_INIT
+PMIx_Disk_stats_construct
+PMIx_Disk_stats_create
+PMIx_Disk_stats_destruct
+PMIx_Disk_stats_free
+
+pmix_net_stats_t
+PMIX_NET_STATS
+PMIX_NET_STATS_STATIC_INIT
+PMIx_Net_stats_construct
+PMIx_Net_stats_create
+PMIx_Net_stats_destruct
+PMIx_Net_stats_free
+
+#---------------------------------------------------------
+# TODO: Macro -> Function conversion
+#---------------------------------------------------------
+PMIx_App_construct
+PMIx_App_create
+PMIx_App_destruct
+PMIx_App_free
+PMIx_App_info_create
+PMIx_App_release
+PMIx_Argv_copy
+PMIx_Argv_count
+PMIx_Argv_free
+PMIx_Argv_join
+PMIx_Argv_split
+PMIx_Byte_object_construct
+PMIx_Byte_object_create
+PMIx_Byte_object_destruct
+PMIx_Byte_object_free
+PMIx_Byte_object_load
+PMIx_Check_key
+PMIx_Check_nspace
+PMIx_Check_procid
+PMIx_Check_rank
+PMIx_Check_reserved_key
+PMIx_Coord_construct
+PMIx_Coord_create
+PMIx_Coord_destruct
+PMIx_Coord_free
+PMIx_Cpuset_construct
+PMIx_Cpuset_create
+PMIx_Cpuset_destruct
+PMIx_Cpuset_free
+PMIx_Data_array_destruct
+PMIx_Data_buffer_construct
+PMIx_Data_buffer_create
+PMIx_Data_buffer_destruct
+PMIx_Data_buffer_load
+PMIx_Data_buffer_release
+PMIx_Data_buffer_unload
+PMIx_Endpoint_construct
+PMIx_Endpoint_create
+PMIx_Endpoint_destruct
+PMIx_Endpoint_free
+PMIx_Envar_construct
+PMIx_Envar_create
+PMIx_Envar_destruct
+PMIx_Envar_free
+PMIx_Envar_load
+PMIx_Geometry_construct
+PMIx_Geometry_create
+PMIx_Geometry_destruct
+PMIx_Geometry_free
+PMIx_Info_construct
+PMIx_Info_create
+PMIx_Info_destruct
+PMIx_Info_free
+PMIx_Info_is_end
+PMIx_Info_is_optional
+PMIx_Info_is_required
+PMIx_Info_optional
+PMIx_Info_processed
+PMIx_Info_required
+PMIx_Info_true
+PMIx_Info_was_processed
+PMIx_Load_key
+PMIx_Load_nspace
+PMIx_Load_procid
+PMIx_Multicluster_nspace_construct
+PMIx_Multicluster_nspace_parse
+PMIx_Nspace_invalid
+PMIx_Pdata_construct
+PMIx_Pdata_create
+PMIx_Pdata_destruct
+PMIx_Pdata_free
+PMIx_Proc_construct
+PMIx_Proc_create
+PMIx_Proc_destruct
+PMIx_Proc_free
+PMIx_Proc_info_construct
+PMIx_Proc_info_create
+PMIx_Proc_info_destruct
+PMIx_Proc_info_free
+PMIx_Proc_load
+PMIx_Procid_invalid
+PMIx_Setenv
+PMIx_Topology_construct
+PMIx_Topology_create
+PMIx_Topology_free
+PMIx_Value_construct
+PMIx_Value_create
+PMIx_Value_destruct
+PMIx_Value_free
+
+#---------------------------------------------------------
+# Items in OpenPMIx that are not in the PMIx Standard v4, but are in v5
+#---------------------------------------------------------
+PMIX_QUERY_PROVISIONAL_ABI_VERSION
+PMIX_QUERY_STABLE_ABI_VERSION
+PMIX_STOR_ACCESS
+PMIX_STOR_ACCESS_TYPE
+PMIX_STOR_MEDIUM
+PMIX_STOR_PERSIST
