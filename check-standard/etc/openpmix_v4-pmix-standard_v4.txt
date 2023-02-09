@@ -195,7 +195,7 @@ PMIx_Value_get_size
 PMIx_Info_get_size
 PMIx_Info_list_prepend
 PMIx_Info_list_get_info
-PMIX_SIZE_ESTIMATE
+# PMIX_SIZE_ESTIMATE -- later removed
 
 #---------------------------------------------------------
 # Needs Review: Likely more macro to function conversions

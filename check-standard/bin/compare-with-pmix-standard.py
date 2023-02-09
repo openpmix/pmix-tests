@@ -590,30 +590,29 @@ if __name__ == "__main__":
     #
     print("-"*50)
 
-    if total_triage_leftovers > 0:
-        print("===> Warning: %d symbols in the Triage file were not missing. Check the triage file" % (total_triage_leftovers))
-        for t_ref in sorted(all_triage_symbols):
-            print(t_ref)
-        print("-"*50)
-
-
-    if total_missing_pmix_standard == 0 and total_missing_openpmix == 0:
+    if total_missing_pmix_standard == 0 and total_missing_openpmix == 0 and total_triage_leftovers == 0:
         print("Success! No missing symbols found!")
         os._exit(0)
     else:
         if total_missing_pmix_standard > 0:
-            print("===> PMIx Standard is missing the following symbols:")
+            print("===> PMIx Standard is missing the following %d symbols:" % (total_missing_pmix_standard))
             print("-"*25)
             for val in sorted(missing_from_pmix_standard['missing']):
                 print(val)
 
         if total_missing_openpmix > 0:
-            print("===> OpenPMIx is missing the following symbols:")
+            print("===> OpenPMIx is missing the following %d symbols:" % (total_missing_openpmix))
             print("-"*25)
             for val in sorted(missing_from_openpmix['missing']):
                 print(val)
 
-        os._exit(total_missing_pmix_standard + total_missing_openpmix)
+        if total_triage_leftovers > 0:
+            print("===> Warning: %d symbols in the Triage file were not found to be missing. Check the triage file" % (total_triage_leftovers))
+            for t_ref in sorted(all_triage_symbols):
+                print(t_ref)
+            print("-"*50)
+
+        os._exit(total_missing_pmix_standard + total_missing_openpmix + total_triage_leftovers)
 
     # --------------------------------------------------
     # Check to make sure that all of the items defined in OpenPMIx are in the PMIx Standard
