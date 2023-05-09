@@ -1,5 +1,33 @@
 #---------------------------------------------------------
 # Needs Review:
+#  OpenPMIx: 1c49b2b
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_tool_set_server_module
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 837c9d6
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIx_Proc_string
+
+#---------------------------------------------------------
+# Needs Review:
+#  OpenPMIx: 1c49b2b
+#  OpenPMIx PR: 
+#---------------------------------------------------------
+PMIX_ALLOC_EXCLUDE
+PMIX_ALLOC_LEND
+PMIX_ALLOC_IMAGE
+PMIX_ALLOC_WAIT_ALL_NODES
+PMIX_ALLOC_SHARE
+PMIX_ALLOC_NOSHELL
+PMIX_ALLOC_DEPENDENCY
+PMIX_ALLOC_BEGIN
+
+#---------------------------------------------------------
+# Needs Review:
 #  OpenPMIx: fb4a57ba1
 #  OpenPMIx PR: 
 #---------------------------------------------------------
