@@ -539,9 +539,9 @@ if __name__ == "__main__":
     #
     print("-"*50)
     print("OpenPMIx Directory     : " + args.openpmix_dir)
-    print("         Git Info.     : " + extract_git_info(args.openpmix_dir))
+    print("             Git Info. : " + extract_git_info(args.openpmix_dir))
     print("PMIx Standard Directory: " + args.pmix_standard_dir)
-    print("              Git Info.: " + extract_git_info(args.pmix_standard_dir))
+    print("             Git Info. : " + extract_git_info(args.pmix_standard_dir))
     if args.triage_file is not None:
         print("Traige file            : " + args.triage_file)
     print("-"*50)

@@ -1,28 +1,40 @@
 #---------------------------------------------------------
 # Needs Review:
+#  OpenPMIx: 1c49b2b
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/483
+#---------------------------------------------------------
+PMIx_tool_set_server_module
+
+#---------------------------------------------------------
+# Needs Review:
 #  OpenPMIx: fb4a57ba1
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue:  https://github.com/pmix/pmix-standard/issues/480
 #---------------------------------------------------------
 PMIX_WDIR_USER_SPECIFIED
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: e66c29b93
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/479
 #---------------------------------------------------------
 PMIX_SORTED_PROC_ARRAY
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 3a8ef0946
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/477
 #---------------------------------------------------------
 PMIX_MYSERVER_URI
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: d490e100a
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/476
 #---------------------------------------------------------
 PMIX_LOG_AGG
 PMIX_LOG_KEY
@@ -31,7 +43,8 @@ PMIX_LOG_VAL
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 73aff171c
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/475
 #---------------------------------------------------------
 PMIX_IOF_TAG_DETAILED_OUTPUT
 PMIX_IOF_TAG_FULLNAME_OUTPUT
@@ -39,21 +52,24 @@ PMIX_IOF_TAG_FULLNAME_OUTPUT
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 70d5a53ae
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/474
 #---------------------------------------------------------
 PMIX_EXTERNAL_AUX_EVENT_BASE
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 518dc6aed
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/473
 #---------------------------------------------------------
 PMIX_EVENT_ONESHOT
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 5dab544ec
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/472
 #---------------------------------------------------------
 PMIX_ERR_EXIT_NONZERO_TERM
 PMIX_ERR_PROC_ABORTED_BY_SIG
@@ -64,21 +80,24 @@ PMIX_ERR_PROC_SENSOR_BOUND_EXCEEDED
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 29a92a17b
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/471
 #---------------------------------------------------------
 PMIX_DISPLAY_PROCESSORS
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 1ba4ee6e7
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/470
 #---------------------------------------------------------
 PMIX_DISPLAY_PARSEABLE_OUTPUT
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 195e36f1d
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/469
 #---------------------------------------------------------
 PMIX_DISPLAY_ALLOCATION
 PMIX_DISPLAY_MAP_DETAILED
@@ -87,14 +106,16 @@ PMIX_DISPLAY_TOPOLOGY
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: fcc07f946
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/468
 #---------------------------------------------------------
 PMIX_DATA_BUFFER
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 137cc3d6b
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/467
 #---------------------------------------------------------
 PMIX_COLOCATE_NPERNODE
 PMIX_COLOCATE_NPERPROC
@@ -103,7 +124,8 @@ PMIX_COLOCATE_PROCS
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: d167a63f5
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/466
 #---------------------------------------------------------
 PMIX_BIND_PROGRESS_THREAD
 PMIX_BIND_REQUIRED
@@ -111,7 +133,8 @@ PMIX_BIND_REQUIRED
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: da240c502
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/465
 #---------------------------------------------------------
 PMIX_RUNTIME_OPTIONS
 PMIX_ABORT_NON_ZERO_TERM
@@ -123,7 +146,8 @@ PMIX_REPORT_CHILD_SEP
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 0a9aa8c8b
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/463
 #---------------------------------------------------------
 PMIx_tool_is_connected
 PMIX_CONNECT_TO_SCHEDULER
@@ -131,14 +155,16 @@ PMIX_CONNECT_TO_SCHEDULER
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 261702212
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/462
 #---------------------------------------------------------
 PMIX_ALLOC_PREEMPTIBLE
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: dad0fb856
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/461
 #---------------------------------------------------------
 PMIx_Info_list_insert
 PMIX_INFO_PERSISTENT
@@ -146,7 +172,8 @@ PMIX_INFO_PERSISTENT
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 7a0fa0455
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/460
 #---------------------------------------------------------
 PMIx_Device_distance_construct
 PMIx_Device_distance_create
@@ -156,14 +183,16 @@ PMIx_Device_distance_free
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: d56cc5fdb
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/459
 #---------------------------------------------------------
 PMIx_App_string
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: ec77b2bfa
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/458
 #---------------------------------------------------------
 PMIX_QUALIFIED_VALUE
 PMIX_GROUP_INFO
@@ -174,14 +203,16 @@ PMIX_INFO_QUALIFIER
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: a4e83b627
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/457
 #---------------------------------------------------------
 PMIx_Value_true
 
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: 7931d879c
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/456
 #---------------------------------------------------------
 PMIx_Info_string
 PMIx_Value_string
@@ -189,7 +220,8 @@ PMIx_Value_string
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: ea977cd55
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/455
 #---------------------------------------------------------
 PMIx_Value_get_size
 PMIx_Info_get_size
@@ -200,7 +232,8 @@ PMIx_Info_list_get_info
 #---------------------------------------------------------
 # Needs Review: Likely more macro to function conversions
 #  OpenPMIx: a37ef140f
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/454
 #---------------------------------------------------------
 PMIx_Xfer_procid
 PMIx_Argv_append_nosize
@@ -217,7 +250,8 @@ PMIx_Info_is_persistent
 #---------------------------------------------------------
 # Needs Review:
 #  OpenPMIx: fec3c6f6f
-#  OpenPMIx PR: 
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/453
 #---------------------------------------------------------
 PMIx_Value_compare
 PMIx_Value_comparison_string
@@ -233,6 +267,7 @@ PMIX_VALUE_TYPE_DIFFERENT
 # Needs Review:
 #  OpenPMIx: 6927bc40c
 #  OpenPMIx PR: https://github.com/openpmix/openpmix/pull/2738
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/452
 #
 # Return value for:
 #  - PMIx_Value_true which replaced macros PMIX_CHECK_TRUE / PMIX_CHECK_BOOL
@@ -281,6 +316,7 @@ PMIx_Net_stats_free
 
 #---------------------------------------------------------
 # TODO: Macro -> Function conversion
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/451
 #---------------------------------------------------------
 PMIx_App_construct
 PMIx_App_create
