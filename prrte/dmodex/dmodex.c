@@ -49,7 +49,7 @@ int main(int argc, char **argv)
     pmix_rank_t *locals = NULL;
     uint8_t j;
     pmix_info_t timeout;
-    int tlimit = 10;
+    int tlimit = 240;
 
     EXAMPLES_HIDE_UNUSED_PARAMS(argc, argv);
 
