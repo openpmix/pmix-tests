@@ -270,11 +270,11 @@ indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Spawning launcher
 indirect-multi      : Launcher namespace is @NS<5>
 indirect-multi      : Reconnect to IL at @NS<5>
-indirect-multi      : Registering PMIX_READY_FOR_DEBUG handler
+indirect-multi      : Registering READY-FOR-DEBUG handler
 indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Releasing prterun [@NS<5>,0]
 indirect-multi      : Waiting for application launch
-indirect-multi      : Got PMIX_READY_FOR_DEBUG event from nspace <host>:PID<?>:@NS<6>
+indirect-multi      : Got READY-FOR-DEBUG event from nspace <host>:PID<?>:@NS<6>
 indirect-multi      : Debugger daemon job: <host>:PID<?>:@NS<2>
 indirect-multi      : Application has launched: <host>:PID<?>:@NS<2>
 indirect-multi      : Debugger: spawning ./daemon
