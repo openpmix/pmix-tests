@@ -14,7 +14,7 @@ daemon-0            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 2 exec h
 daemon-0            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 3 exec hello
 daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] Sending release
 daemon-0            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-0            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-0            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-0            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 0 pid PID<?>: Finalizing
@@ -33,7 +33,7 @@ daemon-1            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-1            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-1            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-1            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-1            : release_fn called as daemon callback for event=JOB ENDED
+daemon-1            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-1            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-1            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-1            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 1 pid PID<?>: Finalizing
@@ -52,7 +52,7 @@ daemon-2            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-2            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-2            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-2            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-2            : release_fn called as daemon callback for event=JOB ENDED
+daemon-2            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-2            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-2            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-2            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 2 pid PID<?>: Finalizing
@@ -94,21 +94,21 @@ hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9: Finalizing
 hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9:PMIx_Finalize successfully completed
 indirect-multi      : Debugger ns @NS<3> rank 0 pid PID<?>: Running
 indirect-multi      : Debugger URI: @NS<4>;tcp4://<host>
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Spawning launcher
 indirect-multi      : Launcher namespace is @NS<5>
 indirect-multi      : Reconnect to IL at @NS<5>
-indirect-multi      : Registering READY-FOR-DEBUG handler
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
+indirect-multi      : Registering PMIX_READY_FOR_DEBUG handler
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Releasing prterun [@NS<5>,0]
 indirect-multi      : Waiting for application launch
-indirect-multi      : Got READY-FOR-DEBUG event from nspace <host>:PID<?>:@NS<6>
+indirect-multi      : Got PMIX_READY_FOR_DEBUG event from nspace <host>:PID<?>:@NS<6>
 indirect-multi      : Debugger daemon job: <host>:PID<?>:@NS<2>
 indirect-multi      : Application has launched: <host>:PID<?>:@NS<2>
 indirect-multi      : Debugger: spawning ./daemon
 indirect-multi      : Debugger nspace: <host>:PID<?>:@NS<0>
 indirect-multi      : Registering handler for debugger termination
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Waiting for IL to terminate
-indirect-multi      : dbgr_complete_fn called with status JOB ENDED
+indirect-multi      : dbgr_complete_fn called with status PMIX_EVENT_JOB_END

@@ -12,7 +12,7 @@ daemon-0            : Proctable[0], namespace @NS<1> rank 0 exec hello
 daemon-0            : Proctable[1], namespace @NS<1> rank 1 exec hello
 daemon-0            : [@NS<0>:0:PID<?>] Sending release
 daemon-0            : Waiting for application namespace @NS<1> to terminate
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<1>
 daemon-0            : Application namespace @NS<1> terminated
 daemon-0            : Debugger daemon ns @NS<0> rank 0 pid PID<?>: Finalizing
@@ -28,8 +28,8 @@ direct              : Debugger: Registered for termination on nspace @NS<1>
 direct              : evhandler_reg_callbk called to register callback
 direct              : Debugger: Registered for READY_FOR_DEBUG event for nspace @NS<3>
 direct              : Waiting for PMIX_READY_FOR_DEBUG event to be posted
-direct              : debug_ready_cb called for event notification READY-FOR-DEBUG from nspace @NS<3>
-direct              : Got READY-FOR-DEBUG notification for target nspace @NS<1>
+direct              : debug_ready_cb called for event notification PMIX_READY_FOR_DEBUG from nspace @NS<3>
+direct              : Got PMIX_READY_FOR_DEBUG notification for target nspace @NS<1>
 direct              : Called cbfunc as callback for PMIx_Query
 direct              : Key pmix.qry.ptable Type PMIX_DATA_ARRAY(39)
 direct              : Received proc table for 2 procs
@@ -37,9 +37,9 @@ direct              : Calling spawn_debugger to spawn the debugger daemon
 direct              : Debugger: spawning ./daemon
 direct              : evhandler_reg_callbk called to register callback
 direct              : Debugger: Registered for termination on nspace @NS<0>
-direct              : release_fn called as callback for event=JOB ENDED source=@NS<1>:0
+direct              : release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<1>:0
 direct              : DEBUGGER NOTIFIED THAT JOB @NS<1> TERMINATED 
-direct              : release_fn called as callback for event=JOB ENDED source=@NS<0>:0
+direct              : release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<0>:0
 direct              : DEBUGGER NOTIFIED THAT JOB @NS<0> TERMINATED 
 hello-0             : Client ns @NS<1> rank 0 pid PID<?>: Running on host <host> localrank 0
 hello-0             : Client ns @NS<1> rank 0: Finalizing

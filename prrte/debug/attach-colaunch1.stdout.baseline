@@ -41,8 +41,8 @@ daemon-0            : [@NS<3>:0:PID<?>] Sending release
 daemon-0            : [@NS<3>:0:PID<?>] Sending release
 daemon-0            : Waiting for application namespace @NS<2> to terminate
 daemon-0            : Waiting for application namespace @NS<2> to terminate
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-0            : Application namespace @NS<2> terminated
@@ -75,8 +75,8 @@ daemon-1            : Proctable[1], namespace @NS<2> rank 3 exec hello
 daemon-1            : Proctable[1], namespace @NS<2> rank 3 exec hello
 daemon-1            : Waiting for application namespace @NS<2> to terminate
 daemon-1            : Waiting for application namespace @NS<2> to terminate
-daemon-1            : release_fn called as daemon callback for event=JOB ENDED
-daemon-1            : release_fn called as daemon callback for event=JOB ENDED
+daemon-1            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
+daemon-1            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-1            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-1            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-1            : Application namespace @NS<2> terminated
@@ -109,8 +109,8 @@ daemon-2            : Proctable[1], namespace @NS<2> rank 5 exec hello
 daemon-2            : Proctable[1], namespace @NS<2> rank 5 exec hello
 daemon-2            : Waiting for application namespace @NS<2> to terminate
 daemon-2            : Waiting for application namespace @NS<2> to terminate
-daemon-2            : release_fn called as daemon callback for event=JOB ENDED
-daemon-2            : release_fn called as daemon callback for event=JOB ENDED
+daemon-2            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
+daemon-2            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-2            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-2            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-2            : Application namespace @NS<2> terminated

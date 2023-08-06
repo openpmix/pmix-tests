@@ -14,7 +14,7 @@ daemon-0            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 2 exec h
 daemon-0            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 3 exec hello
 daemon-0            : [<host>:PID<?>:@NS<1>@2:0:PID<?>] Sending release
 daemon-0            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-0            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-0            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-0            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 0 pid PID<?>: Finalizing
@@ -33,7 +33,7 @@ daemon-1            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 1 exec h
 daemon-1            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 2 exec hello
 daemon-1            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 3 exec hello
 daemon-1            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-1            : release_fn called as daemon callback for event=JOB ENDED
+daemon-1            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-1            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-1            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-1            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 1 pid PID<?>: Finalizing
@@ -52,7 +52,7 @@ daemon-10           : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-10           : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-10           : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-10           : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-10           : release_fn called as daemon callback for event=JOB ENDED
+daemon-10           : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-10           : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-10           : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-10           : Debugger daemon ns <host>:PID<?>:@NS<0> rank 10 pid PID<?>: Finalizing
@@ -71,7 +71,7 @@ daemon-11           : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-11           : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-11           : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-11           : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-11           : release_fn called as daemon callback for event=JOB ENDED
+daemon-11           : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-11           : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-11           : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-11           : Debugger daemon ns <host>:PID<?>:@NS<0> rank 11 pid PID<?>: Finalizing
@@ -90,7 +90,7 @@ daemon-2            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 1 exec h
 daemon-2            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 2 exec hello
 daemon-2            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 3 exec hello
 daemon-2            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-2            : release_fn called as daemon callback for event=JOB ENDED
+daemon-2            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-2            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-2            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-2            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 2 pid PID<?>: Finalizing
@@ -109,7 +109,7 @@ daemon-3            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 1 exec h
 daemon-3            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 2 exec hello
 daemon-3            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 3 exec hello
 daemon-3            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-3            : release_fn called as daemon callback for event=JOB ENDED
+daemon-3            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-3            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-3            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-3            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 3 pid PID<?>: Finalizing
@@ -128,7 +128,7 @@ daemon-4            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-4            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-4            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-4            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-4            : release_fn called as daemon callback for event=JOB ENDED
+daemon-4            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-4            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-4            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-4            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 4 pid PID<?>: Finalizing
@@ -147,7 +147,7 @@ daemon-5            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-5            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-5            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-5            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-5            : release_fn called as daemon callback for event=JOB ENDED
+daemon-5            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-5            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-5            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-5            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 5 pid PID<?>: Finalizing
@@ -166,7 +166,7 @@ daemon-6            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-6            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-6            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-6            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-6            : release_fn called as daemon callback for event=JOB ENDED
+daemon-6            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-6            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-6            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-6            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 6 pid PID<?>: Finalizing
@@ -185,7 +185,7 @@ daemon-7            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 5 exec h
 daemon-7            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 6 exec hello
 daemon-7            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 7 exec hello
 daemon-7            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-7            : release_fn called as daemon callback for event=JOB ENDED
+daemon-7            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-7            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-7            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-7            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 7 pid PID<?>: Finalizing
@@ -204,7 +204,7 @@ daemon-8            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-8            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-8            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-8            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-8            : release_fn called as daemon callback for event=JOB ENDED
+daemon-8            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-8            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-8            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-8            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 8 pid PID<?>: Finalizing
@@ -223,7 +223,7 @@ daemon-9            : Proctable[1], namespace <host>:PID<?>:@NS<2> rank 9 exec h
 daemon-9            : Proctable[2], namespace <host>:PID<?>:@NS<2> rank 10 exec hello
 daemon-9            : Proctable[3], namespace <host>:PID<?>:@NS<2> rank 11 exec hello
 daemon-9            : Waiting for application namespace <host>:PID<?>:@NS<2> to terminate
-daemon-9            : release_fn called as daemon callback for event=JOB ENDED
+daemon-9            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-9            : DEBUGGER DAEMON NAMESPACE <host>:PID<?>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED <host>:PID<?>:@NS<2>
 daemon-9            : Application namespace <host>:PID<?>:@NS<2> terminated
 daemon-9            : Debugger daemon ns <host>:PID<?>:@NS<0> rank 9 pid PID<?>: Finalizing
@@ -265,21 +265,21 @@ hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9: Finalizing
 hello-9             : Client ns <host>:PID<?>:@NS<2> rank 9:PMIx_Finalize successfully completed
 indirect-multi      : Debugger ns @NS<3> rank 0 pid PID<?>: Running
 indirect-multi      : Debugger URI: @NS<4>;tcp4://<host>
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Spawning launcher
 indirect-multi      : Launcher namespace is @NS<5>
 indirect-multi      : Reconnect to IL at @NS<5>
-indirect-multi      : Registering READY-FOR-DEBUG handler
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
+indirect-multi      : Registering PMIX_READY_FOR_DEBUG handler
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Releasing prterun [@NS<5>,0]
 indirect-multi      : Waiting for application launch
-indirect-multi      : Got READY-FOR-DEBUG event from nspace <host>:PID<?>:@NS<6>
+indirect-multi      : Got PMIX_READY_FOR_DEBUG event from nspace <host>:PID<?>:@NS<6>
 indirect-multi      : Debugger daemon job: <host>:PID<?>:@NS<2>
 indirect-multi      : Application has launched: <host>:PID<?>:@NS<2>
 indirect-multi      : Debugger: spawning ./daemon
 indirect-multi      : Debugger nspace: <host>:PID<?>:@NS<0>
 indirect-multi      : Registering handler for debugger termination
-indirect-multi      : evhandler_reg_callbk called with status SUCCESS
+indirect-multi      : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect-multi      : Waiting for IL to terminate
-indirect-multi      : dbgr_complete_fn called with status JOB ENDED
+indirect-multi      : dbgr_complete_fn called with status PMIX_EVENT_JOB_END

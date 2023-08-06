@@ -12,7 +12,7 @@ daemon-0            : Proctable[0], namespace @HOST<0>:@PID<1>:@NS<2> rank 0 exe
 daemon-0            : Proctable[1], namespace @HOST<0>:@PID<1>:@NS<2> rank 1 exec hello
 daemon-0            : [@HOST<0>:@PID<1>:@NS<1>@2:0:@PID<0>] Sending release
 daemon-0            : Waiting for application namespace @HOST<0>:@PID<1>:@NS<2> to terminate
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-0            : DEBUGGER DAEMON NAMESPACE @HOST<0>:@PID<1>:@NS<0> NOTIFIED THAT JOB TERMINATED - AFFECTED @HOST<0>:@PID<1>:@NS<2>
 daemon-0            : Application namespace @HOST<0>:@PID<1>:@NS<2> terminated
 daemon-0            : Debugger daemon ns @HOST<0>:@PID<1>:@NS<0> rank 0 pid @PID<0>: Finalizing
@@ -24,12 +24,12 @@ hello-1             : Client ns @HOST<0>:@PID<1>:@NS<2> rank 1: Finalizing
 hello-1             : Client ns @HOST<0>:@PID<1>:@NS<2> rank 1:PMIx_Finalize successfully completed
 indirect            : Debugger ns @NS<3> rank 0 pid @PID<1>: Running
 indirect            : DEBUGGER URI: @NS<4>;tcp4://@HOST<1>
-indirect            : evhandler_reg_callbk called with status SUCCESS
-indirect            : evhandler_reg_callbk called with status SUCCESS
+indirect            : evhandler_reg_callbk called with status PMIX_SUCCESS
+indirect            : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect            : SPAWNING LAUNCHER
 indirect            : RECONNECT TO IL AT @NS<5>
-indirect            : REGISTERING READY-FOR-DEBUG HANDLER
-indirect            : evhandler_reg_callbk called with status SUCCESS
+indirect            : REGISTERING PMIX_READY_FOR_DEBUG HANDLER
+indirect            : evhandler_reg_callbk called with status PMIX_SUCCESS
 indirect            : RELEASING prterun [@NS<5>,0]
 indirect            : WAITING FOR APPLICATION LAUNCH
 indirect            : GOT NSPACE @HOST<0>:@PID<1>:@NS<2>

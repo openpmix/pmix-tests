@@ -41,8 +41,8 @@ daemon-0            : [@NS<3>:0:@PID<1>] Sending release
 daemon-0            : [@NS<3>:0:@PID<1>] Sending release
 daemon-0            : Waiting for application namespace @NS<2> to terminate
 daemon-0            : Waiting for application namespace @NS<2> to terminate
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
-daemon-0            : release_fn called as daemon callback for event=JOB ENDED
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
+daemon-0            : release_fn called as daemon callback for event=PMIX_EVENT_JOB_END
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-0            : DEBUGGER DAEMON NAMESPACE @NS<3> NOTIFIED THAT JOB TERMINATED - AFFECTED @NS<2>
 daemon-0            : Application namespace @NS<2> terminated

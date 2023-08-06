@@ -5,14 +5,14 @@ direct    :004: Key pmix.qry.spawn Type PMIX_STRING(3)
 direct    :005: Key pmix.qry.debug Type PMIX_STRING(3)
 direct    :006: Calling cospawn_launch to spawn application processes and debugger daemon
 direct    :007: Application namespace is @NS<1>
-direct    :008: release_fn called as callback for event=JOB ENDED source=@NS<0>:0
+direct    :008: release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<0>:0
 direct    :009: DEBUGGER NOTIFIED THAT JOB @NS<2> TERMINATED
-direct    :010: release_fn called as callback for event=JOB ENDED source=@NS<0>:0
+direct    :010: release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<0>:0
 direct    :011: DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED
 direct    :012: evhandler_reg_callbk called to register callback
-direct    :013: release_fn called as callback for event=JOB ENDED source=@NS<3>:0
+direct    :013: release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<3>:0
 direct    :014: DEBUGGER NOTIFIED THAT JOB @NS<3> TERMINATED
-direct    :015: release_fn called as callback for event=JOB ENDED source=@NS<2>:0
+direct    :015: release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<2>:0
 direct    :016: DEBUGGER NOTIFIED THAT JOB @NS<2> TERMINATED
 hello-1   :001: Client ns @NS<1> rank 1 pid @PID<1>: Running on host @HOST<0> localrank 1
 hello-1   :002: Client ns @NS<1> rank 1: Finalizing
@@ -35,5 +35,5 @@ daemon-2  :012: Proctable[2], namespace @NS<1> rank 2 exec daemon
 daemon-2  :013: [@NS<1>:2:@PID<3>] Sending release
 daemon-2  :014: Debugger daemon ns @NS<1> rank 2 pid @PID<3>: Finalizing
 daemon-2  :015: Debugger daemon ns @NS<1> rank 2 pid @PID<3>:PMIx_Finalize successfully completed
-direct    :017: release_fn called as callback for event=JOB ENDED source=@NS<1>:0
+direct    :017: release_fn called as callback for event=PMIX_EVENT_JOB_END source=@NS<1>:0
 direct    :018: DEBUGGER NOTIFIED THAT JOB @NS<1> TERMINATED
