@@ -111,7 +111,7 @@ direct-multi        : evhandler_reg_callbk called to register callback
 direct-multi        : Debugger: Registered for event PMIX_READY_FOR_DEBUG on nspace @NS<1>
 direct-multi        : evhandler_reg_callbk called to register callback
 direct-multi        : Debugger: Registered for event PMIX_EVENT_JOB_END on nspace @NS<1>
-direct-multi        : All expected PMIX_READY_FOR_DEBUG notifications received
+direct-multi        : All expected READY-FOR-DEBUG notifications received
 direct-multi        : Called cbfunc as callback for PMIx_Query
 direct-multi        : Key pmix.qry.ptable Type PMIX_DATA_ARRAY(39)
 direct-multi        : Received proc table for 6 procs
