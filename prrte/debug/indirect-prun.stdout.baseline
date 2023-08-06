@@ -37,6 +37,6 @@ indirect            : Debugger daemon job: @NS<1>
 indirect            : APPLICATION HAS LAUNCHED: @NS<1>
 indirect            : Debugger: spawning ./daemon
 indirect            : WAITING FOR IL TO TERMINATE
-indirect            : terminate_fn called with status LOST_CONNECTION from @NS<4>:0
-indirect            : DEFAULT EVENT HANDLER CALLED WITH STATUS LOST_CONNECTION
+indirect            : terminate_fn called with status PMIX_ERR_LOST_CONNECTION from @NS<4>:0
+indirect            : DEFAULT EVENT HANDLER CALLED WITH STATUS PMIX_ERR_LOST_CONNECTION
 indirect            : 	COMPLETE
