@@ -85,7 +85,6 @@ echo "============ Checking builds"
 echo ""
 ./xversion.py --basedir=$HOME/scratch \
               --with-hwloc=${HWLOC_INSTALL_PATH} \
-              --with-hwloc1=${HWLOC1_INSTALL_PATH} \
               --with-libevent=${LIBEVENT_INSTALL_PATH} \
               ${ADDITIONAL_OPTIONS} -r -q
 
@@ -94,6 +93,5 @@ echo "============ Checking versions"
 echo ""
 ./xversion.py --basedir=$HOME/scratch \
               --with-hwloc=${HWLOC_INSTALL_PATH} \
-              --with-hwloc1=${HWLOC1_INSTALL_PATH} \
               --with-libevent=${LIBEVENT_INSTALL_PATH} \
               ${ADDITIONAL_OPTIONS} ${ADDITIONAL_RUN_OPTIONS} -b -q
