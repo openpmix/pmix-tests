@@ -1,9 +1,7 @@
 name: Refresh Cross Version Testing Container Image
 
 on:
-  schedule:
-    # Run once a week on Sunday (UTC)
-    - cron: '0 1 * * 0'
+  workflow_dispatch
 
 env:
   # Use docker.io for Docker Hub if empty
