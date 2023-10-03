@@ -1,7 +1,7 @@
 name: Refresh Cross Version Testing Container Image
 
 on:
-  schedule:
+  [schedule, workflow_dispatch]:
     # Run once a week on Sunday (UTC)
     - cron: '0 1 * * 0'
 
