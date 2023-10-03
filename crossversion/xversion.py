@@ -182,6 +182,9 @@ def build_tree(bld, logfile=None):
         return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Configure")
+    subprocess.call(["cat",
+                     args.hwloc + "/lib/pkconfig/hwloc.pc"],
+                     stdout=logfile, stderr=logfile, shell=False)
     ret = subprocess.call(["./configure",
                            "--disable-debug",
                            "--enable-static",
