@@ -1,4 +1,4 @@
-name: Refresh Cross Version Testing Container Image
+name: Manually Refresh Cross Version Testing Container Image
 
 on:
   workflow_dispatch
