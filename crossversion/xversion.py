@@ -183,7 +183,7 @@ def build_tree(bld, logfile=None):
 
     print("============ PMIx Build: "+bld.branch+" : Configure")
     subprocess.call(["cat",
-                     args.hwloc + "/lib/pkconfig/hwloc.pc"],
+                     args.hwloc + "/lib/pkgconfig/hwloc.pc"],
                      stdout=logfile, stderr=logfile, shell=False)
     ret = subprocess.call(["./configure",
                            "--disable-debug",
