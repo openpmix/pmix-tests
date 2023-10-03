@@ -11,11 +11,9 @@ FROM quay.io/centos/centos:stream8
 LABEL maintainer="jjhursey@open-mpi.org"
 
 ARG LIBEVENT_INSTALL_PATH=/home/pmixer/local/libevent
-ARG HWLOC1_INSTALL_PATH=/home/pmixer/local/hwloc-1x
 ARG HWLOC_INSTALL_PATH=/home/pmixer/local/hwloc
 
 LABEL com.ibm.hwloc.version=2.4.0
-LABEL com.ibm.hwloc1.version=1.11.13
 LABEL com.ibm.libevent.version=2.4.0
 
 
@@ -57,25 +55,18 @@ ENV PYTHONPATH=/home/pmixer/.local/lib/python3.6/site-packages
 
 
 # -----------------------------
-# Install libevent and hwloc (both 2.x and 1.x)
+# Install libevent and hwloc
 # -----------------------------
 RUN mkdir -p /home/pmixer/local
 ADD --chown=pmixer:pmixer src /home/pmixer/local/src
 
 ENV LIBEVENT_INSTALL_PATH=$LIBEVENT_INSTALL_PATH
-ENV HWLOC1_INSTALL_PATH=$HWLOC1_INSTALL_PATH
 ENV HWLOC_INSTALL_PATH=$HWLOC_INSTALL_PATH
 
 RUN cd /home/pmixer/local/src && \
     tar -zxf libevent* && \
     cd libevent-2.1.8-stable && \
     ./configure --prefix=${LIBEVENT_INSTALL_PATH} > /dev/null && \
-    make > /dev/null && \
-    make install > /dev/null && \
-    cd /home/pmixer/local/src && \
-    tar -zxf hwloc-1* && \
-    cd hwloc-1.11.13 && \
-    ./configure --prefix=${HWLOC1_INSTALL_PATH} > /dev/null && \
     make > /dev/null && \
     make install > /dev/null && \
     cd /home/pmixer/local/src && \
@@ -112,7 +103,6 @@ RUN mkdir -p /home/pmixer/scratch
 RUN cd /home/pmixer/pmix-tests/crossversion && \
     ./xversion.py --basedir=$HOME/scratch \
          --with-hwloc=${HWLOC_INSTALL_PATH} \
-         --with-hwloc1=${HWLOC1_INSTALL_PATH} \
          --with-libevent=${LIBEVENT_INSTALL_PATH} \
          -r -q
 

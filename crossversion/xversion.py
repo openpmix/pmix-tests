@@ -15,7 +15,7 @@ import subprocess
 import shutil
 
 # put this in one place
-supported_versions = ["master", "v4.2", "v4.2.0", "v4.1", "v3.1", "v3.2"]
+supported_versions = ["master", "v5.0", "v4.2", "v4.2.0", "v4.1", "v3.2"]
 
 pmix_git_url      = "https://github.com/pmix/pmix.git"
 pmix_release_url  = "https://github.com/pmix/pmix/releases/download/"
@@ -182,38 +182,16 @@ def build_tree(bld, logfile=None):
         return ret if ret < 0 or ret > 2 else (ret + 1000)
 
     print("============ PMIx Build: "+bld.branch+" : Configure")
-    if bld.branch.startswith("v1"):
-        ret = subprocess.call(["./configure",
-                               "--disable-debug",
-                               "--enable-static",
-                               "--disable-shared",
-                               "--disable-visibility",
-                               "--with-libevent=" + args.libevent,
-                               "--with-hwloc=" + args.hwloc1,
-                               "--prefix=" + local_install_dir],
-                               stdout=logfile, stderr=logfile, shell=False)
-    elif bld.branch.startswith("v2"):
-        ret = subprocess.call(["./configure",
-                               "--disable-debug",
-                               "--enable-static",
-                               "--disable-shared",
-                               "--disable-dlopen",
-                               "--disable-per-user-config-files",
-                               "--disable-visibility",
-                               "--with-libevent=" + args.libevent,
-                               "--prefix=" + local_install_dir],
-                               stdout=logfile, stderr=logfile, shell=False)
-    else:
-        ret = subprocess.call(["./configure",
-                               "--disable-debug",
-                               "--enable-static",
-                               "--disable-shared",
-                               "--disable-dlopen",
-                               "--disable-per-user-config-files",
-                               "--with-libevent=" + args.libevent,
-                               "--with-hwloc=" + args.hwloc,
-                               "--prefix=" + local_install_dir],
-                               stdout=logfile, stderr=logfile, shell=False)
+    ret = subprocess.call(["./configure",
+                           "--disable-debug",
+                           "--enable-static",
+                           "--disable-shared",
+                           "--disable-dlopen",
+                           "--disable-per-user-config-files",
+                           "--with-libevent=" + args.libevent,
+                           "--with-hwloc=" + args.hwloc,
+                           "--prefix=" + local_install_dir],
+                           stdout=logfile, stderr=logfile, shell=False)
 
     if 0 != ret:
         os.chdir(orig_dir)
@@ -349,7 +327,6 @@ if __name__ == "__main__":
     parser.add_argument("--make-check", help="Run make check tests [DISABLED]", action="store_true")
     parser.add_argument("--with-libevent", help="Where libevent is located", action="store", dest="libevent", default="")
     parser.add_argument("--with-hwloc", help="Where hwloc is located", action="store", dest="hwloc", default="")
-    parser.add_argument("--with-hwloc1", help="Where hwloc v1 is located", action="store", dest="hwloc1", default="")
     parser.add_argument("--server-versions", help="Comma-separated PMIx versions to use as servers", action="store", dest="servers", default="all")
     parser.add_argument("--client-versions", help="Comma-separated PMIx versions to use as clients", action="store", dest="clients", default="all")
 
@@ -411,64 +388,6 @@ if __name__ == "__main__":
         allBuilds.append(bld)
         servers.append(bld.branch)
         clients.append(bld.branch)
-
-    # 'server' -> 'client' pairs that are not supported
-    invalid_pairs.append(["v2.0","master"])
-    invalid_pairs.append(["v2.0","v3.1"])
-    invalid_pairs.append(["v2.0","v3.0"])
-    invalid_pairs.append(["v2.0","v2.2"])
-    invalid_pairs.append(["v2.0","v2.1"])
-
-    # 'server' -> 'client' tool pairings that are not supported
-    invalid_tool_pairs.append(["v2.1","master"])
-    invalid_tool_pairs.append(["v2.1","v3.1"])
-    invalid_tool_pairs.append(["v2.1","v3.0"])
-    invalid_tool_pairs.append(["v2.1","v2.2"])
-    invalid_tool_pairs.append(["v2.1","v2.0"])
-    # --
-    invalid_tool_pairs.append(["v2.0","master"])
-    invalid_tool_pairs.append(["v2.0","v3.1"])
-    invalid_tool_pairs.append(["v2.0","v3.0"])
-    invalid_tool_pairs.append(["v2.0","v2.2"])
-    invalid_tool_pairs.append(["v2.0","v2.1"])
-
-    # 'server' -> 'client' "make check" pairs that are not supported
-    # NOTE: we will first check the overall pairing per the above
-    # invalid_pairs settings, and then we will check for a specific
-    # test that is not supported by the target branch
-    invalid_make_check_tests.append(["v2.0", "test-resolve-peers"])
-
-    # PR_TARGET_BRANCH is an envar set by Jenkins CI to indicate the target branch
-    # This is no way from the github branch itself to tell where it was targeted.
-    # As such we need some external envar to tell us.
-    target_branch = None
-    try:
-        target_branch = os.environ['PR_TARGET_BRANCH']
-        if target_branch == "v2.0":
-            invalid_pairs.append([bld.branch,"master"])
-            invalid_pairs.append([bld.branch,"v3.1"])
-            invalid_pairs.append([bld.branch,"v3.0"])
-            invalid_pairs.append([bld.branch,"v2.2"])
-            invalid_pairs.append([bld.branch,"v2.1"])
-            # --
-            invalid_tool_pairs.append([bld.branch,"master"])
-            invalid_tool_pairs.append([bld.branch,"v3.1"])
-            invalid_tool_pairs.append([bld.branch,"v3.0"])
-            invalid_tool_pairs.append([bld.branch,"v2.2"])
-            invalid_tool_pairs.append([bld.branch,"v2.1"])
-        elif target_branch == "v2.1":
-            invalid_tool_pairs.append([bld.branch,"master"])
-            invalid_tool_pairs.append([bld.branch,"v3.1"])
-            invalid_tool_pairs.append([bld.branch,"v3.0"])
-            invalid_tool_pairs.append([bld.branch,"v2.2"])
-            invalid_tool_pairs.append([bld.branch,"v2.0"])
-        else:
-            invalid_pairs.append(["v2.0",bld.branch])
-            invalid_tool_pairs.append(["v2.0",bld.branch])
-            invalid_tool_pairs.append(["v2.1",bld.branch])
-    except KeyError as e:
-        # Ignore if envar is not set
-        pass
 
     # find the timeout command - if on Mac, this may well
     # be "gtimeout", so check for it
