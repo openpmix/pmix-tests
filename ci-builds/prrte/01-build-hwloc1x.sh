@@ -62,7 +62,7 @@ export AUTOMAKE_JOBS=20
             --enable-static \
             --enable-shared \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
-            --with-hwloc=${HWLOC1_INSTALL_PATH}
+            --with-hwloc=${HWLOC_INSTALL_PATH}
 
 #--------------------------------
 # Make
@@ -95,7 +95,7 @@ export AUTOMAKE_JOBS=20
             --disable-debug \
             --with-pmix=${_BUILD_DIR}/install-pmix \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
-            --with-hwloc=${HWLOC1_INSTALL_PATH}
+            --with-hwloc=${HWLOC_INSTALL_PATH}
 
 #--------------------------------
 # Make

@@ -1,8 +1,8 @@
 #!/bin/bash -ex
 
 #
-# PRRTE requires a minimum of OpenPMIx v4.0.x
-# If we change PMIx v4.0 branch then check to make
+# PRRTE requires a minimum of OpenPMIx v4.2.x
+# If we change PMIx v4.2 branch then check to make
 # sure that PRRTE still builds correctly.
 #
 
@@ -23,9 +23,9 @@ if [ ! -d ${_PMIX_CHECKOUT} ] ; then
     exit 1
 fi
 
-# Only run if we are modifying the v4.0 branch
+# Only run if we are modifying the v4.2 branch
 if [ -n "$PR_TARGET_BRANCH" ] ; then
-    if [[ "$PR_TARGET_BRANCH" != "v4.0" ]] ; then
+    if [[ "$PR_TARGET_BRANCH" != "v4.2" ]] ; then
         echo "Warning: This build does not work for this branch"
         exit 0
     fi
@@ -58,7 +58,7 @@ export AUTOMAKE_JOBS=20
 ./configure --prefix=${_BUILD_DIR}/install-pmix \
             --disable-debug \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
-            --with-hwloc=${HWLOC1_INSTALL_PATH}
+            --with-hwloc=${HWLOC_INSTALL_PATH}
 
 #--------------------------------
 # Make
@@ -91,7 +91,7 @@ export AUTOMAKE_JOBS=20
             --disable-debug \
             --with-pmix=${_BUILD_DIR}/install-pmix \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
-            --with-hwloc=${HWLOC1_INSTALL_PATH}
+            --with-hwloc=${HWLOC_INSTALL_PATH}
 
 #--------------------------------
 # Make

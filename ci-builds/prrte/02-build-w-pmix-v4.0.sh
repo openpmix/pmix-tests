@@ -1,7 +1,7 @@
 #!/bin/bash -ex
 
 #
-# PRRTE requires a minimum of OpenPMIx v4.2.2
+# PRRTE requires a minimum of OpenPMIx v4.2.4
 #
 
 #--------------------------------
@@ -33,11 +33,15 @@ cd $_BUILD_DIR
 #--------------------------------
 # PMIx Build
 #--------------------------------
-if [ -n "$PR_TARGET_BRANCH" ] &&  [ "$PR_TARGET_BRANCH" == "v3.0" ] ; then
-  git clone -b v4.2 --recurse-submodules https://github.com/openpmix/openpmix.git
+if [ -n "$PR_TARGET_BRANCH" ] ; then
+    if [ "$PR_TARGET_BRANCH" == "v3.0" ] || [ "$PR_TARGET_BRANCH" == "v3.1" ] ; then
+        git clone -b v4.2 --recurse-submodules https://github.com/openpmix/openpmix.git
+    else
+        # no need to do another build as we have tested against pmix master elsewhere
+        exit 0
+    fi
 else
-  # no need to do another build as we have tested against pmix master elsewhere
-  exit 0
+    exit 0
 fi
 cd openpmix
 
@@ -53,7 +57,7 @@ export AUTOMAKE_JOBS=20
 ./configure --prefix=${_BUILD_DIR}/install-pmix \
             --disable-debug \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
-            --with-hwloc=${HWLOC1_INSTALL_PATH}
+            --with-hwloc=${HWLOC_INSTALL_PATH}
 
 #--------------------------------
 # Make
@@ -86,7 +90,7 @@ export AUTOMAKE_JOBS=20
             --disable-debug \
             --with-pmix=${_BUILD_DIR}/install-pmix \
             --with-libevent=${LIBEVENT_INSTALL_PATH} \
-            --with-hwloc=${HWLOC1_INSTALL_PATH}
+            --with-hwloc=${HWLOC_INSTALL_PATH}
 
 #--------------------------------
 # Make
