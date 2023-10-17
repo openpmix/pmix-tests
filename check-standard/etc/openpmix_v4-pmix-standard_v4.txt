@@ -1,5 +1,16 @@
 #---------------------------------------------------------
 # Needs Review:
+#  OpenPMIx: dfab3b3
+#  OpenPMIx PR:
+#  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/499
+#---------------------------------------------------------
+PMIx_Data_array_construct
+PMIx_Data_array_create
+PMIx_Data_array_free
+PMIx_Data_array_init
+
+#---------------------------------------------------------
+# Needs Review:
 #  OpenPMIx: 1c49b2b
 #  OpenPMIx PR:
 #  PMIx Standard Issue: https://github.com/pmix/pmix-standard/issues/483
