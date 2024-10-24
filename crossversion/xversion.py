@@ -242,6 +242,9 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     client_build_dir   = pmix_build_dir + "/" + bld_client.build_base_dir
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
+    my_env = os.environ.copy()
+    my_env["PMIX_MCA_psquash"] = f"native"
+
     if timeout_cmd is not None:
         timeout_str = timeout_cmd + " --preserve-status -k 35 30 "
     else:
@@ -250,15 +253,15 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     if test_client:
         test_name = "Client"
         test_bin = client_build_dir + "/test/simple/simpclient"
-        cmd = timeout_str + "PMIX_MCA_psquash=native ./simptest -n 2 -xversion -e " + test_bin
+        cmd = timeout_str + "./simptest -n 2 -xversion -e " + test_bin
     elif test_check is not None:
         test_name = "Make Check"
         test_bin = client_build_dir + "/test/pmix_client"
-        cmd = timeout_str + "PMIX_MCA_psquash=native ./pmix_test " + test_check  + test_bin
+        cmd = timeout_str + "./pmix_test " + test_check  + test_bin
     else:
         test_name = "Tool"
         test_bin = client_build_dir + "/test/simple/simptool"
-        cmd = timeout_str + "PMIX_MCA_psquash=native ./simptest -n 1 --xversion -e " + test_bin
+        cmd = timeout_str + "./simptest -n 1 --xversion -e " + test_bin
 
     # Check if the test binary exists
     if os.path.isfile(test_bin) is False:
@@ -270,18 +273,18 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         print("-----> : Run simptest "+test_name)
         print("%7s: %s" % (test_name, test_bin) )
         print("Server : " + os.getcwd() )
-        print("Command: cd " + os.getcwd() + " ; " + "PMIX_MCA_psquash=native " + cmd)
+        print("Command: cd " + os.getcwd() + " ; " + cmd)
     else:
         os.chdir(server_build_dir + "/test/simple")
         print("-----> : Run "+test_name)
         print("%10s: %s" % (test_name, test_bin) )
         print("Server : " + os.getcwd() )
-        print("Command: cd " + os.getcwd() + " ; " + "PMIX_MCA_psquash=native " + cmd)
+        print("Command: cd " + os.getcwd() + " ; " + cmd)
 
     if os.path.isfile(result_file):
         os.remove(result_file)
     with open(result_file, 'w') as logfile:
-        ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True)
+        ret = subprocess.call(cmd, stdout=logfile, stderr=subprocess.STDOUT, shell=True, env=my_env)
         if 0 != ret:
             print("Status : " + str(ret) + " ***FAILED***")
         else:
