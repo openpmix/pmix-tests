@@ -250,15 +250,15 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     if test_client:
         test_name = "Client"
         test_bin = client_build_dir + "/test/simple/simpclient"
-        cmd = timeout_str + "./simptest -n 2 -xversion -e " + test_bin
+        cmd = timeout_str + "PMIX_MCA_psquash=native ./simptest -n 2 -xversion -e " + test_bin
     elif test_check is not None:
         test_name = "Make Check"
         test_bin = client_build_dir + "/test/pmix_client"
-        cmd = timeout_str + "./pmix_test " + test_check  + test_bin
+        cmd = timeout_str + "PMIX_MCA_psquash=native ./pmix_test " + test_check  + test_bin
     else:
         test_name = "Tool"
         test_bin = client_build_dir + "/test/simple/simptool"
-        cmd = timeout_str + "./simptest -n 1 --xversion -e " + test_bin
+        cmd = timeout_str + "PMIX_MCA_psquash=native ./simptest -n 1 --xversion -e " + test_bin
 
     # Check if the test binary exists
     if os.path.isfile(test_bin) is False:
@@ -270,13 +270,13 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
         print("-----> : Run simptest "+test_name)
         print("%7s: %s" % (test_name, test_bin) )
         print("Server : " + os.getcwd() )
-        print("Command: cd " + os.getcwd() + " ; " + cmd)
+        print("Command: cd " + os.getcwd() + " ; " + "PMIX_MCA_psquash=native " + cmd)
     else:
         os.chdir(server_build_dir + "/test/simple")
         print("-----> : Run "+test_name)
         print("%10s: %s" % (test_name, test_bin) )
         print("Server : " + os.getcwd() )
-        print("Command: cd " + os.getcwd() + " ; " + cmd)
+        print("Command: cd " + os.getcwd() + " ; " + "PMIX_MCA_psquash=native " + cmd)
 
     if os.path.isfile(result_file):
         os.remove(result_file)
