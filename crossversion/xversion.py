@@ -243,7 +243,6 @@ def run_test(bld_server, bld_client, test_client=False, test_tool=False, test_ch
     server_build_dir   = pmix_build_dir + "/" + bld_server.build_base_dir
 
     my_env = os.environ.copy()
-    my_env["PMIX_MCA_psquash"] = f"native"
 
     if timeout_cmd is not None:
         timeout_str = timeout_cmd + " --preserve-status -k 35 30 "
